@@ -1,0 +1,263 @@
+﻿using GuruBMXMod.Multi;
+using MelonLoader;
+using UnityEngine;
+
+namespace GuruBMXMod.UI
+{
+    public class UItab // UI dropdown tabs class
+    {
+        public bool isClosed;
+        public string text;
+        public int font;
+
+        public UItab(bool isClosed, string text, int font)
+        {
+            this.isClosed = isClosed;
+            this.text = text;
+            this.font = font;
+        }
+    }
+
+    public class UIcontroller
+    {
+        public bool showUI;
+        public bool setUp;
+        public Rect MainWindowRect = new Rect(20, 20, Screen.width / 6, 20);
+        //public static GUI.WindowFunction windowFunction;
+
+        //readonly UItab Test_Tab = new UItab(true, "Test Stuff", 14);
+
+        readonly UItab Stats_Tab = new UItab(true, "Stats", 14);
+        readonly UItab Multi_Tab = new UItab(true, "Multiplayer", 14);
+        readonly UItab Unlocks_Tab = new UItab(true, "Unlocks", 14);
+
+        readonly UItab BMX_Tab = new UItab(true, "BMX", 13);
+        readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 13);
+
+        private readonly string white = "#e6ebe8";
+        private readonly string grey = "#969696";
+        private readonly string cyan = "#00ffff";
+        private readonly string green = "#7CFC00";
+        private readonly string red = "#b71540";
+
+        // ----- Start Set KeyBindings ------
+
+        //public KeyBinding Hotkey = new KeyBinding { keyCode = KeyCode.W };
+        public KeyCode Hotkey = KeyCode.G;
+
+        private readonly KeyCode[] keyCodes = Enum.GetValues(typeof(KeyCode)).Cast<KeyCode>().Where(k => (int)k < (int)KeyCode.Mouse0).ToArray();
+
+        public bool ctrlToggle = true;
+        public bool altToggle = true;
+        public bool noneToggle = false;
+
+        // Get Key on KeyPress
+        public KeyCode? GetCurrentKeyDown()
+        {
+            if (!Input.anyKeyDown)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < keyCodes.Length; i++)
+            {
+                KeyCode keyCode = keyCodes[i];
+
+                if (keyCode == KeyCode.LeftControl ||
+                    keyCode == KeyCode.RightControl ||
+                    keyCode == KeyCode.LeftAlt ||
+                    keyCode == KeyCode.RightAlt ||
+                    keyCode == KeyCode.AltGr ||
+                    keyCode == KeyCode.LeftCommand ||
+                    keyCode == KeyCode.RightCommand)
+                {
+                    continue;
+                }
+
+                if (Input.GetKey(keyCode))
+                {
+                    return keyCode;
+                }
+            }
+
+            return null;
+        }
+        /*
+        public KeyCode GetAltKey()
+        {
+            if (ctrlToggle)
+            {
+                return KeyCode.LeftControl;
+            }
+            else if (altToggle)
+            {
+                return KeyCode.LeftAlt;
+            }
+            return KeyCode.None;
+        }
+        */
+        public bool IsModifierKeyPressed()
+        {
+            if (ctrlToggle)
+            {
+                // Checks if either left or right Ctrl is pressed
+                if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                {
+                    return true;
+                }
+            }
+            else if (altToggle)
+            {
+                // Checks if either left or right Alt is pressed
+                if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public void WaitForInput()
+        {
+            if (IsModifierKeyPressed() && Input.GetKeyDown(Hotkey))
+            {
+                ToggleUI();
+            }
+        }
+        private void ToggleUI()
+        {
+            if (!showUI)
+            {
+                Open();
+            }
+            else
+            {
+                Close();
+            }
+        }
+        private void Open()
+        {
+            showUI = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        private void Close()
+        {
+            showUI = false;
+            Cursor.visible = false;
+        }
+
+        public void CustomOnGUI()
+        {
+            if (!setUp)
+            {
+                setUp = true;
+            }
+            if (!showUI)
+                return;
+            GUI.backgroundColor = Settings.BGColor;
+            MainWindowRect = GUILayout.Window(387456, MainWindowRect, (GUI.WindowFunction)MainWindow, "<b> Guru BMX Mod </b>");
+        }
+
+        // Creates the GUI window
+        public void MainWindow(int windowID)
+        {
+            GUI.backgroundColor = Settings.BGColor;
+            GUI.DragWindow(new Rect(0, 0, 10000, 20));
+
+            MainUI();
+            if (!Settings.ModEnabled)
+                return;
+
+            StatsUI();
+            MultiUI();
+            UnlocksUI();
+        }
+
+       
+        private void MainUI()
+        {
+            GUILayout.BeginHorizontal();
+            UIextensions.FlexableButton(Settings.ModEnabled ? "<b> Enabled </b>" : "<b><color=#171717> Disabled </color></b>", UIActionManager.MainToggle, UIextensions.ButtonColorSwitch(Settings.ModEnabled));
+            GUILayout.EndHorizontal();
+        }
+
+        private void Tabs(UItab obj, string color = "#e6ebe8")
+        {
+            if (GUILayout.Button($"<size={obj.font}><color={color}>" + (obj.isClosed ? "-" : "<b>+</b>") + obj.text + "</color>" + "</size>", "Label"))
+            {
+                obj.isClosed = !obj.isClosed;
+                MainWindowRect.height = 20;
+                MainWindowRect.width = Screen.width / 6;
+
+            }
+        }
+
+        private void StatsUI()
+        {
+            Tabs(Stats_Tab, UIextensions.TabColorSwitch(Stats_Tab));
+            if (Stats_Tab.isClosed)
+                return;
+
+            GUILayout.BeginVertical("Box");
+            UIextensions.Slider("Gravity", UIActionManager.UpdateGravitySlider, Color.white, Settings.Gravity, -50.0f, 50.0f);
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical("Box");
+            Tabs(BMX_Tab, UIextensions.TabColorSwitch(BMX_Tab));
+            if (!BMX_Tab.isClosed)
+            {
+                GUILayout.BeginVertical();
+                GUILayout.Label($"Enable Simple Pedal", GUILayout.ExpandWidth(true));
+                UIextensions.StandardButton(Settings.EnableSimplePedal ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleSimplePedal, UIextensions.ButtonColorSwitch(Settings.EnableSimplePedal), 72);
+                if (Settings.EnableSimplePedal)
+                {
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.Slider("Pedal Force", UIActionManager.UpdatePedalForceSlider, Color.white, Settings.PedalForce, 0f, 10000f);
+                    GUILayout.EndVertical();
+
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.Slider("Max Pedal Velocity", UIActionManager.UpdatePedalVelocitySlider, Color.white, Settings.MaxPedalVel, 0f, 800f);
+                    GUILayout.EndVertical();
+                }
+                GUILayout.EndVertical();
+            }
+            Tabs(DriftBike_Tab, UIextensions.TabColorSwitch(DriftBike_Tab));
+            if (!DriftBike_Tab.isClosed)
+            {
+                GUILayout.BeginHorizontal();
+                UIextensions.StandardButton("<b> Spawn Drift Bike </b>", UIActionManager.SpawnVehicle, Color.cyan, 128);
+                GUILayout.EndHorizontal();
+            }
+            GUILayout.EndVertical();
+        }
+
+        private void MultiUI()
+        {
+            Tabs(Multi_Tab, UIextensions.TabColorSwitch(Multi_Tab));
+            if (Multi_Tab.isClosed)
+                return;
+
+            GUILayout.BeginVertical("Box");
+            UIextensions.Slider("Lobby Size", UIActionManager.UpdateLobbySlider, Color.white, Settings.PlayerLobbySize, 2, 32);
+            GUILayout.EndVertical();
+
+
+        }
+        private void UnlocksUI()
+        {
+            Tabs(Unlocks_Tab, UIextensions.TabColorSwitch(Unlocks_Tab));
+            if (Unlocks_Tab.isClosed)
+                return;
+
+            GUILayout.BeginHorizontal("Box");
+            GUILayout.Label($"Unlock All Stars", GUILayout.ExpandWidth(true));
+            UIextensions.StandardButton(Settings.UnlockStars ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.UnlockStars, UIextensions.ButtonColorSwitch(Settings.UnlockStars), 72);
+            GUILayout.EndHorizontal();
+
+        }
+    }
+}
+
+
+

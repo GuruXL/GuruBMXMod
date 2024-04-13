@@ -9,6 +9,9 @@ namespace GuruBMXMod
         public static bool ModEnabled = false;
 
         public static bool UnlockStars = false;
+        public static bool UnlockRewards = false;
+
+        public static bool EnableCycle = false;
 
         public static float Gravity = -12.5f;
 
@@ -19,7 +22,7 @@ namespace GuruBMXMod
 
         public static float GrindHoldForce = 0f;
 
-        public static byte PlayerLobbySize = 4;  
+        public static byte PlayerLobbySize = 4;
 
     }
 }

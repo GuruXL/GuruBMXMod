@@ -21,13 +21,6 @@ namespace GuruBMXMod
 
         public VehicleSpawner vehicleSpawner;
 
-        //public TimeOfDayController todController; // find reference
-        public TimeOfDayManager todManager;
-
-        public RewardNotificatonBehaviour rewardsBehavior;
-        public UnityGameEventListener unlockRewardListener;
-        public UnityGameEventListener lockRewardListener;
-
         public void GetBikeComponents()
         {
             MelonLogger.Msg("Getting Bike Componenets...");
@@ -62,66 +55,7 @@ namespace GuruBMXMod
                 }        
             }
         }
-        public void GetSmartDataComponents()
-        {
-            MelonLogger.Msg("Getting Smart Data Componenets...");
-            try
-            {
-               rewardsBehavior = UnityEngine.Object.FindObjectOfType<RewardNotificatonBehaviour>();
-
-                if (rewardsBehavior != null)
-                {
-                    GetRewardListeners();
-                }
-            }
-            catch (Exception ex)
-            {
-                MelonLogger.Msg("Smart Data Components NOT Found: " + ex.Message);
-            }
-            finally
-            {
-                if (rewardsBehavior != null)
-                {
-                    MelonLogger.Msg("Smart Data Components Found");
-                }
-                else
-                {
-                    MelonLogger.Msg("Smart Data Components NOT found");
-                }
-            }
-        }
-        private void GetRewardListeners()
-        {
-            Transform smartDataObj = rewardsBehavior.gameObject.transform.Find("Smart Data Features");
-            Transform unlockObj = smartDataObj.Find("UnlockAllRewards_GameEvent");
-            Transform lockObj = smartDataObj.Find("LockAllRewards_GameEvent");
-
-            unlockRewardListener = unlockObj.gameObject.GetComponent<UnityGameEventListener>();
-            lockRewardListener = lockObj.gameObject.GetComponent<UnityGameEventListener>();
-        }
-        public void GetTimeOfDayComponents()
-        {
-            MelonLogger.Msg("Getting Time Of Day Components...");
-            try
-            {
-                todManager = UnityEngine.Object.FindObjectOfType<TimeOfDayManager>();
-            }
-            catch (Exception ex)
-            {
-                MelonLogger.Msg("Time of Day Exception: " + ex.Message);
-            }
-            finally
-            {
-                if (todManager != null)
-                {
-                    MelonLogger.Msg("Time of Day Components Found");
-                }
-                else
-                {
-                    MelonLogger.Msg("Time of Day Components NOT found");
-                }
-            }
-        }
+      
         public void UpdateGravity()
         {
             float gravity = Physics.gravity.y;
@@ -131,6 +65,8 @@ namespace GuruBMXMod
                 Physics.gravity = new Vector3(Physics.gravity.x, Settings.Gravity, Physics.gravity.z);
             }
         }
+
+        // BMX
         public void ToggleSimplePedal()
         {
             simplePedalForce.enabled = Settings.EnableSimplePedal;
@@ -155,23 +91,13 @@ namespace GuruBMXMod
             }
         }
         */
-        public void UnlockStars(string value, bool state)
-        {
-            if (value == "All")
-            {
-                vehicleSpawner._starSystemManagerData.overrideReturnAllStars = state;
-            }
-            else if (value == "Zero")
-            {
-                vehicleSpawner._starSystemManagerData.overrideReturnZEROStars = state;
-            }
-        }
 
-        public void SpawnVehicle()
+        // Drift Bike 
+        public void SpawnVehicle() // spawns driftbike
         {
-            UnlockStars("All", true);
+            RewardUnlocks.Instance.UnlockStars("All", true);
             vehicleSpawner.SpawnVehicle();
-            UnlockStars("All", false);
+            RewardUnlocks.Instance.UnlockStars("All", false);
         }
     }
 }

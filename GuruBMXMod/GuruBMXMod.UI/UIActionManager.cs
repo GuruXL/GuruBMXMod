@@ -11,7 +11,6 @@ namespace GuruBMXMod.UI
         {
             Settings.ModEnabled = !Settings.ModEnabled;
         }
-        
         public static void ToggleSimplePedal()
         {
             Settings.EnableSimplePedal = !Settings.EnableSimplePedal;
@@ -20,11 +19,21 @@ namespace GuruBMXMod.UI
         public static void UnlockStars()
         {
             Settings.UnlockStars = !Settings.UnlockStars;
-            BMXModController.Instance.UnlockStars("All", Settings.UnlockStars);
+            RewardUnlocks.Instance.UnlockStars("All", Settings.UnlockStars);
+        }
+        public static void UnlockRewards()
+        {
+            Settings.UnlockRewards = !Settings.UnlockRewards;
+            RewardUnlocks.Instance.UnlockRewards(Settings.UnlockRewards);
         }
         public static void SpawnVehicle()
         {
             BMXModController.Instance.SpawnVehicle();
+        }
+        public static void EnableCycle()
+        {
+            Settings.EnableCycle = !Settings.EnableCycle;
+            TimeController.Instance.EnableCycle(Settings.EnableCycle);
         }
         #endregion
 
@@ -56,6 +65,10 @@ namespace GuruBMXMod.UI
             Settings.PlayerLobbySize = bytevalue;
             BMXModNetworkController.Instance.UpdateLobbySize();
         }
+        #endregion
+        #region TimeOfDay Sliders
+        // Time Sliders
+        
         #endregion
 
     }

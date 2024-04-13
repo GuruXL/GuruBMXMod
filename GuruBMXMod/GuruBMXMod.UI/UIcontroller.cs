@@ -30,6 +30,7 @@ namespace GuruBMXMod.UI
         readonly UItab Stats_Tab = new UItab(true, "Stats", 14);
         readonly UItab Multi_Tab = new UItab(true, "Multiplayer", 14);
         readonly UItab Unlocks_Tab = new UItab(true, "Unlocks", 14);
+        readonly UItab Cycle_Tab = new UItab(true, "Time Of Day", 14);
 
         readonly UItab BMX_Tab = new UItab(true, "BMX", 13);
         readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 13);
@@ -169,9 +170,10 @@ namespace GuruBMXMod.UI
             if (!Settings.ModEnabled)
                 return;
 
+            UnlocksUI();
             StatsUI();
             MultiUI();
-            UnlocksUI();
+            CycleUI();
         }
 
        
@@ -192,7 +194,23 @@ namespace GuruBMXMod.UI
 
             }
         }
+        private void UnlocksUI()
+        {
+            Tabs(Unlocks_Tab, UIextensions.TabColorSwitch(Unlocks_Tab));
+            if (Unlocks_Tab.isClosed)
+                return;
 
+            GUILayout.BeginHorizontal("Box");
+            GUILayout.Label($"Unlock All Stars", GUILayout.ExpandWidth(true));
+            UIextensions.StandardButton(Settings.UnlockStars ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.UnlockStars, UIextensions.ButtonColorSwitch(Settings.UnlockStars), 72);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal("Box");
+            GUILayout.Label($"Unlock All Rewards", GUILayout.ExpandWidth(true));
+            UIextensions.StandardButton(Settings.UnlockRewards ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.UnlockRewards, UIextensions.ButtonColorSwitch(Settings.UnlockRewards), 72);
+            GUILayout.EndHorizontal();
+
+        }
         private void StatsUI()
         {
             Tabs(Stats_Tab, UIextensions.TabColorSwitch(Stats_Tab));
@@ -244,17 +262,21 @@ namespace GuruBMXMod.UI
 
 
         }
-        private void UnlocksUI()
+        private void CycleUI()
         {
-            Tabs(Unlocks_Tab, UIextensions.TabColorSwitch(Unlocks_Tab));
-            if (Unlocks_Tab.isClosed)
+            Tabs(Cycle_Tab, UIextensions.TabColorSwitch(Cycle_Tab));
+            if (Cycle_Tab.isClosed)
                 return;
 
-            GUILayout.BeginHorizontal("Box");
-            GUILayout.Label($"Unlock All Stars", GUILayout.ExpandWidth(true));
-            UIextensions.StandardButton(Settings.UnlockStars ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.UnlockStars, UIextensions.ButtonColorSwitch(Settings.UnlockStars), 72);
-            GUILayout.EndHorizontal();
-
+            GUILayout.BeginVertical();
+            GUILayout.Label($"Enable Day/Night Cycle", GUILayout.ExpandWidth(true));
+            UIextensions.StandardButton(Settings.EnableCycle ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.EnableCycle, UIextensions.ButtonColorSwitch(Settings.EnableCycle), 72);
+            if (Settings.EnableCycle)
+            {
+                GUILayout.BeginVertical("Box");
+                GUILayout.EndVertical();
+            }
+            GUILayout.EndVertical();
         }
     }
 }

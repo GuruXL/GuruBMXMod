@@ -31,7 +31,7 @@ namespace GuruBMXMod
             {
                 MelonLogger.Msg("Failed Load: " + ex.Message);
             }
-            MelonLogger.Msg("OnInitializeMelon Success");
+            //MelonLogger.Msg("OnInitializeMelon Success");
         }
         public override void OnLateInitializeMelon() // Runs after OnApplicationStart.
         {
@@ -61,7 +61,7 @@ namespace GuruBMXMod
                 MelonLogger.Msg("OnSceneWasLoaded exception: " + ex.Message);
             }
             */
-            MelonLogger.Msg("OnSceneWasLoaded: " + buildindex.ToString() + " | " + sceneName);
+            //MelonLogger.Msg("OnSceneWasLoaded: " + buildindex.ToString() + " | " + sceneName);
         }
         public override void OnSceneWasInitialized(int buildindex, string sceneName) // Runs when a Scene has Initialized and is passed the Scene's Build Index and Name.
         {
@@ -73,11 +73,11 @@ namespace GuruBMXMod
                 }
                 else if (sceneName == "BMXS_WorldLighting" || buildindex == 8)
                 {
-                    BMXModController.Instance.GetTimeOfDayComponents();
+                    TimeController.Instance.GetTimeOfDayComponents();
                 }
                 else if (sceneName == "Smart Data Features" || buildindex == 2)
                 {
-                    BMXModController.Instance.GetSmartDataComponents();
+                    RewardUnlocks.Instance.GetSmartDataComponents();
                 }
             }
             catch (Exception ex)
@@ -85,7 +85,7 @@ namespace GuruBMXMod
                 MelonLogger.Msg("OnSceneWasLoaded exception: " + ex.Message);
             }
 
-            MelonLogger.Msg("OnSceneWasInitialized: " + buildindex.ToString() + " | " + sceneName);
+            //MelonLogger.Msg("OnSceneWasInitialized: " + buildindex.ToString() + " | " + sceneName);
         }
         public override void OnSceneWasUnloaded(int buildIndex, string sceneName)
         {

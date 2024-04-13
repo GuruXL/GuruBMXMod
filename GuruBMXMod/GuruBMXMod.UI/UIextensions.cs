@@ -62,6 +62,7 @@ namespace GuruBMXMod.UI
             GUILayout.EndHorizontal();
         }
 
+        /* old working wlisder
         public static void Slider(string label, Action<float> valueChangedCallback, Color color, float value, float minValue, float maxValue)
         {
             GUILayout.BeginVertical(); // Start the main vertical layout
@@ -81,6 +82,40 @@ namespace GuruBMXMod.UI
             if (newValue != value)
             {
                 valueChangedCallback?.Invoke(newValue);
+            }
+
+            GUILayout.EndVertical(); // End the main vertical layout
+        }
+        */
+        public static void Slider(string label, Action<float> valueChangedCallback, Color color, float value, float minValue, float maxValue)
+        {
+            GUILayout.BeginVertical(); // Start the main vertical layout
+
+            GUI.backgroundColor = color;
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(label, GUILayout.ExpandWidth(false));
+            GUILayout.FlexibleSpace();
+
+            // Use a TextField instead of a Label for the value input
+            string valueInput = GUILayout.TextField(value.ToString("F2"), GUILayout.Width(50));
+
+            GUILayout.EndHorizontal();
+
+            // Slider underneath the labels
+            float newValue = GUILayout.HorizontalSlider(value, minValue, maxValue, GUILayout.ExpandWidth(true));
+
+            // Check if the text field input is a valid float and different from the current slider value
+            if (float.TryParse(valueInput, out float inputValue) && inputValue != value)
+            {
+                newValue = inputValue; // Update the slider position based on input field value
+                value = newValue;      // Update the reference value to the new input
+                valueChangedCallback?.Invoke(newValue); // Invoke the callback with new value
+            }
+            else if (newValue != value)
+            {
+                value = newValue; // Update the value if the slider moved
+                valueChangedCallback?.Invoke(newValue); // Invoke the callback with new value
             }
 
             GUILayout.EndVertical(); // End the main vertical layout

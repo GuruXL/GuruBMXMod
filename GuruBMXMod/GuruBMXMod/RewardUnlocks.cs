@@ -102,11 +102,11 @@ namespace GuruBMXMod
         {
             if (unlock)
             {
-                unlockRewardListener.OnEventRaised();
+                unlockRewardListener.RaiseEvent();
             }
             else
             {
-                lockRewardListener.OnEventRaised();
+                lockRewardListener.RaiseEvent();
             }
         }
     }

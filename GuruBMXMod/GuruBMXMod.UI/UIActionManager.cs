@@ -37,7 +37,7 @@ namespace GuruBMXMod.UI
         }
         #endregion
 
-        #region Stat Sliders
+        #region Bike Stat Sliders
         // Stat Slider
         public static void UpdateGravitySlider(float newValue)
         {
@@ -46,13 +46,71 @@ namespace GuruBMXMod.UI
         }
         public static void UpdatePedalForceSlider(float newValue)
         {
-            Settings.PedalForce = newValue;
-            BMXModController.Instance.UpdatePedalForces();
+            Settings.SimpleBMX_PedalForce = newValue;
+            BMXModController.Instance.UpdateSimplePedalForce();
         }
         public static void UpdatePedalVelocitySlider(float newValue)
         {
-            Settings.MaxPedalVel = newValue;
-            BMXModController.Instance.UpdatePedalForces();
+            Settings.SimpleBMX_MaxPedalVel = newValue;
+            BMXModController.Instance.UpdateSimplePedalVelocity();
+        }
+        public static void UpdateGrindHoldForce(float newValue)
+        {
+            Settings.SimpleBMX_GrindHoldForce = newValue;
+            BMXModController.Instance.UpdateSimpleGrindHoldForce();
+        }
+        #endregion
+
+        #region DriftBike Stats SLiders
+        public static void UpdateDriftJumpForce(float newValue)
+        {
+            Settings.DriftBike_JumpForce = newValue;
+            BMXModController.Instance.SetDriftJumpForce();
+        }
+        public static void UpdateDriftMaxMotorTorque(float newValue)
+        {
+            Settings.DriftBike_MaxMotorTorque = newValue;
+            BMXModController.Instance.UpdateDriftMotorTorque();
+        }
+        public static void UpdateDriftMaxBrakeTorque(float newValue)
+        {
+            Settings.DriftBike_MaxBrakeTorque = newValue;
+            BMXModController.Instance.UpdateDriftBrakeTorque();
+        }
+        public static void UpdateDriftAirFlipTorque(float newValue)
+        {
+            Settings.DriftBike_AirFlipTorque = newValue;
+            BMXModController.Instance.UpdateDriftAirFlipTorque();
+        }
+        public static void UpdateDriftAirSpinTorque(float newValue)
+        {
+            Settings.DriftBike_AirSpinTorque = newValue;
+            BMXModController.Instance.UpdateDriftAirSpinTorque();
+        }
+        public static void UpdateDriftAirUpRightTorque(float newValue)
+        {
+            Settings.DriftBike_AirUpRightTorque = newValue;
+            BMXModController.Instance.UpdateDriftAirUpRightTorque();
+        }
+        public static void UpdateDriftAntiRoll(float newValue)
+        {
+            Settings.DriftBike_AntiRoll = newValue;
+            BMXModController.Instance.UpdateDriftAntiRoll();
+        }
+        public static void UpdateDriftCOMoffset(float newValue)
+        {
+            Settings.DriftBike_COMOffset = newValue;
+            BMXModController.Instance.UpdateDriftCOMoffset();
+        }
+        public static void UpdateDriftTurnTorque(float newValue)
+        {
+            Settings.DriftBike_TurnTorque = newValue;
+            BMXModController.Instance.UpdateDriftTurnTorque();
+        }
+        public static void UpdateDriftTurnResponse(float newValue)
+        {
+            Settings.DriftBike_TurnResponse = newValue;
+            BMXModController.Instance.UpdateDriftTurnResponse();
         }
         #endregion
 
@@ -66,9 +124,29 @@ namespace GuruBMXMod.UI
             BMXModNetworkController.Instance.UpdateLobbySize();
         }
         #endregion
+
         #region TimeOfDay Sliders
         // Time Sliders
-        
+        public static void UpdateTimeOfDay(float newValue)
+        {
+            Settings.TimeOfDay= newValue;
+            TimeController.Instance.UpdateTimeOfDay();
+        }
+        public static void UpdateCycleSpeed(float newValue)
+        {
+            Settings.CycleSpeed = newValue;
+            TimeController.Instance.UpdateCycleSpeed();
+        }
+        public static void UpdateShadowTime(float newValue)
+        {
+            Settings.ShadowUpdateTime = newValue;
+            TimeController.Instance.ShadowUpdateTime();
+        }
+        public static void TimeBetweenSkyUpdates(float newValue)
+        {
+            Settings.TimeBetweenSkyUpdates = newValue;
+            TimeController.Instance.UpdateTimeBetweenSkyUpdates();
+        }
         #endregion
 
     }

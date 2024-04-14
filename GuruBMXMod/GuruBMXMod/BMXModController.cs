@@ -14,7 +14,7 @@ namespace GuruBMXMod
         public static BMXModController Instance => __instance ?? (__instance = new BMXModController());
 
         public SimplePedalForce simplePedalForce;
-        //public SimpleGrindForce simpleGrindForce;
+        public SimpleGrindForce simpleGrindForce;
 
         public DriftTrikeController driftBike;
         public BikeController bike; // find reference for this in game
@@ -27,7 +27,7 @@ namespace GuruBMXMod
             try
             {
                 simplePedalForce = PlayerComponents.m_Instance.gameObject.GetComponentInChildren<SimplePedalForce>(true);
-                //simpleGrindForce = PlayerComponents.m_Instance.gameObject.GetComponentInChildren<SimpleGrindForce>();
+                simpleGrindForce = PlayerComponents.m_Instance.gameObject.GetComponentInChildren<SimpleGrindForce>();
                 vehicleSpawner = PlayerComponents.m_Instance.gameObject.GetComponentInChildren<VehicleSpawner>();
                 driftBike = vehicleSpawner.gameObject.GetComponentInChildren<DriftTrikeController>(true);
             }
@@ -58,46 +58,120 @@ namespace GuruBMXMod
       
         public void UpdateGravity()
         {
-            float gravity = Physics.gravity.y;
+            if (Physics.gravity.y == Settings.Gravity)
+                return;
 
-            if (gravity != Settings.Gravity)
-            {
-                Physics.gravity = new Vector3(Physics.gravity.x, Settings.Gravity, Physics.gravity.z);
-            }
+            Physics.gravity = new Vector3(Physics.gravity.x, Settings.Gravity, Physics.gravity.z);
         }
 
-        // BMX
+        #region Simple BMX
         public void ToggleSimplePedal()
         {
             simplePedalForce.enabled = Settings.EnableSimplePedal;
         }
-        public void UpdatePedalForces()
+        public void UpdateSimplePedalForce()
         {
-            if (simplePedalForce.pedalForce != Settings.PedalForce)
-            {
-                simplePedalForce.pedalForce = Settings.PedalForce;
-            }
-            else if (simplePedalForce.maxPedalVel != Settings.MaxPedalVel)
-            {
-                simplePedalForce.maxPedalVel = Settings.MaxPedalVel;
-            }
-        }
-        /*
-        public void UpdateGrindHoldForce()
-        {
-            if (simpleGrindForce.holdForce != Settings.GrindHoldForce)
-            {
-                simpleGrindForce.holdForce = Settings.GrindHoldForce;
-            }
-        }
-        */
+            if (simplePedalForce.pedalForce == Settings.SimpleBMX_PedalForce)
+                return;
 
-        // Drift Bike 
+            simplePedalForce.pedalForce = Settings.SimpleBMX_PedalForce;
+        }
+        public void UpdateSimplePedalVelocity()
+        {
+            if (simplePedalForce.maxPedalVel == Settings.SimpleBMX_MaxPedalVel)
+                return;
+
+            simplePedalForce.maxPedalVel = Settings.SimpleBMX_MaxPedalVel;
+        }
+        public void UpdateSimpleGrindHoldForce()
+        {
+            if (simpleGrindForce.holdForce == Settings.SimpleBMX_GrindHoldForce)
+                return;
+
+            simpleGrindForce.holdForce = Settings.SimpleBMX_GrindHoldForce;
+        }
+        #endregion
+
+        #region Drift Bike
         public void SpawnVehicle() // spawns driftbike
         {
-            RewardUnlocks.Instance.UnlockStars("All", true);
+            if (!Settings.UnlockStars)
+            {
+                RewardUnlocks.Instance.UnlockStars("All", true);
+                vehicleSpawner.SpawnVehicle();
+                RewardUnlocks.Instance.UnlockStars("All", false);
+            }
             vehicleSpawner.SpawnVehicle();
-            RewardUnlocks.Instance.UnlockStars("All", false);
         }
+        public void SetDriftJumpForce()
+        {
+            if (driftBike.jumpForce == Settings.DriftBike_JumpForce)
+                return;
+
+            driftBike.jumpForce = Settings.DriftBike_JumpForce;
+        }
+        public void UpdateDriftMotorTorque()
+        {
+            if (driftBike.maxMotorTorque == Settings.DriftBike_MaxMotorTorque)
+                return;
+
+            driftBike.maxMotorTorque = Settings.DriftBike_MaxMotorTorque;
+        }
+        public void UpdateDriftBrakeTorque()
+        {
+            if (driftBike.maxBrakeTorque == Settings.DriftBike_MaxBrakeTorque)
+                return;
+
+            driftBike.maxBrakeTorque = Settings.DriftBike_MaxBrakeTorque;
+        }
+        public void UpdateDriftAirFlipTorque()
+        {
+            if (driftBike.airFlipTorqueBody == Settings.DriftBike_AirFlipTorque)
+                return;
+
+            driftBike.airFlipTorqueBody = Settings.DriftBike_AirFlipTorque;
+        }
+        public void UpdateDriftAirSpinTorque()
+        {
+            if (driftBike.airSpinTorqueBody == Settings.DriftBike_AirSpinTorque)
+                return;
+
+            driftBike.airSpinTorqueBody = Settings.DriftBike_AirSpinTorque;
+        }
+        public void UpdateDriftAirUpRightTorque()
+        {
+            if (driftBike.airUpRightTorque == Settings.DriftBike_AirUpRightTorque)
+                return;
+
+            driftBike.airUpRightTorque = Settings.DriftBike_AirUpRightTorque;
+        }
+        public void UpdateDriftAntiRoll()
+        {
+            if (driftBike.AntiRoll == Settings.DriftBike_AntiRoll)
+                return;
+        }
+        public void UpdateDriftCOMoffset()
+        {
+            Vector3 COMoffset = new Vector3 (0, Settings.DriftBike_COMOffset, 0);
+            if (driftBike.centerOfMassOffset == COMoffset)
+                return;
+
+            driftBike.centerOfMassOffset = COMoffset;
+        }
+        public void UpdateDriftTurnTorque()
+        {
+            if (driftBike.yawTorque == Settings.DriftBike_TurnTorque)
+                return;
+
+            driftBike.yawTorque = Settings.DriftBike_TurnTorque;
+        }
+        public void UpdateDriftTurnResponse()
+        {
+            if (driftBike.steeringLerpSpeed == Settings.DriftBike_TurnResponse)
+                return;
+
+            driftBike.steeringLerpSpeed = Settings.DriftBike_TurnResponse;
+        }
+        #endregion
     }
 }

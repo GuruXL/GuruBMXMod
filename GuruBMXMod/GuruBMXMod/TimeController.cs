@@ -44,5 +44,44 @@ namespace GuruBMXMod
         {
             todManager.isPlaying = enabled;
         }
+
+        public void UpdateTimeOfDay()
+        {
+            if (todManager.timeOfDay != Settings.TimeOfDay)
+            {
+                //todManager.timeOfDay = Settings.TimeOfDay;
+                todManager.SetTimeOfDay(Settings.TimeOfDay);
+            }
+        }
+        public void UpdateTimeBetweenSkyUpdates()
+        {
+            if (todManager.timeBetweenSkyUpdates != Settings.TimeBetweenSkyUpdates)
+            {
+                todManager.timeBetweenSkyUpdates = Settings.TimeBetweenSkyUpdates;
+            }
+        }
+
+        public void UpdateCycleSpeed()
+        {
+            if (todManager.timeOfDayMoveSpeed != Settings.CycleSpeed)
+            {
+                todManager.timeOfDayMoveSpeed = Settings.CycleSpeed;
+            }
+        }
+
+        public void ShadowUpdateTime()
+        {
+            if (todManager._updateShadowsTime != Settings.ShadowUpdateTime)
+            {
+                todManager._updateShadowsTime = Settings.ShadowUpdateTime;
+            }   
+        }
+
+        /*
+        public void SetSunIntensity()
+        {
+            todManager.sunLight.intensity = Settings.SunIntensity;
+        }
+        */
     }
 }

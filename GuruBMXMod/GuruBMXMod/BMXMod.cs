@@ -4,6 +4,7 @@ using HarmonyLib;
 using UnityEngine;
 using Il2CppMG_Gameplay;
 using GuruBMXMod.UI;
+using GuruBMXMod.Multi;
 
 namespace GuruBMXMod
 {
@@ -78,6 +79,10 @@ namespace GuruBMXMod
                 else if (sceneName == "Smart Data Features" || buildindex == 2)
                 {
                     RewardUnlocks.Instance.GetSmartDataComponents();
+                }
+                else if (sceneName == "PlatformManager" || buildindex == 4)
+                {
+                    BMXModNetworkController.Instance.GetNetworkComponenets();
                 }
             }
             catch (Exception ex)

@@ -21,7 +21,6 @@ namespace GuruBMXMod.Multi
             try
             {
                 roomInfo = PUNManager.Instance.transform.parent.gameObject.GetComponentInChildren<NetworkRoomInfo>();
-
             }
             catch (Exception ex)
             {
@@ -33,7 +32,7 @@ namespace GuruBMXMod.Multi
                 {
                     MelonLogger.Msg("All Network Components Found");
                 }
-                if (roomInfo == null)
+                else if (roomInfo == null)
                 {
                     MelonLogger.Msg("Room Info NOT found");
                 }

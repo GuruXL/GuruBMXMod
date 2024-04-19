@@ -5,91 +5,57 @@ using UnityEngine;
 using Il2CppMG_Gameplay;
 using GuruBMXMod.UI;
 using GuruBMXMod.Multi;
+using GuruBMXMod.Utils;
 
 namespace GuruBMXMod
 {
     public static class BuildInfo
     {
         public const string Name = "Guru BMX Mod"; // Name of the Mod.  (MUST BE SET)
-        public const string Description = "Mod for Testing BMX Streets"; // Description for the Mod.  (Set as null if none)
+        public const string Description = "Mod for BMX Streets"; // Description for the Mod.  (Set as null if none)
         public const string Author = "Guru"; // Author of the Mod.  (MUST BE SET)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "0.0.1"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "0.0.2"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
     public class BMXMod : MelonMod
     {
+        private HarmonyLib.Harmony harmonyInstance;
+
+        private GameObject ScriptManager;
+
         private UIcontroller uiController;
 
         public override void OnInitializeMelon()
         {
-            try
-            {
-                LoadUI();
-            }
-            catch (Exception ex)
-            {
-                MelonLogger.Msg("Failed Load: " + ex.Message);
-            }
+
+            InitHarmony();
+           
             //MelonLogger.Msg("OnInitializeMelon Success");
         }
         public override void OnLateInitializeMelon() // Runs after OnApplicationStart.
         {
-            //LoadUI();
+            try
+            {
+                CreateScriptManager();
+                LoadUI();
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Msg("Failed Load Exception: " + ex.Message);
+            }
+
             //MelonLogger.Msg("OnApplicationLateStart");
         }
         public override void OnSceneWasLoaded(int buildindex, string sceneName) // Runs when a Scene has Loaded and is passed the Scene's Build Index and Name.
         {
-            /*
-            try
-            {
-                if (sceneName == "Bridging Physics PIPE Style" || buildindex == 1)
-                {
-                    BMXModController.Instance.GetBikeComponents();
-                }
-                else if (sceneName == "BMXS_WorldLighting" || buildindex == 8)
-                {
-                    BMXModController.Instance.GetTimeOfDayComponents();
-                }
-                else if (sceneName == "Smart Data Features" || buildindex == 2)
-                {
-                    BMXModController.Instance.GetSmartDataComponents();
-                }
-            }
-            catch (Exception ex)
-            {
-                MelonLogger.Msg("OnSceneWasLoaded exception: " + ex.Message);
-            }
-            */
+            CheckForModdedMap(buildindex);
             //MelonLogger.Msg("OnSceneWasLoaded: " + buildindex.ToString() + " | " + sceneName);
         }
         public override void OnSceneWasInitialized(int buildindex, string sceneName) // Runs when a Scene has Initialized and is passed the Scene's Build Index and Name.
         {
-            try
-            {
-                if (sceneName == "Bridging Physics PIPE Style" || buildindex == 1)
-                {
-                    BMXModController.Instance.GetBikeComponents();
-                }
-                else if (sceneName == "BMXS_WorldLighting" || buildindex == 8)
-                {
-                    TimeController.Instance.GetTimeOfDayComponents();
-                }
-                else if (sceneName == "Smart Data Features" || buildindex == 2)
-                {
-                    RewardUnlocks.Instance.GetSmartDataComponents();
-                }
-                else if (sceneName == "PlatformManager" || buildindex == 4)
-                {
-                    BMXModNetworkController.Instance.GetNetworkComponenets();
-                }
-            }
-            catch (Exception ex)
-            {
-                MelonLogger.Msg("OnSceneWasLoaded exception: " + ex.Message);
-            }
-
+            GetModComponents(buildindex, sceneName);
             //MelonLogger.Msg("OnSceneWasInitialized: " + buildindex.ToString() + " | " + sceneName);
         }
         public override void OnSceneWasUnloaded(int buildIndex, string sceneName)
@@ -98,7 +64,10 @@ namespace GuruBMXMod
         }
         public override void OnUpdate() // Runs once per frame.
         {
-            uiController.WaitForInput();
+            if (uiController != null)
+            {
+                uiController.WaitForInput();
+            }
             //MelonLogger.Msg("OnUpdate");
         }
         public override void OnFixedUpdate() // Can run multiple times per frame. Mostly used for Physics.
@@ -112,10 +81,14 @@ namespace GuruBMXMod
         }
         public override void OnGUI() // Can run multiple times per frame. Mostly used for Unity's IMGUI.
         {
-            uiController.CustomOnGUI();
+            if (uiController != null)
+            {
+                uiController.CustomOnGUI();
+            }  
         }
         public override void OnApplicationQuit() // Runs when the Game is told to Close.
         {
+            UnpatchHarmony();
             //MelonLogger.Msg("OnApplicationQuit");
         }
         public override void OnPreferencesSaved() // Runs when Melon Preferences get saved.
@@ -130,10 +103,119 @@ namespace GuruBMXMod
         private void LoadUI()
         {
             uiController = new UIcontroller();
+
             if (uiController != null)
             {
-                MelonLogger.Msg("UI Loaded");
+                MelonLogger.Msg("Loaded");
             }
+            else
+            {
+                if (uiController == null)
+                {
+                    MelonLogger.Msg("UI Failed to Load");
+                }
+            }
+        }
+
+        private void CreateScriptManager()
+        {
+            if (ScriptManager == null)
+            {
+                ScriptManager = new GameObject("Guru BMX Mod");
+                UnityEngine.Object.DontDestroyOnLoad(ScriptManager);
+                MelonLogger.Msg("ScriptManager Created");
+            }
+        }
+        private void CheckForModdedMap(int buildindex)
+        {
+            if (buildindex == -1)
+            {
+                Settings.IsModMap = true;
+                MelonLogger.Msg($"IsModded Map: {Settings.IsModMap}");
+            }
+            else
+            {
+                if (Settings.IsModMap)
+                {
+                    Settings.IsModMap = false;
+                }
+            }
+        }
+
+        private void InitHarmony()
+        {
+            try
+            {
+                if (harmonyInstance == null)
+                {
+                    harmonyInstance = new HarmonyLib.Harmony(BuildInfo.Name);
+                    harmonyInstance.PatchAll();
+                }
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Msg("Exception Creating Hamony Instance: " + ex.Message);
+            }
+            finally
+            {
+                if (harmonyInstance != null)
+                {
+                    MelonLogger.Msg("Hamony Instance Created");
+                }
+            }
+        }
+        private void UnpatchHarmony()
+        {
+            try
+            {
+                if (harmonyInstance != null)
+                {
+                    harmonyInstance.UnpatchSelf();
+                }
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Msg("Exception Unpatching Hamony: " + ex.Message);
+            }
+        }
+
+        private void GetModComponents(int buildindex, string sceneName)
+        {
+            try
+            {
+                if (buildindex == 1 || sceneName == "Bridging Physics PIPE Style")
+                {
+                    BMXModController.Instance.GetBikeComponents();
+                    //CameraController.Instance.GetCameraComponents();
+                    SessionMarkerSwap.Instance.GetInputComponents();
+                }
+                else if (buildindex == 8 || sceneName == "BMXS_WorldLighting")
+                {
+                    TimeController.Instance.GetTimeOfDayComponents();
+                }
+                else if (buildindex == 2 || sceneName == "Smart Data Features")
+                {
+                    RewardUnlocks.Instance.GetSmartDataComponents();
+                }
+                else if (buildindex == 4 || sceneName == "PlatformManager")
+                {
+                    BMXModNetworkController.Instance.GetNetworkComponenets();
+                }
+                else if (buildindex == -1)
+                {
+                    TimeController.Instance.GetModMapComponents(sceneName);
+
+                    if (Settings.EnableCycle)
+                    {
+                        TimeController.Instance.EnableDayNightCycle(Settings.EnableCycle);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Msg("OnSceneWasLoaded exception: " + ex.Message);
+            }
+
         }
     }
 }

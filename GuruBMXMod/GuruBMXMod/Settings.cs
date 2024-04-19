@@ -2,11 +2,15 @@
 
 namespace GuruBMXMod
 {
-    public static class Settings
+    internal class Settings
     {
         public static Color BGColor = new Color(0.85f, 0.90f, 1.0f);
 
         public static bool ModEnabled = false;
+
+        public static bool IsModMap = false;
+
+        public static bool SessionMarkerSwapped = false;
 
         public static float Gravity = -12.5f;
 
@@ -22,6 +26,7 @@ namespace GuruBMXMod
         #region Time Of Day
         // Time of Day
         public static bool EnableCycle = false;
+        public static bool ToggleModMapLights = false;
         public static float TimeBetweenSkyUpdates = 2.0f;
         public static float TimeOfDay = 15.0f;
         public static float CycleSpeed = 0.01f;

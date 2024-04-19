@@ -23,12 +23,12 @@ namespace GuruBMXMod
 
         public void GetBikeComponents()
         {
-            MelonLogger.Msg("Getting Bike Componenets...");
+            MelonLogger.Msg("Getting Bike Components...");
             try
             {
-                simplePedalForce = PlayerComponents.m_Instance.gameObject.GetComponentInChildren<SimplePedalForce>(true);
-                simpleGrindForce = PlayerComponents.m_Instance.gameObject.GetComponentInChildren<SimpleGrindForce>();
-                vehicleSpawner = PlayerComponents.m_Instance.gameObject.GetComponentInChildren<VehicleSpawner>();
+                simplePedalForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimplePedalForce>(true);
+                simpleGrindForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimpleGrindForce>();
+                vehicleSpawner = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<VehicleSpawner>();
                 driftBike = vehicleSpawner.gameObject.GetComponentInChildren<DriftTrikeController>(true);
             }
             catch (Exception ex)
@@ -41,18 +41,21 @@ namespace GuruBMXMod
                 {
                     MelonLogger.Msg("All Bike Components Found");
                 }
-                if (simplePedalForce == null)
+                else
                 {
-                    MelonLogger.Msg("simplePedalForce NOT found");
-                }
-                if (vehicleSpawner == null)
-                {
-                    MelonLogger.Msg("vehicleSpawner NOT found");
-                }
-                if (driftBike == null)
-                {
-                    MelonLogger.Msg("Drift Bike NOT found");
-                }        
+                    if (simplePedalForce == null)
+                    {
+                        MelonLogger.Msg("simplePedalForce NOT found");
+                    }
+                    if (vehicleSpawner == null)
+                    {
+                        MelonLogger.Msg("vehicleSpawner NOT found");
+                    }
+                    if (driftBike == null)
+                    {
+                        MelonLogger.Msg("Drift Bike NOT found");
+                    }
+                }       
             }
         }
       

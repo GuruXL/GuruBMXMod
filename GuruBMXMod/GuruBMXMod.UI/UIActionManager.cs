@@ -1,9 +1,10 @@
 ﻿using GuruBMXMod.Multi;
+using GuruBMXMod.Utils;
 using UnityEngine;
 
 namespace GuruBMXMod.UI
 {
-    public static class UIActionManager
+    internal class UIActionManager
     {
         #region Buttons
         // Buttons
@@ -33,7 +34,13 @@ namespace GuruBMXMod.UI
         public static void EnableCycle()
         {
             Settings.EnableCycle = !Settings.EnableCycle;
-            TimeController.Instance.EnableCycle(Settings.EnableCycle);
+
+            TimeController.Instance.EnableDayNightCycle(Settings.EnableCycle);
+        }
+        public static void SwapSessionMarker()
+        {
+            Settings.SessionMarkerSwapped = !Settings.SessionMarkerSwapped;
+            SessionMarkerSwap.Instance.SwapUpAndDownActions();
         }
         #endregion
 

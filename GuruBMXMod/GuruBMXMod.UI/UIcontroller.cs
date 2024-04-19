@@ -1,4 +1,5 @@
 ﻿using GuruBMXMod.Multi;
+using GuruBMXMod.Utils;
 using MelonLoader;
 using UnityEngine;
 
@@ -30,10 +31,12 @@ namespace GuruBMXMod.UI
         readonly UItab Stats_Tab = new UItab(true, "Stats", 14);
         readonly UItab Multi_Tab = new UItab(true, "Multiplayer", 14);
         readonly UItab Unlocks_Tab = new UItab(true, "Unlocks", 14);
+        readonly UItab Camera_Tab = new UItab(true, "Camera", 14);
         readonly UItab Cycle_Tab = new UItab(true, "Time Of Day", 14);
 
-        readonly UItab BMX_Tab = new UItab(true, "BMX", 13);
-        readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 13);
+        readonly UItab Player_Tab = new UItab(true, "Player", 12);
+        readonly UItab BMX_Tab = new UItab(true, "BMX", 12);
+        readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 12);
 
         private readonly string white = "#e6ebe8";
         private readonly string grey = "#969696";
@@ -171,6 +174,7 @@ namespace GuruBMXMod.UI
                 return;
 
             UnlocksUI();
+            //CameraUI();
             StatsUI();
             MultiUI();
             CycleUI();
@@ -217,6 +221,13 @@ namespace GuruBMXMod.UI
             GUILayout.EndVertical();
 
         }
+        private void CameraUI()
+        {
+            Tabs(Camera_Tab, UIextensions.TabColorSwitch(Camera_Tab));
+            if (Camera_Tab.isClosed)
+                return;
+
+        }
         private void StatsUI()
         {
             Tabs(Stats_Tab, UIextensions.TabColorSwitch(Stats_Tab));
@@ -228,6 +239,18 @@ namespace GuruBMXMod.UI
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical("Box");
+            Tabs(Player_Tab, UIextensions.TabColorSwitch(Player_Tab));
+            if (!Player_Tab.isClosed)
+            {
+                /*
+                GUILayout.BeginHorizontal();
+                GUILayout.Label($"Swap Session Marker Input", GUILayout.ExpandWidth(true));
+                GUILayout.FlexibleSpace();
+                UIextensions.StandardButton(Settings.SessionMarkerSwapped ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.SwapSessionMarker, UIextensions.ButtonColorSwitch(Settings.SessionMarkerSwapped), 72);
+                GUILayout.EndHorizontal();
+                */
+
+            }
             Tabs(BMX_Tab, UIextensions.TabColorSwitch(BMX_Tab));
             if (!BMX_Tab.isClosed)
             {
@@ -318,29 +341,49 @@ namespace GuruBMXMod.UI
             if (Cycle_Tab.isClosed)
                 return;
 
+            GUILayout.BeginVertical(); // start
+
             GUILayout.BeginVertical();
             GUILayout.Label($"Enable Day/Night Cycle", GUILayout.ExpandWidth(true));
             UIextensions.StandardButton(Settings.EnableCycle ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.EnableCycle, UIextensions.ButtonColorSwitch(Settings.EnableCycle), 72);
+            GUILayout.EndVertical();
+            /*
+            GUILayout.BeginVertical();
+            GUILayout.Label($"Enable For Mod Maps", GUILayout.ExpandWidth(true));
+            UIextensions.StandardButton(Settings.ToggleModMapLights ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleModMapLights, UIextensions.ButtonColorSwitch(Settings.ToggleModMapLights), 72);
+            GUILayout.EndVertical();
+            */
             if (Settings.EnableCycle)
             {
-                GUILayout.Label($"Time Of Day: {TimeController.Instance.todManager.GetTimeOfDay().ToString("HH:mm")}", GUILayout.ExpandWidth(true));
+                try
+                {
+                    float time = TimeController.Instance.todManager.GetTimeOfDay();
+                    string formattedTime = TimeFormatter.ConvertTimeTo12HourFormat(time);
+                    GUILayout.Label($"Time Of Day: {formattedTime}", GUILayout.ExpandWidth(true));
+                }
+                catch (Exception e)
+                {
+                    GUILayout.Label("Failed to retrieve time: " + e.Message);
+                }
+                //GUILayout.Label($"Time Of Day: {formattedTime}", GUILayout.ExpandWidth(true));
                 GUILayout.BeginVertical("Box");
                 UIextensions.Slider("Time Of Day", UIActionManager.UpdateTimeOfDay, Color.white, Settings.TimeOfDay, 0.0f, 24.0f);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Time Of Day Speed", UIActionManager.UpdateCycleSpeed, Color.white, Settings.CycleSpeed, 0.01f, 1.0f);
+                UIextensions.Slider("Time Of Day Speed", UIActionManager.UpdateCycleSpeed, Color.white, Settings.CycleSpeed, 0.01f, 1.00f);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Shadow Update Time", UIActionManager.UpdateShadowTime, Color.white, Settings.ShadowUpdateTime, 0.01f, 0.1f);
+                UIextensions.Slider("Shadow Update Time", UIActionManager.UpdateShadowTime, Color.white, Settings.ShadowUpdateTime, 0.01f, 0.10f);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
                 UIextensions.Slider("Time BetweenSky Updates", UIActionManager.TimeBetweenSkyUpdates, Color.white, Settings.TimeBetweenSkyUpdates, 0.1f, 2.0f);
                 GUILayout.EndVertical();
             }
-            GUILayout.EndVertical();
+
+            GUILayout.EndVertical(); // end
         }
     }
 }

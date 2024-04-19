@@ -4,6 +4,7 @@ namespace GuruBMXMod.UI
 {
     public static class UIextensions
     {
+
         private static string white = "#e6ebe8";
         private static string LightBlue = "#30e2e6";
         private static string TabColor;
@@ -63,7 +64,7 @@ namespace GuruBMXMod.UI
         }
 
         /* old working wlisder
-        public static void Slider(string label, Action<float> valueChangedCallback, Color color, float value, float minValue, float maxValue)
+        public void Slider(string label, Action<float> valueChangedCallback, Color color, float value, float minValue, float maxValue)
         {
             GUILayout.BeginVertical(); // Start the main vertical layout
 

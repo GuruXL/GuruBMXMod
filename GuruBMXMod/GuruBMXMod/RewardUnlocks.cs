@@ -20,7 +20,7 @@ namespace GuruBMXMod
 
         public void GetSmartDataComponents()
         {
-            MelonLogger.Msg("Getting Smart Data Componenets...");
+            MelonLogger.Msg("Getting Smart Data Components...");
             try
             {
                 //rewardsBehavior = UnityEngine.Object.FindObjectOfType<RewardNotificatonBehaviour>();

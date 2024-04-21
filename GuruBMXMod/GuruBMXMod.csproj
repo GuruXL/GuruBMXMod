@@ -19,6 +19,9 @@
     <Reference Include="Il2CppCinemachine">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppCinemachine.dll</HintPath>
     </Reference>
+    <Reference Include="Il2CppEmoCompressUtilsASMDEF">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppEmoCompressUtilsASMDEF.dll</HintPath>
+    </Reference>
     <Reference Include="Il2CppInterop.Common">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
     </Reference>
@@ -52,14 +55,26 @@
     <Reference Include="Il2CppPhotonUnityNetworking.Utilities">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppPhotonUnityNetworking.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Il2CppSystem">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Core">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppSystem.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Data">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppSystem.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Net.Http">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppSystem.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Runtime">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppSystem.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Xml">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Il2CppSystem.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="MelonLoader">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\net6\MelonLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="modio.UI">
-      <HintPath>..\..\..\..\Desktop\BMX Streets_BackUpThisFolder\Managed\modio.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="modio.UnityPlugin">
-      <HintPath>..\..\..\..\Desktop\BMX Streets_BackUpThisFolder\Managed\modio.UnityPlugin.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.RuntimeDetour">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\net6\MonoMod.RuntimeDetour.dll</HintPath>
@@ -67,8 +82,14 @@
     <Reference Include="MonoMod.Utils">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\net6\MonoMod.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Unity.Addressables.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Unity.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InputSystem.ForUI">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Unity.InputSystem.ForUI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
@@ -79,11 +100,20 @@
     <Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.IMGUIModule.dll</HintPath>
@@ -93,6 +123,12 @@
     </Reference>
     <Reference Include="UnityEngine.InputModule">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.PhysicsModule.dll</HintPath>
@@ -109,11 +145,11 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UIModule">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.UIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.VehiclesModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VFXModule">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.VFXModule.dll</HintPath>

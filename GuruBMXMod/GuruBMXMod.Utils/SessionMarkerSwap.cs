@@ -12,6 +12,7 @@ namespace GuruBMXMod.Utils
 {
     public class SessionMarkerSwap
     {
+        /*
         public static SessionMarkerSwap __instance { get; private set; }
         public static SessionMarkerSwap Instance => __instance ?? (__instance = new SessionMarkerSwap());
 
@@ -117,5 +118,6 @@ namespace GuruBMXMod.Utils
             upAction.Enable();
             downAction.Enable();
         }
+        */
     }
 }

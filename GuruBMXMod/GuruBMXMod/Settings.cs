@@ -15,7 +15,7 @@ namespace GuruBMXMod
         public static float Gravity = -12.5f;
 
         #region Multiplayer
-        public static byte PlayerLobbySize = 4;
+        public static byte MultiRoomSize = 4;
         #endregion
 
         #region Rewards
@@ -40,6 +40,10 @@ namespace GuruBMXMod
         public static float SimpleBMX_MaxPedalVel = 9f;
         public static float SimpleBMX_PedalForce = 100f;
         public static float SimpleBMX_GrindHoldForce = 0f;
+        public static float SimpleBMX_MinPumpForceMulti = 0f;
+        public static float SimpleBMX_MaxPumpForceMulti = 15f;
+        public static float SimpleBMX_PumpMinMaxCurveTime = 50f;
+
         #endregion
 
         #region Drift Bike

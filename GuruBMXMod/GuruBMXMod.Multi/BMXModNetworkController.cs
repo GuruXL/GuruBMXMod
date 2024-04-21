@@ -5,6 +5,7 @@ using MelonLoader;
 using System.Reflection;
 using System.Security.AccessControl;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace GuruBMXMod.Multi
 {
@@ -15,12 +16,17 @@ namespace GuruBMXMod.Multi
 
         private NetworkRoomInfo roomInfo;
 
+        //private NetworkingSessionScriptableObject netWorkSession;
+
         public void GetNetworkComponenets()
         {
             MelonLogger.Msg("Getting NetWork Componenets...");
             try
             {
                 roomInfo = PUNManager.Instance.transform.parent.gameObject.GetComponentInChildren<NetworkRoomInfo>();
+
+                //netWorkSession.SetMaxPlayers(Settings.PlayerLobbySize);
+
             }
             catch (Exception ex)
             {
@@ -39,22 +45,25 @@ namespace GuruBMXMod.Multi
             }
         }
 
-        public void UpdateLobbySize()
+        public void UpdatePUNRoomSize()
         {
-            int lobbysize = Settings.PlayerLobbySize;
-
-            if (PUNManager.Instance.maxPlayersPerRoom != Settings.PlayerLobbySize)
+            /*
+            if (netWorkSession != null)
             {
-                PUNManager.Instance.maxPlayersPerRoom = Settings.PlayerLobbySize;
+                netWorkSession.SetMaxPlayers(Settings.PlayerLobbySize);
             }
-            if (roomInfo != null && roomInfo.currentSessionInfo._maxPlayers != lobbysize)
+            */
+            if (PUNManager.Instance.maxPlayersPerRoom != Settings.MultiRoomSize)
             {
-                //roomInfo.currentSessionInfo.SetMaxPlayers(lobbysize);
-                roomInfo.currentSessionInfo._maxPlayers = lobbysize;
+                PUNManager.Instance.maxPlayersPerRoom = Settings.MultiRoomSize;
             }
-            if (roomInfo != null && roomInfo._clientNetworkingPlayerData._playerGameStatusInfo._maxSessionPlayers != lobbysize)
+        }
+        public void UpdateRoomInfo()
+        {
+            if (roomInfo.currentSessionInfo != null)
             {
-                roomInfo._clientNetworkingPlayerData._playerGameStatusInfo._maxSessionPlayers = lobbysize;
+                roomInfo.currentSessionInfo.SetMaxPlayers(Settings.MultiRoomSize);
+                //MelonLogger.Msg($"Room Info Updated: Max Players:{roomInfo.currentSessionInfo._maxPlayers}");
             }
         }
     }

@@ -15,7 +15,7 @@ namespace GuruBMXMod.UI
         public static void ToggleSimplePedal()
         {
             Settings.EnableSimplePedal = !Settings.EnableSimplePedal;
-            BMXModController.Instance.ToggleSimplePedal();
+            VehicleController.Instance.ToggleSimplePedal();
         }
         public static void UnlockStars()
         {
@@ -29,7 +29,7 @@ namespace GuruBMXMod.UI
         }
         public static void SpawnVehicle()
         {
-            BMXModController.Instance.SpawnVehicle();
+            VehicleController.Instance.SpawnVehicle();
         }
         public static void EnableCycle()
         {
@@ -40,7 +40,7 @@ namespace GuruBMXMod.UI
         public static void SwapSessionMarker()
         {
             Settings.SessionMarkerSwapped = !Settings.SessionMarkerSwapped;
-            SessionMarkerSwap.Instance.SwapUpAndDownActions();
+            //SessionMarkerSwap.Instance.SwapUpAndDownActions();
         }
         #endregion
 
@@ -49,75 +49,90 @@ namespace GuruBMXMod.UI
         public static void UpdateGravitySlider(float newValue)
         {
             Settings.Gravity = newValue;
-            BMXModController.Instance.UpdateGravity();
+            VehicleController.Instance.UpdateGravity();
         }
         public static void UpdatePedalForceSlider(float newValue)
         {
             Settings.SimpleBMX_PedalForce = newValue;
-            BMXModController.Instance.UpdateSimplePedalForce();
+            VehicleController.Instance.UpdateSimplePedalForce();
         }
         public static void UpdatePedalVelocitySlider(float newValue)
         {
             Settings.SimpleBMX_MaxPedalVel = newValue;
-            BMXModController.Instance.UpdateSimplePedalVelocity();
+            VehicleController.Instance.UpdateSimplePedalVelocity();
         }
         public static void UpdateGrindHoldForce(float newValue)
         {
             Settings.SimpleBMX_GrindHoldForce = newValue;
-            BMXModController.Instance.UpdateSimpleGrindHoldForce();
+            VehicleController.Instance.UpdateSimpleGrindHoldForce();
+        }
+        public static void UpdateSteeringPumpMin(float newValue)
+        {
+            Settings.SimpleBMX_MinPumpForceMulti = newValue;
+            VehicleController.Instance.UpdateSteeringPumpForce();
+        }
+        public static void UpdateSteeringPumpMax(float newValue)
+        {
+            Settings.SimpleBMX_MaxPumpForceMulti = newValue;
+            VehicleController.Instance.UpdateSteeringPumpForce();
+        }
+        public static void UpdateSteeringPumpTime(float newValue)
+        {
+            Settings.SimpleBMX_PumpMinMaxCurveTime = newValue;
+            VehicleController.Instance.UpdateSteeringPumpForce();
         }
         #endregion
 
-        #region DriftBike Stats SLiders
+        #region DriftBike Stats Sliders
         public static void UpdateDriftJumpForce(float newValue)
         {
             Settings.DriftBike_JumpForce = newValue;
-            BMXModController.Instance.SetDriftJumpForce();
+            VehicleController.Instance.SetDriftJumpForce();
         }
         public static void UpdateDriftMaxMotorTorque(float newValue)
         {
             Settings.DriftBike_MaxMotorTorque = newValue;
-            BMXModController.Instance.UpdateDriftMotorTorque();
+            VehicleController.Instance.UpdateDriftMotorTorque();
         }
         public static void UpdateDriftMaxBrakeTorque(float newValue)
         {
             Settings.DriftBike_MaxBrakeTorque = newValue;
-            BMXModController.Instance.UpdateDriftBrakeTorque();
+            VehicleController.Instance.UpdateDriftBrakeTorque();
         }
         public static void UpdateDriftAirFlipTorque(float newValue)
         {
             Settings.DriftBike_AirFlipTorque = newValue;
-            BMXModController.Instance.UpdateDriftAirFlipTorque();
+            VehicleController.Instance.UpdateDriftAirFlipTorque();
         }
         public static void UpdateDriftAirSpinTorque(float newValue)
         {
             Settings.DriftBike_AirSpinTorque = newValue;
-            BMXModController.Instance.UpdateDriftAirSpinTorque();
+            VehicleController.Instance.UpdateDriftAirSpinTorque();
         }
         public static void UpdateDriftAirUpRightTorque(float newValue)
         {
             Settings.DriftBike_AirUpRightTorque = newValue;
-            BMXModController.Instance.UpdateDriftAirUpRightTorque();
+            VehicleController.Instance.UpdateDriftAirUpRightTorque();
         }
         public static void UpdateDriftAntiRoll(float newValue)
         {
             Settings.DriftBike_AntiRoll = newValue;
-            BMXModController.Instance.UpdateDriftAntiRoll();
+            VehicleController.Instance.UpdateDriftAntiRoll();
         }
         public static void UpdateDriftCOMoffset(float newValue)
         {
             Settings.DriftBike_COMOffset = newValue;
-            BMXModController.Instance.UpdateDriftCOMoffset();
+            VehicleController.Instance.UpdateDriftCOMoffset();
         }
         public static void UpdateDriftTurnTorque(float newValue)
         {
             Settings.DriftBike_TurnTorque = newValue;
-            BMXModController.Instance.UpdateDriftTurnTorque();
+            VehicleController.Instance.UpdateDriftTurnTorque();
         }
         public static void UpdateDriftTurnResponse(float newValue)
         {
             Settings.DriftBike_TurnResponse = newValue;
-            BMXModController.Instance.UpdateDriftTurnResponse();
+            VehicleController.Instance.UpdateDriftTurnResponse();
         }
         #endregion
 
@@ -127,8 +142,9 @@ namespace GuruBMXMod.UI
         {
             byte bytevalue = (byte)newValue;
 
-            Settings.PlayerLobbySize = bytevalue;
-            BMXModNetworkController.Instance.UpdateLobbySize();
+            Settings.MultiRoomSize = bytevalue;
+            BMXModNetworkController.Instance.UpdatePUNRoomSize();
+            BMXModNetworkController.Instance.UpdateRoomInfo();
         }
         #endregion
 

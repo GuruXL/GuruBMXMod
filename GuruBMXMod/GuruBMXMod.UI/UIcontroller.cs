@@ -9,9 +9,9 @@ namespace GuruBMXMod.UI
     {
         public bool isClosed;
         public string text;
-        public int font;
+        public float font;
 
-        public UItab(bool isClosed, string text, int font)
+        public UItab(bool isClosed, string text, float font)
         {
             this.isClosed = isClosed;
             this.text = text;
@@ -28,15 +28,20 @@ namespace GuruBMXMod.UI
 
         //readonly UItab Test_Tab = new UItab(true, "Test Stuff", 14);
 
-        readonly UItab Stats_Tab = new UItab(true, "Stats", 14);
-        readonly UItab Multi_Tab = new UItab(true, "Multiplayer", 14);
-        readonly UItab Unlocks_Tab = new UItab(true, "Unlocks", 14);
-        readonly UItab Camera_Tab = new UItab(true, "Camera", 14);
-        readonly UItab Cycle_Tab = new UItab(true, "Time Of Day", 14);
+        readonly UItab Stats_Tab = new UItab(true, "Stats", 14.0f);
+        readonly UItab Multi_Tab = new UItab(true, "Multiplayer", 14.0f);
+        readonly UItab Unlocks_Tab = new UItab(true, "Unlocks", 14.0f);
+        readonly UItab Camera_Tab = new UItab(true, "Camera", 14.0f);
+        readonly UItab Cycle_Tab = new UItab(true, "Time Of Day", 14.0f);
 
-        readonly UItab Player_Tab = new UItab(true, "Player", 12);
-        readonly UItab BMX_Tab = new UItab(true, "BMX", 12);
-        readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 12);
+        readonly UItab Player_Tab = new UItab(true, "Player", 13.0f);
+        readonly UItab BMX_Tab = new UItab(true, "BMX", 13.0f);
+        readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 13.0f);
+
+        readonly UItab Peddle_Tab = new UItab(true, "Peddle", 12.50f);
+        readonly UItab Pumping_Tab = new UItab(true, "Pumping", 12.50f);
+        readonly UItab Manny_Tab = new UItab(true, "Manny", 12.50f);
+        readonly UItab Grind_Tab = new UItab(true, "Grinds", 12.50f);
 
         private readonly string white = "#e6ebe8";
         private readonly string grey = "#969696";
@@ -195,7 +200,6 @@ namespace GuruBMXMod.UI
                 obj.isClosed = !obj.isClosed;
                 MainWindowRect.height = 20;
                 MainWindowRect.width = Screen.width / 6;
-
             }
         }
         private void UnlocksUI()
@@ -254,25 +258,56 @@ namespace GuruBMXMod.UI
             Tabs(BMX_Tab, UIextensions.TabColorSwitch(BMX_Tab));
             if (!BMX_Tab.isClosed)
             {
-                GUILayout.BeginVertical();
-                GUILayout.Label($"Enable Simple Pedal", GUILayout.ExpandWidth(true));
-                UIextensions.StandardButton(Settings.EnableSimplePedal ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleSimplePedal, UIextensions.ButtonColorSwitch(Settings.EnableSimplePedal), 72);
-                if (Settings.EnableSimplePedal)
+                GUILayout.BeginVertical("Box"); // start BMX tabs
+
+                Tabs(Peddle_Tab, UIextensions.TabColorSwitch(Peddle_Tab));
+                if (!Peddle_Tab.isClosed)
+                {
+                    GUILayout.BeginVertical();
+                    GUILayout.Label($"Enable Simple Pedal", GUILayout.ExpandWidth(true));
+                    UIextensions.StandardButton(Settings.EnableSimplePedal ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleSimplePedal, UIextensions.ButtonColorSwitch(Settings.EnableSimplePedal), 72);
+                    if (Settings.EnableSimplePedal)
+                    {
+                        GUILayout.BeginVertical("Box");
+                        UIextensions.Slider("Pedal Force", UIActionManager.UpdatePedalForceSlider, Color.white, Settings.SimpleBMX_PedalForce, 0f, 10000f);
+                        GUILayout.EndVertical();
+
+                        GUILayout.BeginVertical("Box");
+                        UIextensions.Slider("Max Pedal Velocity", UIActionManager.UpdatePedalVelocitySlider, Color.white, Settings.SimpleBMX_MaxPedalVel, 0f, 800f);
+                        GUILayout.EndVertical();
+                    }
+                    GUILayout.EndVertical();
+                }
+                Tabs(Pumping_Tab, UIextensions.TabColorSwitch(Pumping_Tab));
+                if (!Pumping_Tab.isClosed)
                 {
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Pedal Force", UIActionManager.UpdatePedalForceSlider, Color.white, Settings.SimpleBMX_PedalForce, 0f, 10000f);
+                    UIextensions.Slider("Steering Pump Force MIN", UIActionManager.UpdateSteeringPumpMin, Color.white, Settings.SimpleBMX_MinPumpForceMulti, 0f, 20f);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Max Pedal Velocity", UIActionManager.UpdatePedalVelocitySlider, Color.white, Settings.SimpleBMX_MaxPedalVel, 0f, 800f);
+                    UIextensions.Slider("Steering Pump Force MAX", UIActionManager.UpdateSteeringPumpMax, Color.white, Settings.SimpleBMX_MaxPumpForceMulti, 0f, 20f);
                     GUILayout.EndVertical();
 
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.Slider("Time from Min to Max", UIActionManager.UpdateSteeringPumpTime, Color.white, Settings.SimpleBMX_PumpMinMaxCurveTime, 0f, 100f);
+                    GUILayout.EndVertical();
+                }
+                Tabs(Manny_Tab, UIextensions.TabColorSwitch(Manny_Tab));
+                if (!Manny_Tab.isClosed)
+                {
+
+                }
+                Tabs(Grind_Tab, UIextensions.TabColorSwitch(Grind_Tab));
+                if (!Grind_Tab.isClosed)
+                {
                     GUILayout.BeginVertical("Box");
                     UIextensions.Slider("Grind Hold Force", UIActionManager.UpdateGrindHoldForce, Color.white, Settings.SimpleBMX_GrindHoldForce, -20000f, 20000f);
                     GUILayout.EndVertical();
                 }
-                GUILayout.EndVertical();
-            }
+
+                GUILayout.EndVertical(); // end Bmx Tabs
+            } 
             Tabs(DriftBike_Tab, UIextensions.TabColorSwitch(DriftBike_Tab));
             if (!DriftBike_Tab.isClosed)
             {
@@ -330,7 +365,7 @@ namespace GuruBMXMod.UI
                 return;
 
             GUILayout.BeginVertical("Box");
-            UIextensions.Slider("Lobby Size", UIActionManager.UpdateLobbySlider, Color.white, Settings.PlayerLobbySize, 2, 32);
+            UIextensions.Slider("Lobby Size", UIActionManager.UpdateLobbySlider, Color.white, Settings.MultiRoomSize, 2, 16);
             GUILayout.EndVertical();
 
 

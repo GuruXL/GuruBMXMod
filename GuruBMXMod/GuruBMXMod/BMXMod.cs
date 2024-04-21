@@ -6,6 +6,7 @@ using Il2CppMG_Gameplay;
 using GuruBMXMod.UI;
 using GuruBMXMod.Multi;
 using GuruBMXMod.Utils;
+using GuruBMXMod.Patches;
 
 namespace GuruBMXMod
 {
@@ -29,9 +30,8 @@ namespace GuruBMXMod
 
         public override void OnInitializeMelon()
         {
-
             InitHarmony();
-           
+
             //MelonLogger.Msg("OnInitializeMelon Success");
         }
         public override void OnLateInitializeMelon() // Runs after OnApplicationStart.
@@ -185,9 +185,9 @@ namespace GuruBMXMod
             {
                 if (buildindex == 1 || sceneName == "Bridging Physics PIPE Style")
                 {
-                    BMXModController.Instance.GetBikeComponents();
+                    VehicleController.Instance.GetBikeComponents();
                     //CameraController.Instance.GetCameraComponents();
-                    SessionMarkerSwap.Instance.GetInputComponents();
+                    //SessionMarkerSwap.Instance.GetInputComponents();
                 }
                 else if (buildindex == 8 || sceneName == "BMXS_WorldLighting")
                 {

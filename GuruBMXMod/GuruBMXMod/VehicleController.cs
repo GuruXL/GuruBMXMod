@@ -5,19 +5,20 @@ using HarmonyLib;
 using Il2CppMG_Gameplay;
 using System.Collections.Generic;
 using System.Collections;
+using GuruBMXMod.Utils;
 
 namespace GuruBMXMod
 {
-    public class BMXModController
+    public class VehicleController
     {
-        public static BMXModController __instance { get; private set; }
-        public static BMXModController Instance => __instance ?? (__instance = new BMXModController());
+        public static VehicleController __instance { get; private set; }
+        public static VehicleController Instance => __instance ?? (__instance = new VehicleController());
 
-        public SimplePedalForce simplePedalForce;
-        public SimpleGrindForce simpleGrindForce;
+        private SimplePedalForce simplePedalForce;
+        private SimpleGrindForce simpleGrindForce;
+        private SimpleSteeringPumpForce simpleSteeringPumpForce;
 
-        public DriftTrikeController driftBike;
-        public BikeController bike; // find reference for this in game
+        private DriftTrikeController driftBike;
 
         public VehicleSpawner vehicleSpawner;
 
@@ -29,6 +30,7 @@ namespace GuruBMXMod
                 simplePedalForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimplePedalForce>(true);
                 simpleGrindForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimpleGrindForce>();
                 vehicleSpawner = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<VehicleSpawner>();
+                simpleSteeringPumpForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimpleSteeringPumpForce>();
                 driftBike = vehicleSpawner.gameObject.GetComponentInChildren<DriftTrikeController>(true);
             }
             catch (Exception ex)
@@ -37,7 +39,7 @@ namespace GuruBMXMod
             }
             finally
             {
-                if (simplePedalForce != null && vehicleSpawner != null && driftBike != null)
+                if (simplePedalForce != null && vehicleSpawner != null && driftBike != null && simpleSteeringPumpForce != null)
                 {
                     MelonLogger.Msg("All Bike Components Found");
                 }
@@ -47,6 +49,10 @@ namespace GuruBMXMod
                     {
                         MelonLogger.Msg("simplePedalForce NOT found");
                     }
+                    if (simpleSteeringPumpForce == null)
+                    {
+                        MelonLogger.Msg("simpleSteeringPumpForce NOT found");
+                    }
                     if (vehicleSpawner == null)
                     {
                         MelonLogger.Msg("vehicleSpawner NOT found");
@@ -55,6 +61,7 @@ namespace GuruBMXMod
                     {
                         MelonLogger.Msg("Drift Bike NOT found");
                     }
+                   
                 }       
             }
         }
@@ -92,6 +99,13 @@ namespace GuruBMXMod
                 return;
 
             simpleGrindForce.holdForce = Settings.SimpleBMX_GrindHoldForce;
+        }
+        public void UpdateSteeringPumpForce()
+        {
+            AnimationCurveModifier.ModifyMinMaxCurve(simpleSteeringPumpForce.pumpForcePerVelocityMagMutlipler,
+                Settings.SimpleBMX_MinPumpForceMulti,
+                Settings.SimpleBMX_MaxPumpForceMulti, 
+                Settings.SimpleBMX_PumpMinMaxCurveTime);
         }
         #endregion
 

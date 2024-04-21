@@ -36,6 +36,7 @@ namespace GuruBMXMod
 
         #region BMX
         public static bool EnableSimplePedal = false;
+        public static bool MannyAutoStability = false;
         public static float SimpleBMX_MaxMotorTorque = 1000f;
         public static float SimpleBMX_MaxPedalVel = 9f;
         public static float SimpleBMX_PedalForce = 100f;

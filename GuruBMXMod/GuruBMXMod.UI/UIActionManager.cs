@@ -42,6 +42,10 @@ namespace GuruBMXMod.UI
             Settings.SessionMarkerSwapped = !Settings.SessionMarkerSwapped;
             //SessionMarkerSwap.Instance.SwapUpAndDownActions();
         }
+        public static void ToggleMannyStability()
+        {
+            Settings.MannyAutoStability = !Settings.MannyAutoStability;
+        }
         #endregion
 
         #region Bike Stat Sliders
@@ -143,7 +147,7 @@ namespace GuruBMXMod.UI
             byte bytevalue = (byte)newValue;
 
             Settings.MultiRoomSize = bytevalue;
-            BMXModNetworkController.Instance.UpdatePUNRoomSize();
+            BMXModNetworkController.Instance.UpdateRoomSize();
             BMXModNetworkController.Instance.UpdateRoomInfo();
         }
         #endregion

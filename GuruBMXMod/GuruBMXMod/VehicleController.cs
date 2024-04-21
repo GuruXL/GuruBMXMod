@@ -6,6 +6,7 @@ using Il2CppMG_Gameplay;
 using System.Collections.Generic;
 using System.Collections;
 using GuruBMXMod.Utils;
+using Il2CppMG_StateMachine;
 
 namespace GuruBMXMod
 {
@@ -17,6 +18,8 @@ namespace GuruBMXMod
         private SimplePedalForce simplePedalForce;
         private SimpleGrindForce simpleGrindForce;
         private SimpleSteeringPumpForce simpleSteeringPumpForce;
+
+        //private TestBalance testBalance;
 
         private DriftTrikeController driftBike;
 

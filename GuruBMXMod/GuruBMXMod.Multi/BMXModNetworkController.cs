@@ -45,7 +45,7 @@ namespace GuruBMXMod.Multi
             }
         }
 
-        public void UpdatePUNRoomSize()
+        public void UpdateRoomSize()
         {
             /*
             if (netWorkSession != null)
@@ -56,6 +56,10 @@ namespace GuruBMXMod.Multi
             if (PUNManager.Instance.maxPlayersPerRoom != Settings.MultiRoomSize)
             {
                 PUNManager.Instance.maxPlayersPerRoom = Settings.MultiRoomSize;
+            }
+            if (Launcher.Instance.maxPlayersPerRoom != Settings.MultiRoomSize)
+            {
+                Launcher.Instance.maxPlayersPerRoom = Settings.MultiRoomSize;
             }
         }
         public void UpdateRoomInfo()

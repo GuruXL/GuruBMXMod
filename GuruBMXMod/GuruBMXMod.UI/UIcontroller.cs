@@ -296,7 +296,11 @@ namespace GuruBMXMod.UI
                 Tabs(Manny_Tab, UIextensions.TabColorSwitch(Manny_Tab));
                 if (!Manny_Tab.isClosed)
                 {
-
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"Manny Auto Stability", GUILayout.ExpandWidth(true));
+                    GUILayout.FlexibleSpace();
+                    UIextensions.StandardButton(Settings.MannyAutoStability ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleMannyStability, UIextensions.ButtonColorSwitch(Settings.MannyAutoStability), 72);
+                    GUILayout.EndHorizontal();
                 }
                 Tabs(Grind_Tab, UIextensions.TabColorSwitch(Grind_Tab));
                 if (!Grind_Tab.isClosed)

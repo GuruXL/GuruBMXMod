@@ -9,9 +9,9 @@ namespace GuruBMXMod.UI
     {
         public bool isClosed;
         public string text;
-        public float font;
+        public int font;
 
-        public UItab(bool isClosed, string text, float font)
+        public UItab(bool isClosed, string text, int font)
         {
             this.isClosed = isClosed;
             this.text = text;
@@ -28,20 +28,20 @@ namespace GuruBMXMod.UI
 
         //readonly UItab Test_Tab = new UItab(true, "Test Stuff", 14);
 
-        readonly UItab Stats_Tab = new UItab(true, "Stats", 14.0f);
-        readonly UItab Multi_Tab = new UItab(true, "Multiplayer", 14.0f);
-        readonly UItab Unlocks_Tab = new UItab(true, "Unlocks", 14.0f);
-        readonly UItab Camera_Tab = new UItab(true, "Camera", 14.0f);
-        readonly UItab Cycle_Tab = new UItab(true, "Time Of Day", 14.0f);
+        readonly UItab Unlocks_Tab = new UItab(true, "Unlocks", 16);
+        readonly UItab Stats_Tab = new UItab(true, "Gameplay", 16);
+        readonly UItab Multi_Tab = new UItab(true, "Multiplayer", 16);
+        readonly UItab Camera_Tab = new UItab(true, "Camera", 16);
+        readonly UItab Cycle_Tab = new UItab(true, "Time Of Day", 16);
 
-        readonly UItab Player_Tab = new UItab(true, "Player", 13.0f);
-        readonly UItab BMX_Tab = new UItab(true, "BMX", 13.0f);
-        readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 13.0f);
+        readonly UItab Player_Tab = new UItab(true, "Player", 14);
+        readonly UItab BMX_Tab = new UItab(true, "BMX", 14);
+        readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 14);
 
-        readonly UItab Peddle_Tab = new UItab(true, "Peddle", 12.50f);
-        readonly UItab Pumping_Tab = new UItab(true, "Pumping", 12.50f);
-        readonly UItab Manny_Tab = new UItab(true, "Manny", 12.50f);
-        readonly UItab Grind_Tab = new UItab(true, "Grinds", 12.50f);
+        readonly UItab Peddle_Tab = new UItab(true, "Peddle", 13);
+        readonly UItab Pumping_Tab = new UItab(true, "Pumping", 13);
+        readonly UItab Manny_Tab = new UItab(true, "Manny", 13);
+        readonly UItab Grind_Tab = new UItab(true, "Grinds", 13);
 
         private readonly string white = "#e6ebe8";
         private readonly string grey = "#969696";
@@ -195,11 +195,12 @@ namespace GuruBMXMod.UI
 
         private void Tabs(UItab obj, string color = "#e6ebe8")
         {
-            if (GUILayout.Button($"<size={obj.font}><color={color}>" + (obj.isClosed ? "-" : "<b>+</b>") + obj.text + "</color>" + "</size>", "Label"))
+            if (GUILayout.Button($"<size={obj.font}><color={color}>" + (obj.isClosed ? "○" : "●") + obj.text + "</color>" + "</size>", "Label"))
             {
                 obj.isClosed = !obj.isClosed;
                 MainWindowRect.height = 20;
-                MainWindowRect.width = Screen.width / 6;
+                MainWindowRect.width = Screen.width / 5;
+                UIextensions.TabFontSwitch(obj);
             }
         }
         private void UnlocksUI()
@@ -297,10 +298,19 @@ namespace GuruBMXMod.UI
                 if (!Manny_Tab.isClosed)
                 {
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label($"Manny Auto Stability", GUILayout.ExpandWidth(true));
+                    GUILayout.Label($"Auto Sideways Stability", GUILayout.ExpandWidth(true));
                     GUILayout.FlexibleSpace();
                     UIextensions.StandardButton(Settings.MannyAutoStability ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleMannyStability, UIextensions.ButtonColorSwitch(Settings.MannyAutoStability), 72);
                     GUILayout.EndHorizontal();
+
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.Slider("Manny Max Angle", UIActionManager.UpdateMannyMaxAngle, Color.white, Settings.BMX_MannyMaxBailAngle, 0f, 90f);
+                    GUILayout.EndVertical();
+
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.Slider("Nosey Max Angle", UIActionManager.UpdateNoseyMaxAngle, Color.white, Settings.BMX_NoseyMaxBailAngle, 0f, 90f);
+                    GUILayout.EndVertical();
+
                 }
                 Tabs(Grind_Tab, UIextensions.TabColorSwitch(Grind_Tab));
                 if (!Grind_Tab.isClosed)

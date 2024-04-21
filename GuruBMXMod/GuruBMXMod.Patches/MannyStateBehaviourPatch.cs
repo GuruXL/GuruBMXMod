@@ -18,12 +18,12 @@ namespace GuruBMXMod.Patches
             if (Settings.MannyAutoStability)
             {
                 __instance.testBalance.forceUpNormal = true;
-                MelonLogger.Msg($"On Enter Manny Stability: {__instance.testBalance.forceUpNormal}");
+                //MelonLogger.Msg($"On Enter Manny Stability: {__instance.testBalance.forceUpNormal}");
             }
             else if (!Settings.MannyAutoStability && __instance.testBalance.forceUpNormal)
             {
                 __instance.testBalance.forceUpNormal = false;
-                MelonLogger.Msg($"On Enter Manny Stability: {__instance.testBalance.forceUpNormal}");
+                //MelonLogger.Msg($"On Enter Manny Stability: {__instance.testBalance.forceUpNormal}");
             }
         }
     }
@@ -34,7 +34,7 @@ namespace GuruBMXMod.Patches
         static void Postfix(int nextState, MannyStateBehaviour __instance)
         {
             __instance.testBalance.forceUpNormal = false;
-            MelonLogger.Msg($"On Exit Manny Stability: {__instance.testBalance.forceUpNormal}");
+            //MelonLogger.Msg($"On Exit Manny Stability: {__instance.testBalance.forceUpNormal}");
         }
     }
 
@@ -46,12 +46,12 @@ namespace GuruBMXMod.Patches
             if (Settings.MannyAutoStability)
             {
                 __instance.testBalance.forceUpNormal = true;
-                MelonLogger.Msg($"On Enter Manny Stability: {__instance.testBalance.forceUpNormal}");
+                //MelonLogger.Msg($"On Enter Nosey Stability: {__instance.testBalance.forceUpNormal}");
             }
             else if (!Settings.MannyAutoStability && __instance.testBalance.forceUpNormal)
             {
                 __instance.testBalance.forceUpNormal = false;
-                MelonLogger.Msg($"On Enter Manny Stability: {__instance.testBalance.forceUpNormal}");
+                //MelonLogger.Msg($"On Enter Nosey Stability: {__instance.testBalance.forceUpNormal}");
             }
         }
     }
@@ -62,7 +62,7 @@ namespace GuruBMXMod.Patches
         static void Postfix(int nextState, NoseyStateBehaviour __instance)
         {
             __instance.testBalance.forceUpNormal = false;
-            MelonLogger.Msg($"On Exit Manny Stability: {__instance.testBalance.forceUpNormal}");
+            //MelonLogger.Msg($"On Exit Manny Stability: {__instance.testBalance.forceUpNormal}");
         }
     }
 }

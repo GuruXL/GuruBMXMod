@@ -4,9 +4,8 @@ namespace GuruBMXMod.UI
 {
     public static class UIextensions
     {
-
-        private static string white = "#e6ebe8";
-        private static string LightBlue = "#30e2e6";
+        private static readonly string white = "#e6ebe8";
+        private static readonly string LightBlue = "#30e2e6";
         private static string TabColor;
 
         public static string TabColorSwitch(UItab Tab)
@@ -19,6 +18,20 @@ namespace GuruBMXMod.UI
 
                 case false:
                     TabColor = LightBlue;
+                    break;
+            }
+            return TabColor;
+        }
+        public static string TabFontSwitch(UItab Tab)
+        {
+            switch (!Tab.isClosed)
+            {
+                case true:
+                    Tab.font = Tab.font + 2;
+                    break;
+
+                case false:
+                    Tab.font = Tab.font - 2;
                     break;
             }
             return TabColor;

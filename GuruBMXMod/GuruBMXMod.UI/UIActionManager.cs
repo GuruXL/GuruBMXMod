@@ -85,6 +85,16 @@ namespace GuruBMXMod.UI
             Settings.SimpleBMX_PumpMinMaxCurveTime = newValue;
             VehicleController.Instance.UpdateSteeringPumpForce();
         }
+        public static void UpdateMannyMaxAngle(float newValue)
+        {
+            Settings.BMX_MannyMaxBailAngle = newValue;
+            VehicleController.Instance.UpdateMannyMaxBailAngle();
+        }
+        public static void UpdateNoseyMaxAngle(float newValue)
+        {
+            Settings.BMX_NoseyMaxBailAngle = newValue;
+            VehicleController.Instance.updateNoseyMaxBailAngle();
+        }
         #endregion
 
         #region DriftBike Stats Sliders

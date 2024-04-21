@@ -31,6 +31,7 @@ namespace GuruBMXMod
         public static float TimeOfDay = 15.0f;
         public static float CycleSpeed = 0.01f;
         public static float ShadowUpdateTime = 0.1f;
+
         public static float SunIntensity = 20000.0f;
         #endregion
 
@@ -44,6 +45,8 @@ namespace GuruBMXMod
         public static float SimpleBMX_MinPumpForceMulti = 0f;
         public static float SimpleBMX_MaxPumpForceMulti = 15f;
         public static float SimpleBMX_PumpMinMaxCurveTime = 50f;
+        public static float BMX_MannyMaxBailAngle = 60f;
+        public static float BMX_NoseyMaxBailAngle = 60f;
 
         #endregion
 

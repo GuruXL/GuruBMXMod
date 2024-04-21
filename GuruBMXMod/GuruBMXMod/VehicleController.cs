@@ -19,10 +19,12 @@ namespace GuruBMXMod
         private SimpleGrindForce simpleGrindForce;
         private SimpleSteeringPumpForce simpleSteeringPumpForce;
 
+        private MannyStateBehaviour mannyStateBehaviour;
+        private NoseyStateBehaviour noseyStateBehaviour;
+
         //private TestBalance testBalance;
 
         private DriftTrikeController driftBike;
-
         public VehicleSpawner vehicleSpawner;
 
         public void GetBikeComponents()
@@ -35,6 +37,9 @@ namespace GuruBMXMod
                 vehicleSpawner = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<VehicleSpawner>();
                 simpleSteeringPumpForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimpleSteeringPumpForce>();
                 driftBike = vehicleSpawner.gameObject.GetComponentInChildren<DriftTrikeController>(true);
+
+                mannyStateBehaviour = UnityEngine.Object.FindObjectOfType<MannyStateBehaviour>();
+                noseyStateBehaviour = UnityEngine.Object.FindObjectOfType<NoseyStateBehaviour>();
             }
             catch (Exception ex)
             {
@@ -42,7 +47,12 @@ namespace GuruBMXMod
             }
             finally
             {
-                if (simplePedalForce != null && vehicleSpawner != null && driftBike != null && simpleSteeringPumpForce != null)
+                if (simplePedalForce != null && 
+                    vehicleSpawner != null && 
+                    driftBike != null && 
+                    simpleSteeringPumpForce != null && 
+                    mannyStateBehaviour != null && 
+                    noseyStateBehaviour != null)
                 {
                     MelonLogger.Msg("All Bike Components Found");
                 }
@@ -64,7 +74,15 @@ namespace GuruBMXMod
                     {
                         MelonLogger.Msg("Drift Bike NOT found");
                     }
-                   
+                    if (mannyStateBehaviour == null)
+                    {
+                        MelonLogger.Msg("mannyStateBehaviour NOT found");
+                    }
+                    if (noseyStateBehaviour == null)
+                    {
+                        MelonLogger.Msg("noseyStateBehaviour NOT found");
+                    }
+
                 }       
             }
         }
@@ -109,6 +127,20 @@ namespace GuruBMXMod
                 Settings.SimpleBMX_MinPumpForceMulti,
                 Settings.SimpleBMX_MaxPumpForceMulti, 
                 Settings.SimpleBMX_PumpMinMaxCurveTime);
+        }
+        public void UpdateMannyMaxBailAngle()
+        {
+            if (mannyStateBehaviour.maxBailAngle == Settings.BMX_MannyMaxBailAngle)
+                return;
+
+            mannyStateBehaviour.maxBailAngle = Settings.BMX_MannyMaxBailAngle;
+        }
+        public void updateNoseyMaxBailAngle()
+        {
+            if (noseyStateBehaviour.maxBailAngle == Settings.BMX_NoseyMaxBailAngle)
+                return;
+
+            noseyStateBehaviour.maxBailAngle = Settings.BMX_NoseyMaxBailAngle;
         }
         #endregion
 

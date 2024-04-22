@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace GuruBMXMod
+namespace GuruBMXMod.Gameplay
 {
     public class CameraController
     {

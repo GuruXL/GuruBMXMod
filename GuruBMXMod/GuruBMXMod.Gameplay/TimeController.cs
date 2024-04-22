@@ -14,14 +14,14 @@ using System.ComponentModel;
 using UnityEngine.Profiling;
 using GuruBMXMod.Utils;
 
-namespace GuruBMXMod
+namespace GuruBMXMod.Gameplay
 {
     public class TimeController
     {
         public static TimeController __instance { get; private set; }
         public static TimeController Instance => __instance ?? (__instance = new TimeController());
 
-       
+
         public TimeOfDayManager todManager;
 
         public MGModMapManager modMapManger;
@@ -45,7 +45,7 @@ namespace GuruBMXMod
                     GetVolumeComponents();
                 }
                 */
-                
+
             }
             catch (Exception ex)
             {
@@ -115,7 +115,7 @@ namespace GuruBMXMod
         {
             PlayCycle(enabled);
 
-            if (!Settings.IsModMap)
+            if (!SettingsManager.CurrentSettings.IsModMap)
                 return;
 
             if (modMapManger == null)
@@ -137,38 +137,38 @@ namespace GuruBMXMod
         }
         public void UpdateTimeOfDay()
         {
-            if (todManager.timeOfDay == Settings.TimeOfDay)
+            if (todManager.timeOfDay == SettingsManager.CurrentSettings.TimeOfDay)
                 return;
 
-            todManager.SetTimeOfDay(Settings.TimeOfDay);
+            todManager.SetTimeOfDay(SettingsManager.CurrentSettings.TimeOfDay);
         }
         public void UpdateTimeBetweenSkyUpdates()
         {
-            if (todManager.timeBetweenSkyUpdates == Settings.TimeBetweenSkyUpdates)
+            if (todManager.timeBetweenSkyUpdates == SettingsManager.CurrentSettings.TimeBetweenSkyUpdates)
                 return;
 
-            todManager.timeBetweenSkyUpdates = Settings.TimeBetweenSkyUpdates;
+            todManager.timeBetweenSkyUpdates = SettingsManager.CurrentSettings.TimeBetweenSkyUpdates;
         }
 
         public void UpdateCycleSpeed()
         {
-            if (todManager.timeOfDayMoveSpeed == Settings.CycleSpeed)
+            if (todManager.timeOfDayMoveSpeed == SettingsManager.CurrentSettings.CycleSpeed)
                 return;
 
-            todManager.timeOfDayMoveSpeed = Settings.CycleSpeed;
+            todManager.timeOfDayMoveSpeed = SettingsManager.CurrentSettings.CycleSpeed;
         }
 
         public void ShadowUpdateTime()
         {
-            if (todManager._updateShadowsTime == Settings.ShadowUpdateTime)
+            if (todManager._updateShadowsTime == SettingsManager.CurrentSettings.ShadowUpdateTime)
                 return;
 
-            todManager._updateShadowsTime = Settings.ShadowUpdateTime;
+            todManager._updateShadowsTime = SettingsManager.CurrentSettings.ShadowUpdateTime;
         }
         /*
         public void SetSunIntensity()
         {
-            todManager.sunLight.intensity = Settings.SunIntensity;
+            todManager.sunLight.intensity = SettingsManager.CurrentSettings.SunIntensity;
         }
         */
     }

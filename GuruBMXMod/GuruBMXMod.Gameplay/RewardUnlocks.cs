@@ -8,7 +8,7 @@ using System.Collections;
 using GuruBMXMod.Utils;
 using UnityEngine.UIElements.UIR;
 
-namespace GuruBMXMod
+namespace GuruBMXMod.Gameplay
 {
     public class RewardUnlocks
     {
@@ -78,26 +78,13 @@ namespace GuruBMXMod
                     lockRewardListener = listner;
                 }
             }
-
-            if (unlockRewardListener != null && lockRewardListener != null)
-            {
-                MelonLogger.Msg("Reward Components Found");
-            }
-            else
-            {
-                if (unlockRewardListener == null)
-                    MelonLogger.Msg("UnlockAllRewards_GameEvent Listener not found");
-
-                if (lockRewardListener == null)
-                    MelonLogger.Msg("LockAllRewards_GameEvent Listener not found");
-            }
         }
 
         public void UnlockStars(string value, bool state)
         {
             if (value == "All")
             {
-                VehicleController.Instance.vehicleSpawner._starSystemManagerData.overrideReturnAllStars = state;       
+                VehicleController.Instance.vehicleSpawner._starSystemManagerData.overrideReturnAllStars = state;
             }
             else if (value == "Zero")
             {

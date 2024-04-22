@@ -6,6 +6,7 @@ using UnityEngine;
 using GuruBMXMod.Multi;
 using MelonLoader;
 using Il2Cpp;
+using GuruBMXMod.Utils;
 
 namespace GuruBMXMod.Patches
 {
@@ -15,12 +16,12 @@ namespace GuruBMXMod.Patches
     {
         static void Postfix(int lastState, MannyStateBehaviour __instance)
         {
-            if (Settings.MannyAutoStability)
+            if (SettingsManager.CurrentSettings.MannyAutoStability)
             {
                 __instance.testBalance.forceUpNormal = true;
                 //MelonLogger.Msg($"On Enter Manny Stability: {__instance.testBalance.forceUpNormal}");
             }
-            else if (!Settings.MannyAutoStability && __instance.testBalance.forceUpNormal)
+            else if (!SettingsManager.CurrentSettings.MannyAutoStability && __instance.testBalance.forceUpNormal)
             {
                 __instance.testBalance.forceUpNormal = false;
                 //MelonLogger.Msg($"On Enter Manny Stability: {__instance.testBalance.forceUpNormal}");
@@ -43,12 +44,12 @@ namespace GuruBMXMod.Patches
     {
         static void Postfix(int lastState, NoseyStateBehaviour __instance)
         {
-            if (Settings.MannyAutoStability)
+            if (SettingsManager.CurrentSettings.MannyAutoStability)
             {
                 __instance.testBalance.forceUpNormal = true;
                 //MelonLogger.Msg($"On Enter Nosey Stability: {__instance.testBalance.forceUpNormal}");
             }
-            else if (!Settings.MannyAutoStability && __instance.testBalance.forceUpNormal)
+            else if (!SettingsManager.CurrentSettings.MannyAutoStability && __instance.testBalance.forceUpNormal)
             {
                 __instance.testBalance.forceUpNormal = false;
                 //MelonLogger.Msg($"On Enter Nosey Stability: {__instance.testBalance.forceUpNormal}");

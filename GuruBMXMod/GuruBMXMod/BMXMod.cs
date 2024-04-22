@@ -7,6 +7,7 @@ using GuruBMXMod.UI;
 using GuruBMXMod.Multi;
 using GuruBMXMod.Utils;
 using GuruBMXMod.Patches;
+using GuruBMXMod.Gameplay;
 
 namespace GuruBMXMod
 {
@@ -130,14 +131,14 @@ namespace GuruBMXMod
         {
             if (buildindex == -1)
             {
-                Settings.IsModMap = true;
-                MelonLogger.Msg($"IsModded Map: {Settings.IsModMap}");
+                SettingsManager.CurrentSettings.IsModMap = true;
+                MelonLogger.Msg($"IsModded Map: {SettingsManager.CurrentSettings.IsModMap}");
             }
             else
             {
-                if (Settings.IsModMap)
+                if (SettingsManager.CurrentSettings.IsModMap)
                 {
-                    Settings.IsModMap = false;
+                    SettingsManager.CurrentSettings.IsModMap = false;
                 }
             }
         }
@@ -205,9 +206,9 @@ namespace GuruBMXMod
                 {
                     TimeController.Instance.GetModMapComponents(sceneName);
 
-                    if (Settings.EnableCycle)
+                    if (SettingsManager.CurrentSettings.EnableCycle)
                     {
-                        TimeController.Instance.EnableDayNightCycle(Settings.EnableCycle);
+                        TimeController.Instance.EnableDayNightCycle(SettingsManager.CurrentSettings.EnableCycle);
                     }
                 }
             }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace GuruBMXMod.Utils
+namespace GuruBMXMod.Gameplay
 {
     public class SessionMarkerSwap
     {

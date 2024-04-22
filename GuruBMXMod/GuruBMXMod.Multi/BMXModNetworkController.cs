@@ -26,7 +26,7 @@ namespace GuruBMXMod.Multi
             {
                 roomInfo = PUNManager.Instance.transform.parent.gameObject.GetComponentInChildren<NetworkRoomInfo>();
 
-                //netWorkSession.SetMaxPlayers(Settings.PlayerLobbySize);
+                //netWorkSession.SetMaxPlayers(SettingsManager.CurrentSettings.PlayerLobbySize);
 
             }
             catch (Exception ex)
@@ -53,23 +53,23 @@ namespace GuruBMXMod.Multi
             /*
             if (netWorkSession != null)
             {
-                netWorkSession.SetMaxPlayers(Settings.PlayerLobbySize);
+                netWorkSession.SetMaxPlayers(SettingsManager.CurrentSettings.PlayerLobbySize);
             }
             */
-            if (PUNManager.Instance.maxPlayersPerRoom != Settings.MultiRoomSize)
+            if (PUNManager.Instance.maxPlayersPerRoom != SettingsManager.CurrentSettings.MultiRoomSize)
             {
-                PUNManager.Instance.maxPlayersPerRoom = Settings.MultiRoomSize;
+                PUNManager.Instance.maxPlayersPerRoom = SettingsManager.CurrentSettings.MultiRoomSize;
             }
-            if (Launcher.Instance.maxPlayersPerRoom != Settings.MultiRoomSize)
+            if (Launcher.Instance.maxPlayersPerRoom != SettingsManager.CurrentSettings.MultiRoomSize)
             {
-                Launcher.Instance.maxPlayersPerRoom = Settings.MultiRoomSize;
+                Launcher.Instance.maxPlayersPerRoom = SettingsManager.CurrentSettings.MultiRoomSize;
             }
         }
         public void UpdateRoomInfo()
         {
             if (roomInfo.currentSessionInfo != null)
             {
-                roomInfo.currentSessionInfo.SetMaxPlayers(Settings.MultiRoomSize);
+                roomInfo.currentSessionInfo.SetMaxPlayers(SettingsManager.CurrentSettings.MultiRoomSize);
                 //MelonLogger.Msg($"Room Info Updated: Max Players:{roomInfo.currentSessionInfo._maxPlayers}");
             }
         }

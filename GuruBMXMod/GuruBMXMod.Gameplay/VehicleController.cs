@@ -8,7 +8,7 @@ using System.Collections;
 using GuruBMXMod.Utils;
 using Il2CppMG_StateMachine;
 
-namespace GuruBMXMod
+namespace GuruBMXMod.Gameplay
 {
     public class VehicleController
     {
@@ -41,7 +41,7 @@ namespace GuruBMXMod
                 simpleGrindForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimpleGrindForce>();
                 vehicleSpawner = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<VehicleSpawner>();
                 simpleSteeringPumpForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimpleSteeringPumpForce>();
-                driftBike = vehicleSpawner.gameObject.GetComponentInChildren<DriftTrikeController>(true);  
+                driftBike = vehicleSpawner.gameObject.GetComponentInChildren<DriftTrikeController>(true);
                 animationControl = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<BMXAnimationControl>();
                 mannyStateBehaviour = UnityEngine.Object.FindObjectOfType<MannyStateBehaviour>();
                 noseyStateBehaviour = UnityEngine.Object.FindObjectOfType<NoseyStateBehaviour>();
@@ -75,67 +75,67 @@ namespace GuruBMXMod
 
         public void UpdateGravity()
         {
-            if (Physics.gravity.y == Settings.Gravity)
+            if (Physics.gravity.y == SettingsManager.CurrentSettings.Gravity)
                 return;
 
-            Physics.gravity = new Vector3(Physics.gravity.x, Settings.Gravity, Physics.gravity.z);
+            Physics.gravity = new Vector3(Physics.gravity.x, SettingsManager.CurrentSettings.Gravity, Physics.gravity.z);
         }
         #region Simple BMX
         public void ToggleSimplePedal()
         {
-            simplePedalForce.enabled = Settings.EnableSimplePedal;
+            simplePedalForce.enabled = SettingsManager.CurrentSettings.EnableSimplePedal;
         }
         public void UpdateSimplePedalForce()
         {
-            if (simplePedalForce.pedalForce == Settings.SimpleBMX_PedalForce)
+            if (simplePedalForce.pedalForce == SettingsManager.CurrentSettings.SimpleBMX_PedalForce)
                 return;
 
-            simplePedalForce.pedalForce = Settings.SimpleBMX_PedalForce;
+            simplePedalForce.pedalForce = SettingsManager.CurrentSettings.SimpleBMX_PedalForce;
         }
         public void UpdateSimplePedalVelocity()
         {
-            if (simplePedalForce.maxPedalVel == Settings.SimpleBMX_MaxPedalVel)
+            if (simplePedalForce.maxPedalVel == SettingsManager.CurrentSettings.SimpleBMX_MaxPedalVel)
                 return;
 
-            simplePedalForce.maxPedalVel = Settings.SimpleBMX_MaxPedalVel;
+            simplePedalForce.maxPedalVel = SettingsManager.CurrentSettings.SimpleBMX_MaxPedalVel;
         }
         public void UpdateBrakeForce()
         {
         }
         public void UpdateSimpleGrindHoldForce()
         {
-            if (simpleGrindForce.holdForce == Settings.SimpleBMX_GrindHoldForce)
+            if (simpleGrindForce.holdForce == SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce)
                 return;
 
-            simpleGrindForce.holdForce = Settings.SimpleBMX_GrindHoldForce;
+            simpleGrindForce.holdForce = SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce;
         }
         public void UpdateSteeringPumpForce()
         {
             AnimationCurveModifier.ModifyMinMaxCurve(simpleSteeringPumpForce.pumpForcePerVelocityMagMutlipler,
-                Settings.SimpleBMX_MinPumpForceMulti,
-                Settings.SimpleBMX_MaxPumpForceMulti, 
-                Settings.SimpleBMX_PumpMinMaxCurveTime);
+                SettingsManager.CurrentSettings.SimpleBMX_MinPumpForceMulti,
+                SettingsManager.CurrentSettings.SimpleBMX_MaxPumpForceMulti,
+                SettingsManager.CurrentSettings.SimpleBMX_PumpMinMaxCurveTime);
         }
         public void UpdateMannyMaxBailAngle()
         {
-            if (mannyStateBehaviour.maxBailAngle == Settings.BMX_MannyMaxBailAngle)
+            if (mannyStateBehaviour.maxBailAngle == SettingsManager.CurrentSettings.BMX_MannyMaxBailAngle)
                 return;
 
-            mannyStateBehaviour.maxBailAngle = Settings.BMX_MannyMaxBailAngle;
+            mannyStateBehaviour.maxBailAngle = SettingsManager.CurrentSettings.BMX_MannyMaxBailAngle;
         }
         public void updateNoseyMaxBailAngle()
         {
-            if (noseyStateBehaviour.maxBailAngle == Settings.BMX_NoseyMaxBailAngle)
+            if (noseyStateBehaviour.maxBailAngle == SettingsManager.CurrentSettings.BMX_NoseyMaxBailAngle)
                 return;
 
-            noseyStateBehaviour.maxBailAngle = Settings.BMX_NoseyMaxBailAngle;
+            noseyStateBehaviour.maxBailAngle = SettingsManager.CurrentSettings.BMX_NoseyMaxBailAngle;
         }
         #endregion
 
         #region Drift Bike
         public void SpawnVehicle() // spawns driftbike
         {
-            if (!Settings.UnlockStars)
+            if (!SettingsManager.CurrentSettings.UnlockStars)
             {
                 RewardUnlocks.Instance.UnlockStars("All", true);
                 vehicleSpawner.SpawnVehicle();
@@ -145,54 +145,54 @@ namespace GuruBMXMod
         }
         public void SetDriftJumpForce()
         {
-            if (driftBike.jumpForce == Settings.DriftBike_JumpForce)
+            if (driftBike.jumpForce == SettingsManager.CurrentSettings.DriftBike_JumpForce)
                 return;
 
-            driftBike.jumpForce = Settings.DriftBike_JumpForce;
+            driftBike.jumpForce = SettingsManager.CurrentSettings.DriftBike_JumpForce;
         }
         public void UpdateDriftMotorTorque()
         {
-            if (driftBike.maxMotorTorque == Settings.DriftBike_MaxMotorTorque)
+            if (driftBike.maxMotorTorque == SettingsManager.CurrentSettings.DriftBike_MaxMotorTorque)
                 return;
 
-            driftBike.maxMotorTorque = Settings.DriftBike_MaxMotorTorque;
+            driftBike.maxMotorTorque = SettingsManager.CurrentSettings.DriftBike_MaxMotorTorque;
         }
         public void UpdateDriftBrakeTorque()
         {
-            if (driftBike.maxBrakeTorque == Settings.DriftBike_MaxBrakeTorque)
+            if (driftBike.maxBrakeTorque == SettingsManager.CurrentSettings.DriftBike_MaxBrakeTorque)
                 return;
 
-            driftBike.maxBrakeTorque = Settings.DriftBike_MaxBrakeTorque;
+            driftBike.maxBrakeTorque = SettingsManager.CurrentSettings.DriftBike_MaxBrakeTorque;
         }
         public void UpdateDriftAirFlipTorque()
         {
-            if (driftBike.airFlipTorqueBody == Settings.DriftBike_AirFlipTorque)
+            if (driftBike.airFlipTorqueBody == SettingsManager.CurrentSettings.DriftBike_AirFlipTorque)
                 return;
 
-            driftBike.airFlipTorqueBody = Settings.DriftBike_AirFlipTorque;
+            driftBike.airFlipTorqueBody = SettingsManager.CurrentSettings.DriftBike_AirFlipTorque;
         }
         public void UpdateDriftAirSpinTorque()
         {
-            if (driftBike.airSpinTorqueBody == Settings.DriftBike_AirSpinTorque)
+            if (driftBike.airSpinTorqueBody == SettingsManager.CurrentSettings.DriftBike_AirSpinTorque)
                 return;
 
-            driftBike.airSpinTorqueBody = Settings.DriftBike_AirSpinTorque;
+            driftBike.airSpinTorqueBody = SettingsManager.CurrentSettings.DriftBike_AirSpinTorque;
         }
         public void UpdateDriftAirUpRightTorque()
         {
-            if (driftBike.airUpRightTorque == Settings.DriftBike_AirUpRightTorque)
+            if (driftBike.airUpRightTorque == SettingsManager.CurrentSettings.DriftBike_AirUpRightTorque)
                 return;
 
-            driftBike.airUpRightTorque = Settings.DriftBike_AirUpRightTorque;
+            driftBike.airUpRightTorque = SettingsManager.CurrentSettings.DriftBike_AirUpRightTorque;
         }
         public void UpdateDriftAntiRoll()
         {
-            if (driftBike.AntiRoll == Settings.DriftBike_AntiRoll)
+            if (driftBike.AntiRoll == SettingsManager.CurrentSettings.DriftBike_AntiRoll)
                 return;
         }
         public void UpdateDriftCOMoffset()
         {
-            Vector3 COMoffset = new Vector3 (0, Settings.DriftBike_COMOffset, 0);
+            Vector3 COMoffset = new Vector3(0, SettingsManager.CurrentSettings.DriftBike_COMOffset, 0);
             if (driftBike.centerOfMassOffset == COMoffset)
                 return;
 
@@ -200,17 +200,17 @@ namespace GuruBMXMod
         }
         public void UpdateDriftTurnTorque()
         {
-            if (driftBike.yawTorque == Settings.DriftBike_TurnTorque)
+            if (driftBike.yawTorque == SettingsManager.CurrentSettings.DriftBike_TurnTorque)
                 return;
 
-            driftBike.yawTorque = Settings.DriftBike_TurnTorque;
+            driftBike.yawTorque = SettingsManager.CurrentSettings.DriftBike_TurnTorque;
         }
         public void UpdateDriftTurnResponse()
         {
-            if (driftBike.steeringLerpSpeed == Settings.DriftBike_TurnResponse)
+            if (driftBike.steeringLerpSpeed == SettingsManager.CurrentSettings.DriftBike_TurnResponse)
                 return;
 
-            driftBike.steeringLerpSpeed = Settings.DriftBike_TurnResponse;
+            driftBike.steeringLerpSpeed = SettingsManager.CurrentSettings.DriftBike_TurnResponse;
         }
         #endregion
     }

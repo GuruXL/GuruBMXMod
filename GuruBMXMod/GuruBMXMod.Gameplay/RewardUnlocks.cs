@@ -84,11 +84,11 @@ namespace GuruBMXMod.Gameplay
         {
             if (value == "All")
             {
-                VehicleController.Instance.vehicleSpawner._starSystemManagerData.overrideReturnAllStars = state;
+                BMXModController.Instance.vehicleSpawner._starSystemManagerData.overrideReturnAllStars = state;
             }
             else if (value == "Zero")
             {
-                VehicleController.Instance.vehicleSpawner._starSystemManagerData.overrideReturnZEROStars = state;
+                BMXModController.Instance.vehicleSpawner._starSystemManagerData.overrideReturnZEROStars = state;
             }
         }
 

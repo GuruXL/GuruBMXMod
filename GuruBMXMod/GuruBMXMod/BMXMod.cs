@@ -186,7 +186,8 @@ namespace GuruBMXMod
             {
                 if (buildindex == 1 || sceneName == "Bridging Physics PIPE Style")
                 {
-                    VehicleController.Instance.GetBikeComponents();
+                    BMXModController.Instance.GetBikeComponents();
+                    PlayerController.Instance.GetPlayerComponents();
                     //CameraController.Instance.GetCameraComponents();
                     //SessionMarkerSwap.Instance.GetInputComponents();
                 }

@@ -24,25 +24,5 @@ namespace GuruBMXMod.Utils
                 MelonLogger.Msg($"All {componentType} components found");
             }
         }
-        /*
-        public static void CheckComponents(params KeyValuePair<string, object>[] components)
-        {
-            bool allComponentsFound = true;
-
-            foreach (KeyValuePair<string, object> component in components)
-            {
-                if (component.Value == null)
-                {
-                    MelonLogger.Msg($"{component.Key} NOT found");
-                    allComponentsFound = false;
-                }
-            }
-
-            if (allComponentsFound)
-            {
-                MelonLogger.Msg("All components found");
-            }
-        }
-        */
     }
 }

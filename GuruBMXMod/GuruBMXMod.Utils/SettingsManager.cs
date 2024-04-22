@@ -18,22 +18,19 @@ namespace GuruBMXMod.Utils
             DefaultSettings = new Settings { ModEnabled = true };
         }
 
-        // Method to reset current settings to the default
         public static void ResetToDefault()
         {
             CurrentSettings = DefaultSettings.Clone();
         }
 
-        // Method to save current settings (could use serialization)
         public static void SaveSettings(string filePath)
         {
-            // Serialization code to save CurrentSettings to a file
+            
         }
 
-        // Method to load settings into CurrentSettings (could use deserialization)
         public static void LoadSettings(string filePath)
         {
-            // Deserialization code to load settings from a file into CurrentSettings
+            
         }
     }
 }

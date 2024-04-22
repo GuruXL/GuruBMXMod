@@ -75,7 +75,6 @@ namespace GuruBMXMod.UI
             }
             GUILayout.EndHorizontal();
         }
-
         /*
         public static void Slider(string label, Action<float> valueChangedCallback, Color color, float value, float minValue, float maxValue)
         {
@@ -131,7 +130,6 @@ namespace GuruBMXMod.UI
                 value = defaultValue; // Reset value to default
                 valueChangedCallback?.Invoke(defaultValue); // Invoke the callback with the default value
             }
-
             GUILayout.EndHorizontal();
 
             // Slider underneath the labels
@@ -149,7 +147,6 @@ namespace GuruBMXMod.UI
                 value = newValue; // Update the value if the slider moved
                 valueChangedCallback?.Invoke(newValue); // Invoke the callback with new value
             }
-
             GUILayout.EndVertical(); // End the main vertical layout
         }
     }

@@ -3,6 +3,7 @@ using GuruBMXMod.Multi;
 using GuruBMXMod.Utils;
 using MelonLoader;
 using UnityEngine;
+using static Il2CppPhoton.Pun.UtilityScripts.TabViewManager;
 
 namespace GuruBMXMod.UI
 {
@@ -29,6 +30,9 @@ namespace GuruBMXMod.UI
 
         //readonly UItab Test_Tab = new UItab(true, "Test Stuff", 14);
 
+        private GUIStyle normalStyle;
+        private GUIStyle highlightedStyle;
+
         readonly UItab Unlocks_Tab = new UItab(true, "Unlocks", 16);
         readonly UItab Stats_Tab = new UItab(true, "Gameplay", 16);
         readonly UItab Multi_Tab = new UItab(true, "Multiplayer", 16);
@@ -39,6 +43,7 @@ namespace GuruBMXMod.UI
         readonly UItab BMX_Tab = new UItab(true, "BMX", 14);
         readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 14);
 
+        //readonly UItab Hopping_Tab = new UItab(true, "Hopping", 13);
         readonly UItab Peddle_Tab = new UItab(true, "Peddle", 13);
         readonly UItab Pumping_Tab = new UItab(true, "Pumping", 13);
         readonly UItab Manny_Tab = new UItab(true, "Manny", 13);
@@ -194,6 +199,7 @@ namespace GuruBMXMod.UI
             GUILayout.EndHorizontal();
         }
 
+       
         private void Tabs(UItab obj, string color = "#e6ebe8")
         {
             if (GUILayout.Button($"<size={obj.font}><color={color}>" + (obj.isClosed ? "○" : "●") + obj.text + "</color>" + "</size>", "Label"))
@@ -256,11 +262,27 @@ namespace GuruBMXMod.UI
                 GUILayout.EndHorizontal();
                 */
 
+                GUILayout.BeginVertical("Box");
+                UIextensions.Slider("Player Animation Speed", UIActionManager.UpdatePlayerAnimationSpeed, Color.white, SettingsManager.CurrentSettings.Player_AnimationSpeed, 0f, 2f, SettingsManager.DefaultSettings.Player_AnimationSpeed);
+                GUILayout.EndVertical();
+
+                GUILayout.BeginVertical("Box");
+                UIextensions.Slider("Jump Force", UIActionManager.UpdatePlayerJumpForce, Color.white, SettingsManager.CurrentSettings.Player_JumpForce, 0f, 50f, SettingsManager.DefaultSettings.Player_JumpForce);
+                GUILayout.EndVertical();
+
+                GUILayout.BeginVertical("Box");
+                UIextensions.Slider("Max Fall Velocity To Ragdoll", UIActionManager.UpdatePlayerMaxFallVelocity, Color.white, SettingsManager.CurrentSettings.Player_MaxVelocityToRagDoll, -100f, 100f, SettingsManager.DefaultSettings.Player_MaxVelocityToRagDoll);
+                GUILayout.EndVertical();
+
             }
             Tabs(BMX_Tab, UIextensions.TabColorSwitch(BMX_Tab));
             if (!BMX_Tab.isClosed)
             {
                 GUILayout.BeginVertical("Box"); // start BMX tabs
+
+                GUILayout.BeginVertical("Box");
+                UIextensions.Slider("Trick Animation Speed", UIActionManager.UpdateTrickAnimationSpeed, Color.white, SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed, 0f, 2f, SettingsManager.DefaultSettings.BMX_TrickAnimationSpeed);
+                GUILayout.EndVertical();
 
                 Tabs(Peddle_Tab, UIextensions.TabColorSwitch(Peddle_Tab));
                 if (!Peddle_Tab.isClosed)

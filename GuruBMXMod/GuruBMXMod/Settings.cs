@@ -41,6 +41,12 @@ namespace GuruBMXMod
         public float SunIntensity = 20000.0f;
         #endregion
 
+        #region Player
+        public float Player_AnimationSpeed = 1f;
+        public float Player_JumpForce = 8.0f;
+        public float Player_MaxVelocityToRagDoll = -13.0f;
+        #endregion
+
         #region BMX
         public bool EnableSimplePedal = false;
         public bool MannyAutoStability = false;
@@ -53,6 +59,8 @@ namespace GuruBMXMod
         public float SimpleBMX_PumpMinMaxCurveTime = 50f;
         public float BMX_MannyMaxBailAngle = 60f;
         public float BMX_NoseyMaxBailAngle = 60f;
+
+        public float BMX_TrickAnimationSpeed = 1f;
 
         #endregion
 

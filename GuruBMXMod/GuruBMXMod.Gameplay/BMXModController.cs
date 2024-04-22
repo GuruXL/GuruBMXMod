@@ -7,23 +7,20 @@ using System.Collections.Generic;
 using System.Collections;
 using GuruBMXMod.Utils;
 using Il2CppMG_StateMachine;
+using Il2CppDiasGames.ThirdPersonSystem;
 
 namespace GuruBMXMod.Gameplay
 {
-    public class VehicleController
+    public class BMXModController
     {
-        public static VehicleController __instance { get; private set; }
-        public static VehicleController Instance => __instance ?? (__instance = new VehicleController());
+        public static BMXModController __instance { get; private set; }
+        public static BMXModController Instance => __instance ?? (__instance = new BMXModController());
 
-        // Dictionary to hold component references and their corresponding names
-
-
+        // BMX
         private BMXAnimationControl animationControl;
-
         private SimplePedalForce simplePedalForce;
         private SimpleGrindForce simpleGrindForce;
         private SimpleSteeringPumpForce simpleSteeringPumpForce;
-
         private MannyStateBehaviour mannyStateBehaviour;
         private NoseyStateBehaviour noseyStateBehaviour;
 
@@ -80,7 +77,17 @@ namespace GuruBMXMod.Gameplay
 
             Physics.gravity = new Vector3(Physics.gravity.x, SettingsManager.CurrentSettings.Gravity, Physics.gravity.z);
         }
-        #region Simple BMX
+
+        #region BMX
+        // Tricks
+        public void UpdateTrickAnimationSpeed()
+        {
+            if (animationControl.bmxAnimator.speed != SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed)
+                return;
+
+            animationControl.bmxAnimator.speed = SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed;
+        }
+        // Peddle
         public void ToggleSimplePedal()
         {
             simplePedalForce.enabled = SettingsManager.CurrentSettings.EnableSimplePedal;
@@ -102,6 +109,7 @@ namespace GuruBMXMod.Gameplay
         public void UpdateBrakeForce()
         {
         }
+        // Grinds
         public void UpdateSimpleGrindHoldForce()
         {
             if (simpleGrindForce.holdForce == SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce)
@@ -109,6 +117,7 @@ namespace GuruBMXMod.Gameplay
 
             simpleGrindForce.holdForce = SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce;
         }
+        // Pumping
         public void UpdateSteeringPumpForce()
         {
             AnimationCurveModifier.ModifyMinMaxCurve(simpleSteeringPumpForce.pumpForcePerVelocityMagMutlipler,
@@ -116,6 +125,7 @@ namespace GuruBMXMod.Gameplay
                 SettingsManager.CurrentSettings.SimpleBMX_MaxPumpForceMulti,
                 SettingsManager.CurrentSettings.SimpleBMX_PumpMinMaxCurveTime);
         }
+        // Manny
         public void UpdateMannyMaxBailAngle()
         {
             if (mannyStateBehaviour.maxBailAngle == SettingsManager.CurrentSettings.BMX_MannyMaxBailAngle)
@@ -213,5 +223,5 @@ namespace GuruBMXMod.Gameplay
             driftBike.steeringLerpSpeed = SettingsManager.CurrentSettings.DriftBike_TurnResponse;
         }
         #endregion
-    }
+    } 
 }

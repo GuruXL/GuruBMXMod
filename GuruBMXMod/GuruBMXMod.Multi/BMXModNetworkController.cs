@@ -1,4 +1,5 @@
-﻿using Il2Cpp;
+﻿using GuruBMXMod.Utils;
+using Il2Cpp;
 using Il2CppCom.MyCompany.MyGame;
 using Il2CppPhoton.Pun;
 using MelonLoader;
@@ -34,17 +35,19 @@ namespace GuruBMXMod.Multi
             }
             finally
             {
-                if (roomInfo != null)
-                {
-                    MelonLogger.Msg("All Network Components Found");
-                }
-                else if (roomInfo == null)
-                {
-                    MelonLogger.Msg("Room Info NOT found");
-                }
+                CheckNetworkComponents();
             }
         }
+        private void CheckNetworkComponents()
+        {
+            // Creating a dictionary for dynamic checking
+            Dictionary<string, object> components = new Dictionary<string, object>
+            {
+            {"roomInfo", roomInfo},
+            };
 
+            ComponentCheck.CheckComponents(components, "Network");
+        }
         public void UpdateRoomSize()
         {
             /*

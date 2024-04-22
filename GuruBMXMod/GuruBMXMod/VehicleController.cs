@@ -15,6 +15,11 @@ namespace GuruBMXMod
         public static VehicleController __instance { get; private set; }
         public static VehicleController Instance => __instance ?? (__instance = new VehicleController());
 
+        // Dictionary to hold component references and their corresponding names
+
+
+        private BMXAnimationControl animationControl;
+
         private SimplePedalForce simplePedalForce;
         private SimpleGrindForce simpleGrindForce;
         private SimpleSteeringPumpForce simpleSteeringPumpForce;
@@ -36,8 +41,8 @@ namespace GuruBMXMod
                 simpleGrindForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimpleGrindForce>();
                 vehicleSpawner = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<VehicleSpawner>();
                 simpleSteeringPumpForce = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<SimpleSteeringPumpForce>();
-                driftBike = vehicleSpawner.gameObject.GetComponentInChildren<DriftTrikeController>(true);
-
+                driftBike = vehicleSpawner.gameObject.GetComponentInChildren<DriftTrikeController>(true);  
+                animationControl = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<BMXAnimationControl>();
                 mannyStateBehaviour = UnityEngine.Object.FindObjectOfType<MannyStateBehaviour>();
                 noseyStateBehaviour = UnityEngine.Object.FindObjectOfType<NoseyStateBehaviour>();
             }
@@ -47,46 +52,27 @@ namespace GuruBMXMod
             }
             finally
             {
-                if (simplePedalForce != null && 
-                    vehicleSpawner != null && 
-                    driftBike != null && 
-                    simpleSteeringPumpForce != null && 
-                    mannyStateBehaviour != null && 
-                    noseyStateBehaviour != null)
-                {
-                    MelonLogger.Msg("All Bike Components Found");
-                }
-                else
-                {
-                    if (simplePedalForce == null)
-                    {
-                        MelonLogger.Msg("simplePedalForce NOT found");
-                    }
-                    if (simpleSteeringPumpForce == null)
-                    {
-                        MelonLogger.Msg("simpleSteeringPumpForce NOT found");
-                    }
-                    if (vehicleSpawner == null)
-                    {
-                        MelonLogger.Msg("vehicleSpawner NOT found");
-                    }
-                    if (driftBike == null)
-                    {
-                        MelonLogger.Msg("Drift Bike NOT found");
-                    }
-                    if (mannyStateBehaviour == null)
-                    {
-                        MelonLogger.Msg("mannyStateBehaviour NOT found");
-                    }
-                    if (noseyStateBehaviour == null)
-                    {
-                        MelonLogger.Msg("noseyStateBehaviour NOT found");
-                    }
-
-                }       
+                CheckBikeComponents();
             }
         }
-      
+        private void CheckBikeComponents()
+        {
+            // Creating a dictionary for dynamic checking
+            Dictionary<string, object> components = new Dictionary<string, object>
+            {
+            {"simplePedalForce", simplePedalForce},
+            {"simpleGrindForce", simpleGrindForce},
+            {"vehicleSpawner", vehicleSpawner},
+            {"simpleSteeringPumpForce", simpleSteeringPumpForce},
+            {"driftBike", driftBike},
+            {"animationControl", animationControl},
+            {"mannyStateBehaviour", mannyStateBehaviour},
+            {"noseyStateBehaviour", noseyStateBehaviour}
+            };
+
+            ComponentCheck.CheckComponents(components, "Bike");
+        }
+
         public void UpdateGravity()
         {
             if (Physics.gravity.y == Settings.Gravity)
@@ -94,7 +80,6 @@ namespace GuruBMXMod
 
             Physics.gravity = new Vector3(Physics.gravity.x, Settings.Gravity, Physics.gravity.z);
         }
-
         #region Simple BMX
         public void ToggleSimplePedal()
         {
@@ -113,6 +98,9 @@ namespace GuruBMXMod
                 return;
 
             simplePedalForce.maxPedalVel = Settings.SimpleBMX_MaxPedalVel;
+        }
+        public void UpdateBrakeForce()
+        {
         }
         public void UpdateSimpleGrindHoldForce()
         {

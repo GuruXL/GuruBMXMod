@@ -5,6 +5,8 @@ using HarmonyLib;
 using Il2CppMG_Gameplay;
 using System.Collections.Generic;
 using System.Collections;
+using GuruBMXMod.Utils;
+using UnityEngine.UIElements.UIR;
 
 namespace GuruBMXMod
 {
@@ -37,15 +39,20 @@ namespace GuruBMXMod
             }
             finally
             {
-                if (rewardsBehavior != null && unlockRewardListener && lockRewardListener != null)
-                {
-                    MelonLogger.Msg("Smart Data Components Found");
-                }
-                else
-                {
-                    MelonLogger.Msg("Smart Data Components NOT found");
-                }
+                CheckRewardComponents();
             }
+        }
+        private void CheckRewardComponents()
+        {
+            // Creating a dictionary for dynamic checking
+            Dictionary<string, object> components = new Dictionary<string, object>
+            {
+            {"rewardsBehavior", rewardsBehavior},
+            {"unlockRewardListener", unlockRewardListener},
+            {"lockRewardListener", lockRewardListener},
+            };
+
+            ComponentCheck.CheckComponents(components, "Smart Data");
         }
         private void GetRewardListeners()
         {

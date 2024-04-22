@@ -277,6 +277,8 @@ namespace GuruBMXMod.UI
                         UIextensions.Slider("Max Pedal Velocity", UIActionManager.UpdatePedalVelocitySlider, Color.white, Settings.SimpleBMX_MaxPedalVel, 0f, 800f);
                         GUILayout.EndVertical();
                     }
+
+
                     GUILayout.EndVertical();
                 }
                 Tabs(Pumping_Tab, UIextensions.TabColorSwitch(Pumping_Tab));
@@ -304,11 +306,11 @@ namespace GuruBMXMod.UI
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Manny Max Angle", UIActionManager.UpdateMannyMaxAngle, Color.white, Settings.BMX_MannyMaxBailAngle, 0f, 90f);
+                    UIextensions.Slider("Manny Max Bail Angle", UIActionManager.UpdateMannyMaxAngle, Color.white, Settings.BMX_MannyMaxBailAngle, 0f, 90f);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Nosey Max Angle", UIActionManager.UpdateNoseyMaxAngle, Color.white, Settings.BMX_NoseyMaxBailAngle, 0f, 90f);
+                    UIextensions.Slider("Nosey Max Bail Angle", UIActionManager.UpdateNoseyMaxAngle, Color.white, Settings.BMX_NoseyMaxBailAngle, 0f, 90f);
                     GUILayout.EndVertical();
 
                 }

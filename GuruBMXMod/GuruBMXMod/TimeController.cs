@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using System.ComponentModel;
 using UnityEngine.Profiling;
+using GuruBMXMod.Utils;
 
 namespace GuruBMXMod
 {
@@ -52,23 +53,19 @@ namespace GuruBMXMod
             }
             finally
             {
-                if (todManager != null && todVolume != null)
-                {
-                    MelonLogger.Msg("Time of Day Components Found");
-                }
-                else
-                {
-                    if (todManager == null)
-                    {
-                        MelonLogger.Msg($"TOD Manager NOT Found");
-                    }
-                    if (todVolume == null)
-                    {
-                        MelonLogger.Msg($"TOD Volume NOT Found");
-                    }
-                }
-                
+                CheckTimeComponents();
             }
+        }
+        private void CheckTimeComponents()
+        {
+            // Creating a dictionary for dynamic checking
+            Dictionary<string, object> components = new Dictionary<string, object>
+            {
+            {"todManager", todManager},
+            {"todVolume", todVolume},
+            };
+
+            ComponentCheck.CheckComponents(components, "Time");
         }
         private Volume GetTODVolume()
         {
@@ -79,71 +76,9 @@ namespace GuruBMXMod
             {
                 MelonLogger.Msg($" Unable to Find TOD volume Component");
             }
-
             return volume;
         }
 
-        
-        private void GetVolumeComponents()
-        {
-            try
-            {
-                //todVolume.profile.TryGet(todBloom);
-                //todVolume.profile.TryGet(todIndirectLight);
-
-            }
-            catch (Exception ex)
-            {
-                MelonLogger.Msg("Exception while Getting Volume Components: " + ex.Message);
-            }
-            finally
-            {
-                if (todBloom != null && todIndirectLight != null)
-                {
-                    MelonLogger.Msg("All Volume profile components found.");
-                }
-                else
-                {
-                    if (todBloom == null)
-                    {
-                        MelonLogger.Msg("Bloom Not Found.");
-                    }
-                    if (todIndirectLight == null)
-                    {
-                        MelonLogger.Msg("Indirect Light Not Found.");
-                    }
-                }
-            }
-            /*
-            for (int i = 0; i < todVolume.profile.components.Count; i++)
-            {
-                if (todVolume.profile.components[i] is Bloom bloom)
-                {
-                    //todBloom = bloom;
-                    todVolume.profile.TryGet(todBloom);
-                }
-                else if (todVolume.profile.components[i] is IndirectLightingController light)
-                {
-                    //todIndirectLight = light;
-                    todVolume.profile.TryGet(todIndirectLight);
-                }
-            }
-            */
-            /*
-            foreach (VolumeComponent comp in todVolume.profile.components)
-            {
-                if (comp.GetType() == typeof(Bloom))
-                {
-                    todBloom = (Bloom)comp;
-                }
-                else if (comp.GetType() == typeof(IndirectLightingController))
-                {
-                    todIndirectLight = (IndirectLightingController)comp;
-                }
-            }
-            */
-        }
-        
         public void GetModMapComponents(string scenename)
         {
             try

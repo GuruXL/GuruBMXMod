@@ -84,6 +84,11 @@ namespace GuruBMXMod.UI
             SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed = newValue;
             BMXModController.Instance.UpdateTrickAnimationSpeed();
         }
+        public static void UpdatePerefectTweakThreshold(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_PerfectTweakThreshold = newValue;
+            BMXModController.Instance.UpdatePerfectTweakThreshold();
+        }
         // Peddle
         public static void UpdatePedalForceSlider(float newValue)
         {
@@ -191,7 +196,6 @@ namespace GuruBMXMod.UI
 
             SettingsManager.CurrentSettings.MultiRoomSize = bytevalue;
             BMXModNetworkController.Instance.UpdateRoomSize();
-            BMXModNetworkController.Instance.UpdateRoomInfo();
         }
         #endregion
 

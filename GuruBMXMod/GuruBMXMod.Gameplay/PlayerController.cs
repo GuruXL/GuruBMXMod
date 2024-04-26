@@ -27,9 +27,9 @@ namespace GuruBMXMod.Gameplay
             try
             {
                 freeRunPlayerManager = PlayerComponents.GetInstance().GetComponentInParent<FreeRunningPlayerManager>();
-                jumpAbility = freeRunPlayerManager.gameObject.GetComponentInParent<JumpAbility>();
-                fallAbility = freeRunPlayerManager.gameObject.GetComponentInParent<FallAbility>();
-                getUpAbility = freeRunPlayerManager.gameObject.GetComponentInParent<GetUpAbility>();
+                jumpAbility = freeRunPlayerManager.freeRunningCharacterManager.gameObject.GetComponentInChildren<JumpAbility>();
+                fallAbility = freeRunPlayerManager.freeRunningCharacterManager.gameObject.GetComponentInChildren<FallAbility>();
+                getUpAbility = freeRunPlayerManager.freeRunningCharacterManager.gameObject.GetComponentInChildren<GetUpAbility>();
             }
             catch (Exception ex)
             {
@@ -64,10 +64,10 @@ namespace GuruBMXMod.Gameplay
 
         public void UpdatePlayerJumpForce()
         {
-            if (jumpAbility.jumpPower == SettingsManager.CurrentSettings.Player_MaxVelocityToRagDoll)
+            if (jumpAbility.jumpPower == SettingsManager.CurrentSettings.Player_JumpForce)
                 return;
 
-            jumpAbility.jumpPower = SettingsManager.CurrentSettings.Player_MaxVelocityToRagDoll;
+            jumpAbility.jumpPower = SettingsManager.CurrentSettings.Player_JumpForce;
         }
         public void UpdatePlayerMaxFallVelocity()
         {

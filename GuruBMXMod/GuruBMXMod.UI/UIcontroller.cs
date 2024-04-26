@@ -1,9 +1,9 @@
 ﻿using GuruBMXMod.Gameplay;
 using GuruBMXMod.Multi;
 using GuruBMXMod.Utils;
+using Il2Cpp;
 using MelonLoader;
 using UnityEngine;
-using static Il2CppPhoton.Pun.UtilityScripts.TabViewManager;
 
 namespace GuruBMXMod.UI
 {
@@ -44,6 +44,7 @@ namespace GuruBMXMod.UI
         readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 14);
 
         //readonly UItab Hopping_Tab = new UItab(true, "Hopping", 13);
+        readonly UItab Tricks_Tab = new UItab(true, "Tricks", 13);
         readonly UItab Peddle_Tab = new UItab(true, "Peddle", 13);
         readonly UItab Pumping_Tab = new UItab(true, "Pumping", 13);
         readonly UItab Manny_Tab = new UItab(true, "Manny", 13);
@@ -161,7 +162,6 @@ namespace GuruBMXMod.UI
             showUI = false;
             Cursor.visible = false;
         }
-
         public void CustomOnGUI()
         {
             if (!setUp)
@@ -187,10 +187,9 @@ namespace GuruBMXMod.UI
             UnlocksUI();
             //CameraUI();
             StatsUI();
-            MultiUI();
+            //MultiUI();
             CycleUI();
         }
-
        
         private void MainUI()
         {
@@ -253,7 +252,7 @@ namespace GuruBMXMod.UI
             GUILayout.BeginVertical("Box");
             Tabs(Player_Tab, UIextensions.TabColorSwitch(Player_Tab));
             if (!Player_Tab.isClosed)
-            {
+            {  
                 /*
                 GUILayout.BeginHorizontal();
                 GUILayout.Label($"Swap Session Marker Input", GUILayout.ExpandWidth(true));
@@ -263,7 +262,7 @@ namespace GuruBMXMod.UI
                 */
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Player Animation Speed", UIActionManager.UpdatePlayerAnimationSpeed, Color.white, SettingsManager.CurrentSettings.Player_AnimationSpeed, 0f, 2f, SettingsManager.DefaultSettings.Player_AnimationSpeed);
+                UIextensions.Slider("Player Animation Speed", UIActionManager.UpdatePlayerAnimationSpeed, Color.white, SettingsManager.CurrentSettings.Player_AnimationSpeed, 0.0f, 4.0f, SettingsManager.DefaultSettings.Player_AnimationSpeed);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
@@ -271,7 +270,7 @@ namespace GuruBMXMod.UI
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Max Fall Velocity To Ragdoll", UIActionManager.UpdatePlayerMaxFallVelocity, Color.white, SettingsManager.CurrentSettings.Player_MaxVelocityToRagDoll, -100f, 100f, SettingsManager.DefaultSettings.Player_MaxVelocityToRagDoll);
+                UIextensions.Slider("Max Fall Velocity To Ragdoll", UIActionManager.UpdatePlayerMaxFallVelocity, Color.white, SettingsManager.CurrentSettings.Player_MaxVelocityToRagDoll, -100f, 0f, SettingsManager.DefaultSettings.Player_MaxVelocityToRagDoll);
                 GUILayout.EndVertical();
 
             }
@@ -280,10 +279,17 @@ namespace GuruBMXMod.UI
             {
                 GUILayout.BeginVertical("Box"); // start BMX tabs
 
-                GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Trick Animation Speed", UIActionManager.UpdateTrickAnimationSpeed, Color.white, SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed, 0f, 2f, SettingsManager.DefaultSettings.BMX_TrickAnimationSpeed);
-                GUILayout.EndVertical();
+                Tabs(Tricks_Tab, UIextensions.TabColorSwitch(Tricks_Tab));
+                if (!Tricks_Tab.isClosed)
+                {
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.Slider("Trick Animation Speed", UIActionManager.UpdateTrickAnimationSpeed, Color.white, SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed, 1.0f, 2.0f, SettingsManager.DefaultSettings.BMX_TrickAnimationSpeed);
+                    GUILayout.EndVertical();
 
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.Slider("Perfect Tweak Threshold", UIActionManager.UpdatePerefectTweakThreshold, Color.white, SettingsManager.CurrentSettings.BMX_PerfectTweakThreshold, 0.0f, 1.0f, SettingsManager.DefaultSettings.BMX_PerfectTweakThreshold);
+                    GUILayout.EndVertical();
+                }
                 Tabs(Peddle_Tab, UIextensions.TabColorSwitch(Peddle_Tab));
                 if (!Peddle_Tab.isClosed)
                 {
@@ -340,7 +346,7 @@ namespace GuruBMXMod.UI
                 if (!Grind_Tab.isClosed)
                 {
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Grind Hold Force", UIActionManager.UpdateGrindHoldForce, Color.white, SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce, -20000f, 20000f, SettingsManager.DefaultSettings.SimpleBMX_GrindHoldForce);
+                    UIextensions.Slider("Grind Hold Force", UIActionManager.UpdateGrindHoldForce, Color.white, SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce, -5000f, 5000f, SettingsManager.DefaultSettings.SimpleBMX_GrindHoldForce);
                     GUILayout.EndVertical();
                 }
 

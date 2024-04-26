@@ -155,13 +155,13 @@ namespace GuruBMXMod
             }
             catch (Exception ex)
             {
-                MelonLogger.Msg("Exception Creating Hamony Instance: " + ex.Message);
+                MelonLogger.Msg("Exception Creating Harmony Instance: " + ex.Message);
             }
             finally
             {
                 if (harmonyInstance != null)
                 {
-                    MelonLogger.Msg("Hamony Instance Created");
+                    MelonLogger.Msg("Harmony Instance Created");
                 }
             }
         }

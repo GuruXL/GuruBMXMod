@@ -1,4 +1,5 @@
-﻿using Il2Cpp;
+﻿using GuruBMXMod.Utils;
+using Il2Cpp;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
@@ -51,25 +52,7 @@ namespace GuruBMXMod.Gameplay
             }
             finally
             {
-                if (sessionMarker != null && placeCallback != null && resetCallback != null)
-                {
-                    MelonLogger.Msg("Input Components Found");
-                }
-                else
-                {
-                    if (sessionMarker == null)
-                    {
-                        MelonLogger.Msg("sessionMarker NOT found");
-                    }
-                    if (placeCallback == null)
-                    {
-                        MelonLogger.Msg("placeCallback NOT found");
-                    }
-                    if (resetCallback == null)
-                    {
-                        MelonLogger.Msg("resetCallback NOT found");
-                    }
-                }
+                CheckInputComponents();
             }
         }
         public void GetInputBindings()
@@ -85,7 +68,22 @@ namespace GuruBMXMod.Gameplay
 
             //InputActionMap actionMap = placeCallback.GetInputActionMap();
         }
+        private void CheckInputComponents()
+        {
+            // Creating a dictionary for dynamic checking
+            Dictionary<string, object> components = new Dictionary<string, object>
+            {
+            {"sessionMarker", sessionMarker},
+            {"placeCallback", placeCallback},
+            {"resetCallback", resetCallback},
+            {"upAction", upAction},
+            {"downAction", downAction},
+            {"originalUpBinding", originalUpBinding},
+            {"originalDownBinding", originalDownBinding},
+            };
 
+            ComponentCheck.CheckComponents(components, "Input");
+        }
         public void SwapUpAndDownActions()
         {
             if (upAction == null || downAction == null)
@@ -98,21 +96,29 @@ namespace GuruBMXMod.Gameplay
             if (upAction.enabled) upAction.Disable();
             if (downAction.enabled) downAction.Disable();
 
-            if (!Settings.SessionMarkerSwapped)
+            if (!SettingsManager.CurrentSettings.SessionMarkerSwapped)
             {
                 // Swap the bindings
-                upAction.ApplyBindingOverride(originalDownBinding);
-                downAction.ApplyBindingOverride(originalUpBinding);
+                //upAction.ApplyBindingOverride(originalDownBinding);
+                //downAction.ApplyBindingOverride(originalUpBinding);
+
+                // Swap the bindings
+                upAction.ChangeBindingWithPath(upAction.name).WithPath(originalDownBinding.path);
+                downAction.ChangeBindingWithPath(downAction.name).WithPath(originalUpBinding.path);
             }
             else
             {
                 // Revert the bindings
-                upAction.ApplyBindingOverride(originalUpBinding);
-                downAction.ApplyBindingOverride(originalDownBinding);
+                //upAction.ApplyBindingOverride(originalUpBinding);
+                //downAction.ApplyBindingOverride(originalDownBinding);
+
+                // Swap the bindings
+                upAction.ChangeBindingWithPath(upAction.name).WithPath(originalUpBinding.path);
+                downAction.ChangeBindingWithPath(downAction.name).WithPath(originalDownBinding.path);
             }
 
             // Toggle the swapped state
-            Settings.SessionMarkerSwapped = !Settings.SessionMarkerSwapped;
+            //SettingsManager.CurrentSettings.SessionMarkerSwapped = !SettingsManager.CurrentSettings.SessionMarkerSwapped;
 
             // Enable the actions again
             upAction.Enable();

@@ -59,8 +59,8 @@ namespace GuruBMXMod
         public float SimpleBMX_PumpMinMaxCurveTime = 50f;
         public float BMX_MannyMaxBailAngle = 60f;
         public float BMX_NoseyMaxBailAngle = 60f;
-
         public float BMX_TrickAnimationSpeed = 1f;
+        public float BMX_PerfectTweakThreshold = 0.2f;
 
         #endregion
 

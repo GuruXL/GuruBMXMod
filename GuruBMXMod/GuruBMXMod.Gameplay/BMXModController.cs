@@ -17,6 +17,7 @@ namespace GuruBMXMod.Gameplay
         public static BMXModController Instance => __instance ?? (__instance = new BMXModController());
 
         // BMX
+        private PlayerAbilityDataBehaviour playerAbilityDataBehaviour;
         private BMXAnimationControl animationControl;
         private SimplePedalForce simplePedalForce;
         private SimpleGrindForce simpleGrindForce;
@@ -42,6 +43,8 @@ namespace GuruBMXMod.Gameplay
                 animationControl = PlayerComponents.GetInstance().gameObject.GetComponentInChildren<BMXAnimationControl>();
                 mannyStateBehaviour = UnityEngine.Object.FindObjectOfType<MannyStateBehaviour>();
                 noseyStateBehaviour = UnityEngine.Object.FindObjectOfType<NoseyStateBehaviour>();
+                playerAbilityDataBehaviour = GameWorld.GetInstance().gameObject.GetComponentInChildren<PlayerAbilityDataBehaviour>();
+
             }
             catch (Exception ex)
             {
@@ -64,7 +67,8 @@ namespace GuruBMXMod.Gameplay
             {"driftBike", driftBike},
             {"animationControl", animationControl},
             {"mannyStateBehaviour", mannyStateBehaviour},
-            {"noseyStateBehaviour", noseyStateBehaviour}
+            {"noseyStateBehaviour", noseyStateBehaviour},
+            {"playerAbilityDataBehaviour ", playerAbilityDataBehaviour}
             };
 
             ComponentCheck.CheckComponents(components, "Bike");
@@ -82,10 +86,17 @@ namespace GuruBMXMod.Gameplay
         // Tricks
         public void UpdateTrickAnimationSpeed()
         {
-            if (animationControl.bmxAnimator.speed != SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed)
+            if (animationControl.bmxAnimator.speed == SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed)
                 return;
 
             animationControl.bmxAnimator.speed = SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed;
+        }
+        public void UpdatePerfectTweakThreshold()
+        {
+            if (playerAbilityDataBehaviour._playerAbilityData.perfectTweakThreshold == SettingsManager.CurrentSettings.BMX_PerfectTweakThreshold)
+                return;
+
+            playerAbilityDataBehaviour._playerAbilityData.perfectTweakThreshold = SettingsManager.CurrentSettings.BMX_PerfectTweakThreshold;
         }
         // Peddle
         public void ToggleSimplePedal()

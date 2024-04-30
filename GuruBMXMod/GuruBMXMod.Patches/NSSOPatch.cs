@@ -14,19 +14,17 @@ namespace GuruBMXMod.Patches
     public static class NSSOPatch
     {
         // Patches a 2 - 16 clamp for SetMaxPlayers
-        static bool Prefix(NetworkingSessionScriptableObject __instance, ref int numPlayers)
+        public static bool Prefix(NetworkingSessionScriptableObject __instance, ref int numPlayers)
         {
-            if (numPlayers <= 16)
-            {
-                return true;
-            }
-            else
+            if (numPlayers > 16)
             {
                 __instance._maxPlayers = numPlayers;
-                MelonLogger.Msg($"NSSOPatch Run: Max Players update: {__instance._maxPlayers}");
-                return false;
+                //MelonLogger.Msg($"SetMaxPlayers called with numPlayers: {numPlayers}");
+                return false;  // Skip the original method to prevent clamping in the original method
             }
-            
+
+            //MelonLogger.Msg($"SetMaxPlayers Origianl Method Run");
+            return true;  // Continue with the original method if within limits
         }
     }
 }

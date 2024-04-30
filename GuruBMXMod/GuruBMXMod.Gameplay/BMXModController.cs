@@ -25,6 +25,12 @@ namespace GuruBMXMod.Gameplay
         private MannyStateBehaviour mannyStateBehaviour;
         private NoseyStateBehaviour noseyStateBehaviour;
 
+        private HopBehaviour hopBehaviour;
+
+        private HopDataSet Grounded_HopData;
+        private HopDataSet Nosey_HopData;
+        private HopDataSet Grind_HopData;
+
         //private TestBalance testBalance;
 
         private DriftTrikeController driftBike;
@@ -44,6 +50,7 @@ namespace GuruBMXMod.Gameplay
                 mannyStateBehaviour = UnityEngine.Object.FindObjectOfType<MannyStateBehaviour>();
                 noseyStateBehaviour = UnityEngine.Object.FindObjectOfType<NoseyStateBehaviour>();
                 playerAbilityDataBehaviour = GameWorld.GetInstance().gameObject.GetComponentInChildren<PlayerAbilityDataBehaviour>();
+                GetHopData();
 
             }
             catch (Exception ex)
@@ -55,6 +62,32 @@ namespace GuruBMXMod.Gameplay
                 CheckBikeComponents();
             }
         }
+
+        private void GetHopData()
+        {
+            //HopDataSet[] hopDataSets = UnityEngine.Object.FindObjectsOfType<HopDataSet>();
+            HopDataSet[] hopDataSets = Resources.FindObjectsOfTypeAll<HopDataSet>();
+
+            if (hopDataSets.Length == 0)
+                return;
+
+            foreach (HopDataSet dataSet in hopDataSets)
+            {
+                switch (dataSet.name)
+                {
+                    case "Grounded_HopDataSet":
+                        Grounded_HopData = dataSet;
+                        break;
+                    case "Nosey_HopDataSet":
+                        Nosey_HopData = dataSet;
+                        break;
+                    case "Grind_HopDataSet":
+                        Grind_HopData = dataSet;
+                        break;
+                }
+            }
+        }
+
         private void CheckBikeComponents()
         {
             // Creating a dictionary for dynamic checking
@@ -68,7 +101,10 @@ namespace GuruBMXMod.Gameplay
             {"animationControl", animationControl},
             {"mannyStateBehaviour", mannyStateBehaviour},
             {"noseyStateBehaviour", noseyStateBehaviour},
-            {"playerAbilityDataBehaviour ", playerAbilityDataBehaviour}
+            {"playerAbilityDataBehaviour", playerAbilityDataBehaviour},
+            {"Grounded_HopData", Grounded_HopData},
+            {"Nosey_HopData", Nosey_HopData},
+            {"Grind_HopData", Grind_HopData}
             };
 
             ComponentCheck.CheckComponents(components, "Bike");
@@ -81,6 +117,59 @@ namespace GuruBMXMod.Gameplay
 
             Physics.gravity = new Vector3(Physics.gravity.x, SettingsManager.CurrentSettings.Gravity, Physics.gravity.z);
         }
+
+        #region Hop Data
+        public void UpdateGroundHopData()
+        {
+            if (Grounded_HopData == null)
+                return;
+
+            if (Grounded_HopData._olliehopDataLarge._hopForce != SettingsManager.CurrentSettings.BMX_Ground_OllieForce)
+            {
+                Grounded_HopData._olliehopDataLarge._hopForce = SettingsManager.CurrentSettings.BMX_Ground_OllieForce;
+            }
+            if (Grounded_HopData._nolliehopDataLarge._hopForce != SettingsManager.CurrentSettings.BMX_Ground_NollieForce)
+            {
+                Grounded_HopData._nolliehopDataLarge._hopForce = SettingsManager.CurrentSettings.BMX_Ground_NollieForce;
+            }
+            if (Grounded_HopData._quickHopData._hopForce != SettingsManager.CurrentSettings.BMX_Ground_QuickHopForce)
+            {
+                Grounded_HopData._quickHopData._hopForce = SettingsManager.CurrentSettings.BMX_Ground_QuickHopForce;
+            }
+        }
+        public void UpdateNoseyHopData()
+        {
+            if (Nosey_HopData == null)
+                return;
+
+            if (Nosey_HopData._olliehopDataLarge._hopForce != SettingsManager.CurrentSettings.BMX_Nosey_OllieForce)
+            {
+                Nosey_HopData._olliehopDataLarge._hopForce = SettingsManager.CurrentSettings.BMX_Nosey_OllieForce;
+            }
+            if (Nosey_HopData._quickHopData._hopForce != SettingsManager.CurrentSettings.BMX_Nosey_QuickHopForce)
+            {
+                Nosey_HopData._quickHopData._hopForce = SettingsManager.CurrentSettings.BMX_Nosey_QuickHopForce;
+            }
+        }
+        public void UpdateGrindHopData()
+        {
+            if (Grind_HopData == null)
+                return;
+
+            if (Grind_HopData._olliehopDataLarge._hopForce != SettingsManager.CurrentSettings.BMX_Grind_OllieForce)
+            {
+                Grind_HopData._olliehopDataLarge._hopForce = SettingsManager.CurrentSettings.BMX_Grind_OllieForce;
+            }
+            if (Grind_HopData._nolliehopDataLarge._hopForce != SettingsManager.CurrentSettings.BMX_Grind_NollieForce)
+            {
+                Grind_HopData._nolliehopDataLarge._hopForce = SettingsManager.CurrentSettings.BMX_Grind_NollieForce;
+            }
+            if (Grind_HopData._quickHopData._hopForce != SettingsManager.CurrentSettings.BMX_Grind_QuickHopForce)
+            {
+                Grind_HopData._quickHopData._hopForce = SettingsManager.CurrentSettings.BMX_Grind_QuickHopForce;
+            }
+        }
+        #endregion
 
         #region BMX
         // Tricks

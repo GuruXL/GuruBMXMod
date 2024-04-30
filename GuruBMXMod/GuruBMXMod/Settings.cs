@@ -47,6 +47,17 @@ namespace GuruBMXMod
         public float Player_MaxVelocityToRagDoll = -13.0f;
         #endregion
 
+        #region HopForces
+        public float BMX_Ground_OllieForce = 4.0f;
+        public float BMX_Ground_NollieForce = 3.0f;
+        public float BMX_Ground_QuickHopForce = 2.5f;
+        public float BMX_Nosey_OllieForce = 4.2f;
+        public float BMX_Nosey_QuickHopForce = 3.2f;
+        public float BMX_Grind_OllieForce = 3.3f;
+        public float BMX_Grind_NollieForce = 3.0f;
+        public float BMX_Grind_QuickHopForce = 2.6f;
+        #endregion
+
         #region BMX
         public bool EnableSimplePedal = false;
         public bool MannyAutoStability = false;

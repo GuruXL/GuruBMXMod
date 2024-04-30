@@ -78,6 +78,51 @@ namespace GuruBMXMod.UI
             SettingsManager.CurrentSettings.Gravity = newValue;
             BMXModController.Instance.UpdateGravity();
         }
+        #region Hop Data
+        //Hop Data
+        public static void UpdateGroundOllie(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_Ground_OllieForce = newValue;
+            BMXModController.Instance.UpdateGroundHopData();
+        }
+        public static void UpdateGroundNollie(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_Ground_NollieForce = newValue;
+            BMXModController.Instance.UpdateGroundHopData();
+        }
+        public static void UpdateGroundQuickHop(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_Ground_QuickHopForce = newValue;
+            BMXModController.Instance.UpdateGroundHopData();
+        }
+        public static void UpdateNoseyOllie(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_Nosey_OllieForce = newValue;
+            BMXModController.Instance.UpdateNoseyHopData();
+        }
+        public static void UpdateNoseyQuickHop(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_Nosey_QuickHopForce = newValue;
+            BMXModController.Instance.UpdateNoseyHopData();
+        }
+        public static void UpdateGrindOllie(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_Grind_OllieForce = newValue;
+            BMXModController.Instance.UpdateGrindHopData();
+        }
+        public static void UpdateGrindNollie(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_Grind_NollieForce = newValue;
+            BMXModController.Instance.UpdateGrindHopData();
+        }
+        public static void UpdateGrindQuickHop(float newValue)
+        {
+            SettingsManager.CurrentSettings.BMX_Grind_QuickHopForce = newValue;
+            BMXModController.Instance.UpdateGrindHopData();
+        }
+        #endregion
+
+        #region Tricks
         //Tricks
         public static void UpdateTrickAnimationSpeed(float newValue)
         {
@@ -100,12 +145,18 @@ namespace GuruBMXMod.UI
             SettingsManager.CurrentSettings.SimpleBMX_MaxPedalVel = newValue;
             BMXModController.Instance.UpdateSimplePedalVelocity();
         }
+        #endregion
+
+        #region Grind
         // Grind
         public static void UpdateGrindHoldForce(float newValue)
         {
             SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce = newValue;
             BMXModController.Instance.UpdateSimpleGrindHoldForce();
         }
+        #endregion
+
+        #region Pumping
         // Pumping
         public static void UpdateSteeringPumpMin(float newValue)
         {
@@ -122,6 +173,9 @@ namespace GuruBMXMod.UI
             SettingsManager.CurrentSettings.SimpleBMX_PumpMinMaxCurveTime = newValue;
             BMXModController.Instance.UpdateSteeringPumpForce();
         }
+        #endregion
+
+        #region Manny
         // Manny
         public static void UpdateMannyMaxAngle(float newValue)
         {
@@ -133,6 +187,8 @@ namespace GuruBMXMod.UI
             SettingsManager.CurrentSettings.BMX_NoseyMaxBailAngle = newValue;
             BMXModController.Instance.updateNoseyMaxBailAngle();
         }
+        #endregion
+
         #endregion
 
         #region DriftBike Stats Sliders

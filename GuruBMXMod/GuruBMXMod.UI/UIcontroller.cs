@@ -45,6 +45,7 @@ namespace GuruBMXMod.UI
 
         //readonly UItab Hopping_Tab = new UItab(true, "Hopping", 13);
         readonly UItab Tricks_Tab = new UItab(true, "Tricks", 13);
+        readonly UItab Hop_Tab = new UItab(true, "Hopping", 13);
         readonly UItab Peddle_Tab = new UItab(true, "Peddle", 13);
         readonly UItab Pumping_Tab = new UItab(true, "Pumping", 13);
         readonly UItab Manny_Tab = new UItab(true, "Manny", 13);
@@ -290,6 +291,45 @@ namespace GuruBMXMod.UI
                     UIextensions.Slider("Perfect Tweak Threshold", UIActionManager.UpdatePerefectTweakThreshold, Color.white, SettingsManager.CurrentSettings.BMX_PerfectTweakThreshold, 0.0f, 1.0f, SettingsManager.DefaultSettings.BMX_PerfectTweakThreshold);
                     GUILayout.EndVertical();
                 }
+                Tabs(Hop_Tab, UIextensions.TabColorSwitch(Hop_Tab));
+                if (!Hop_Tab.isClosed)
+                {
+                    GUILayout.BeginVertical(); // start hop layout
+
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.CenteredLabel("Default");
+                    GUILayout.Space(2);
+                    UIextensions.Slider("Ollie Hop Force", UIActionManager.UpdateGroundOllie, Color.white, SettingsManager.CurrentSettings.BMX_Ground_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_OllieForce);
+                    GUILayout.Space(2);
+                    UIextensions.Slider("Nollie Hop Force", UIActionManager.UpdateGroundNollie, Color.white, SettingsManager.CurrentSettings.BMX_Ground_NollieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_NollieForce);
+                    GUILayout.Space(2);
+                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateGroundQuickHop, Color.white, SettingsManager.CurrentSettings.BMX_Ground_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_QuickHopForce);
+                    GUILayout.Space(2);
+                    GUILayout.EndVertical();
+
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.CenteredLabel("Manny");
+                    GUILayout.Space(2);
+                    UIextensions.Slider("Manny/Nosey Hop Force", UIActionManager.UpdateNoseyOllie, Color.white, SettingsManager.CurrentSettings.BMX_Nosey_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Nosey_OllieForce);
+                    GUILayout.Space(2);
+                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateNoseyQuickHop, Color.white, SettingsManager.CurrentSettings.BMX_Nosey_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Nosey_QuickHopForce);
+                    GUILayout.Space(2);
+                    GUILayout.EndVertical();
+
+                    GUILayout.BeginVertical("Box");
+                    UIextensions.CenteredLabel("Grind");
+                    GUILayout.Space(2);
+                    UIextensions.Slider("Ollie Hop Force", UIActionManager.UpdateGrindOllie, Color.white, SettingsManager.CurrentSettings.BMX_Grind_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_OllieForce);
+                    GUILayout.Space(2);
+                    UIextensions.Slider("Nollie Hop Force", UIActionManager.UpdateGrindNollie, Color.white, SettingsManager.CurrentSettings.BMX_Grind_NollieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_NollieForce);
+                    GUILayout.Space(2);
+                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateGrindQuickHop, Color.white, SettingsManager.CurrentSettings.BMX_Grind_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_QuickHopForce);
+                    GUILayout.Space(2);
+                    GUILayout.EndVertical();
+
+                    GUILayout.EndVertical(); // end hop layout
+
+                }
                 Tabs(Peddle_Tab, UIextensions.TabColorSwitch(Peddle_Tab));
                 if (!Peddle_Tab.isClosed)
                 {
@@ -411,7 +451,6 @@ namespace GuruBMXMod.UI
             GUILayout.BeginVertical("Box");
             UIextensions.Slider("Lobby Size", UIActionManager.UpdateLobbySlider, Color.white, SettingsManager.CurrentSettings.MultiRoomSize, 2, 32, SettingsManager.DefaultSettings.MultiRoomSize);
             GUILayout.EndVertical();
-
 
         }
         

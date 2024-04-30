@@ -23,7 +23,7 @@ namespace GuruBMXMod.Patches
                 SettingsManager.CurrentSettings.MultiRoomSize = (byte)PhotonNetwork.CurrentRoom.MaxPlayers;
                 BMXModNetworkController.Instance.UpdateRoomSize();
 
-                MelonLogger.Msg($"OnJoinRoomPatch Run: Max Players update: {__instance.maxPlayersPerRoom}");
+                //MelonLogger.Msg($"OnJoinRoomPatch Run: Max Players update: {__instance.maxPlayersPerRoom}");
             }
         }
     }

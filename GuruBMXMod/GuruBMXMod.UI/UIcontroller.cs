@@ -187,7 +187,7 @@ namespace GuruBMXMod.UI
             UnlocksUI();
             //CameraUI();
             StatsUI();
-            //MultiUI();
+            MultiUI();
             CycleUI();
         }
        
@@ -401,7 +401,7 @@ namespace GuruBMXMod.UI
             }
             GUILayout.EndVertical();
         }
-
+        
         private void MultiUI()
         {
             Tabs(Multi_Tab, UIextensions.TabColorSwitch(Multi_Tab));
@@ -409,11 +409,12 @@ namespace GuruBMXMod.UI
                 return;
 
             GUILayout.BeginVertical("Box");
-            UIextensions.Slider("Lobby Size", UIActionManager.UpdateLobbySlider, Color.white, SettingsManager.CurrentSettings.MultiRoomSize, 2, 16, SettingsManager.DefaultSettings.MultiRoomSize);
+            UIextensions.Slider("Lobby Size", UIActionManager.UpdateLobbySlider, Color.white, SettingsManager.CurrentSettings.MultiRoomSize, 2, 32, SettingsManager.DefaultSettings.MultiRoomSize);
             GUILayout.EndVertical();
 
 
         }
+        
         private void CycleUI()
         {
             Tabs(Cycle_Tab, UIextensions.TabColorSwitch(Cycle_Tab));

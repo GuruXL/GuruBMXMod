@@ -2,6 +2,7 @@
 using Il2Cpp;
 using Il2CppCom.MyCompany.MyGame;
 using Il2CppPhoton.Pun;
+using Il2CppPhoton.Realtime;
 using MelonLoader;
 using System.Reflection;
 using System.Security.AccessControl;
@@ -13,11 +14,12 @@ namespace GuruBMXMod.Multi
     
     public class BMXModNetworkController
     {
-        /*
+        
         public static BMXModNetworkController __instance { get; private set; }
         public static BMXModNetworkController Instance => __instance ?? (__instance = new BMXModNetworkController());
 
         private NetworkRoomInfo roomInfo;
+        //private NetworkingSessionScriptableObject networkSession;
 
         public void GetNetworkComponenets()
         {
@@ -25,6 +27,7 @@ namespace GuruBMXMod.Multi
             try
             {
                 roomInfo = PUNManager.Instance.transform.parent.gameObject.GetComponentInChildren<NetworkRoomInfo>();
+                //networkSession = UnityEngine.Object.FindObjectOfType<NetworkingSessionScriptableObject>();
 
             }
             catch (Exception ex)
@@ -42,6 +45,7 @@ namespace GuruBMXMod.Multi
             Dictionary<string, object> components = new Dictionary<string, object>
             {
             {"roomInfo", roomInfo},
+            //{"networkSession", networkSession}
             };
 
             ComponentCheck.CheckComponents(components, "Network");
@@ -56,29 +60,24 @@ namespace GuruBMXMod.Multi
                     {
                         PUNManager.Instance.maxPlayersPerRoom = SettingsManager.CurrentSettings.MultiRoomSize;
                     }
-                    if (Launcher.Instance.maxPlayersPerRoom != SettingsManager.CurrentSettings.MultiRoomSize)
-                    {
-                        Launcher.Instance.maxPlayersPerRoom = SettingsManager.CurrentSettings.MultiRoomSize;
-                    }
-                    if (PUNManager.Instance.isConnected && roomInfo.currentSessionInfo != null)
+                    if (roomInfo.currentSessionInfo._maxPlayers != SettingsManager.CurrentSettings.MultiRoomSize)
                     {
                         roomInfo.currentSessionInfo.SetMaxPlayers(SettingsManager.CurrentSettings.MultiRoomSize);
                         //MelonLogger.Msg($"Room Info Updated: Max Players:{roomInfo.currentSessionInfo._maxPlayers}");
                     }
-                    
-                    //if (PUNManager.Instance._clientNetworkingPlayerData._currentSession._maxPlayers != SettingsManager.CurrentSettings.MultiRoomSize)
+                    //if (networkSession._maxPlayers != SettingsManager.CurrentSettings.MultiRoomSize)
                     //{
-                    //    PUNManager.Instance._clientNetworkingPlayerData._currentSession.SetMaxPlayers(SettingsManager.CurrentSettings.MultiRoomSize);
+                    //    networkSession.SetMaxPlayers(SettingsManager.CurrentSettings.MultiRoomSize);
+                    //    MelonLogger.Msg($"Network Session Updated: Max Players:{networkSession._maxPlayers}");
                     //}
-                    
+
                 }
             }
             catch (Exception ex)
             {
-                MelonLogger.Msg("Exception Updating Room Size: " + ex.Message + ex.Source + ex.Data);
+                MelonLogger.Msg("Exception Updating Room Size: " + ex.Message + ex.Source + ex.TargetSite);
             }
 
         }
-        */
     }
 }

@@ -22,7 +22,7 @@ namespace GuruBMXMod.UI
             }
             return TabColor;
         }
-        public static string TabFontSwitch(UItab Tab)
+        public static void TabFontSwitch(UItab Tab)
         {
             switch (!Tab.isClosed)
             {
@@ -34,7 +34,6 @@ namespace GuruBMXMod.UI
                     Tab.font = Tab.font - 2;
                     break;
             }
-            return TabColor;
         }
         public static Color ButtonColorSwitch(bool toggle)
         {

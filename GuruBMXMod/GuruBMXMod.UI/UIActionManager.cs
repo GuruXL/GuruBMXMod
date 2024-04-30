@@ -190,6 +190,7 @@ namespace GuruBMXMod.UI
 
         #region NetworkSliders
         // Network Sliders
+        
         public static void UpdateLobbySlider(float newValue)
         {
             byte bytevalue = (byte)newValue;
@@ -197,6 +198,7 @@ namespace GuruBMXMod.UI
             SettingsManager.CurrentSettings.MultiRoomSize = bytevalue;
             BMXModNetworkController.Instance.UpdateRoomSize();
         }
+        
         #endregion
 
         #region TimeOfDay Sliders

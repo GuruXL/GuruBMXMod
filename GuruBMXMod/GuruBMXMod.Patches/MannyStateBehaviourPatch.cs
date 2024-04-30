@@ -12,7 +12,7 @@ namespace GuruBMXMod.Patches
 {
 
     [HarmonyPatch(typeof(MannyStateBehaviour), "OnStateEnter")]
-    public class MannyOnStateEnterPatch
+    public static class MannyOnStateEnterPatch
     {
         static void Postfix(int lastState, MannyStateBehaviour __instance)
         {
@@ -30,7 +30,7 @@ namespace GuruBMXMod.Patches
     }
 
     [HarmonyPatch(typeof(MannyStateBehaviour), "OnStateExit")]
-    public class MannyOnStateExitPatch
+    public static class MannyOnStateExitPatch
     {
         static void Postfix(int nextState, MannyStateBehaviour __instance)
         {
@@ -40,7 +40,7 @@ namespace GuruBMXMod.Patches
     }
 
     [HarmonyPatch(typeof(NoseyStateBehaviour), "OnStateEnter")]
-    public class NoseyOnStateEnterPatch
+    public static class NoseyOnStateEnterPatch
     {
         static void Postfix(int lastState, NoseyStateBehaviour __instance)
         {
@@ -58,7 +58,7 @@ namespace GuruBMXMod.Patches
     }
 
     [HarmonyPatch(typeof(NoseyStateBehaviour), "OnStateExit")]
-    public class NoseyOnStateExitPatch
+    public static class NoseyOnStateExitPatch
     {
         static void Postfix(int nextState, NoseyStateBehaviour __instance)
         {

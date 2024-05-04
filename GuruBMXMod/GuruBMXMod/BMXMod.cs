@@ -17,7 +17,7 @@ namespace GuruBMXMod
         public const string Description = "Mod for BMX Streets"; // Description for the Mod.  (Set as null if none)
         public const string Author = "Guru"; // Author of the Mod.  (MUST BE SET)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "0.0.3"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "0.0.4"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
@@ -25,22 +25,24 @@ namespace GuruBMXMod
     {
         private HarmonyLib.Harmony harmonyInstance;
 
-        private GameObject ScriptManager;
+        //public GameObject ScriptManager;
 
         private UIcontroller uiController;
+        private VFXController vfxController;
 
         public override void OnInitializeMelon()
         {
             InitHarmony();
-
             //MelonLogger.Msg("OnInitializeMelon Success");
         }
         public override void OnLateInitializeMelon() // Runs after OnApplicationStart.
         {
             try
             {
+                LoadAssetBundles();
                 CreateScriptManager();
                 LoadUI();
+                //AddScriptsToManager();
             }
             catch (Exception ex)
             {
@@ -89,6 +91,7 @@ namespace GuruBMXMod
         }
         public override void OnApplicationQuit() // Runs when the Game is told to Close.
         {
+            UnloadAssetBundles();
             UnpatchHarmony();
             //MelonLogger.Msg("OnApplicationQuit");
         }
@@ -100,49 +103,6 @@ namespace GuruBMXMod
         {
             //MelonLogger.Msg("OnPreferencesLoaded");
         }
-
-        private void LoadUI()
-        {
-            uiController = new UIcontroller();
-
-            if (uiController != null)
-            {
-                MelonLogger.Msg("Loaded");
-            }
-            else
-            {
-                if (uiController == null)
-                {
-                    MelonLogger.Msg("UI Failed to Load");
-                }
-            }
-        }
-
-        private void CreateScriptManager()
-        {
-            if (ScriptManager == null)
-            {
-                ScriptManager = new GameObject("Guru BMX Mod");
-                UnityEngine.Object.DontDestroyOnLoad(ScriptManager);
-                MelonLogger.Msg("ScriptManager Created");
-            }
-        }
-        private void CheckForModdedMap(int buildindex)
-        {
-            if (buildindex == -1)
-            {
-                SettingsManager.CurrentSettings.IsModMap = true;
-                MelonLogger.Msg($"IsModded Map: {SettingsManager.CurrentSettings.IsModMap}");
-            }
-            else
-            {
-                if (SettingsManager.CurrentSettings.IsModMap)
-                {
-                    SettingsManager.CurrentSettings.IsModMap = false;
-                }
-            }
-        }
-
         private void InitHarmony()
         {
             try
@@ -179,7 +139,6 @@ namespace GuruBMXMod
                 MelonLogger.Msg("Exception Unpatching Hamony: " + ex.Message);
             }
         }
-
         private void GetModComponents(int buildindex, string sceneName)
         {
             try
@@ -217,7 +176,76 @@ namespace GuruBMXMod
             {
                 MelonLogger.Msg("OnSceneWasLoaded exception: " + ex.Message);
             }
+        }
+        private void CheckForModdedMap(int buildindex)
+        {
+            if (buildindex == -1)
+            {
+                SettingsManager.CurrentSettings.IsModMap = true;
+                MelonLogger.Msg($"IsModded Map: {SettingsManager.CurrentSettings.IsModMap}");
+            }
+            else
+            {
+                if (SettingsManager.CurrentSettings.IsModMap)
+                {
+                    SettingsManager.CurrentSettings.IsModMap = false;
+                }
+            }
+        }
+        private void LoadAssetBundles()
+        {
+            AssetLoader.LoadBundles();
+        }
+        private void UnloadAssetBundles()
+        {
+            AssetLoader.UnloadAssetBundle();
+        }
 
+        private void LoadUI()
+        {
+            uiController = new UIcontroller();
+
+            if (uiController != null)
+            {
+                MelonLogger.Msg("Loaded");
+            }
+            else
+            {
+                if (uiController == null)
+                {
+                    MelonLogger.Msg("UI Failed to Load");
+                }
+            }
+        }   
+        private void CreateScriptManager()
+        {
+            if (AssetLoader.ScriptManager == null)
+            {
+                AssetLoader.ScriptManager = new GameObject("Guru BMX Mod");
+                UnityEngine.Object.DontDestroyOnLoad(AssetLoader.ScriptManager);
+                MelonLogger.Msg("ScriptManager Created");
+            }
+        }
+        private void AddScriptsToManager()
+        {
+            if (AssetLoader.ScriptManager == null)
+            {
+                MelonLogger.Msg("ScriptManager NOT Loaded");
+                return;
+            }
+            else
+            {
+                vfxController = AssetLoader.ScriptManager.gameObject.AddComponent<VFXController>();
+
+                if (vfxController != null)
+                {
+                    MelonLogger.Msg("VFXController Added");
+                }
+                else
+                {
+                    MelonLogger.Msg("VFXController Failed to Add");
+                }
+            }
         }
     }
 }

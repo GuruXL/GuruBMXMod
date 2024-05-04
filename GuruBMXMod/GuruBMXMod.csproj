@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\bmxweatherdata" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bmxweatherdata" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\net6\0Harmony.dll</HintPath>
     </Reference>
@@ -157,6 +165,12 @@
     <Reference Include="UnityEngine.VFXModule">
       <HintPath>D:\SteamLibrary\steamapps\common\BMX Streets\MelonLoader\Il2CppAssemblies\UnityEngine.VFXModule.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Link.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -28,7 +28,7 @@ namespace GuruBMXMod
         //public GameObject ScriptManager;
 
         private UIcontroller uiController;
-        private VFXController vfxController;
+        //private VFXController vfxController;
 
         public override void OnInitializeMelon()
         {
@@ -42,7 +42,8 @@ namespace GuruBMXMod
                 LoadAssetBundles();
                 CreateScriptManager();
                 LoadUI();
-                //AddScriptsToManager();
+                //LoadVFX();
+                VFXController.Instance.LoadVFXAssets();
             }
             catch (Exception ex)
             {
@@ -207,7 +208,7 @@ namespace GuruBMXMod
 
             if (uiController != null)
             {
-                MelonLogger.Msg("Loaded");
+                MelonLogger.Msg("UI Loaded");
             }
             else
             {
@@ -216,7 +217,27 @@ namespace GuruBMXMod
                     MelonLogger.Msg("UI Failed to Load");
                 }
             }
-        }   
+        } 
+        /*
+        private void LoadVFX()
+        {
+            vfxController = new VFXController();
+
+            if (vfxController != null)
+            {
+                vfxController.LoadVFXAssets();
+                MelonLogger.Msg("VFX controller Loaded");
+            }
+            else
+            {
+                if (vfxController == null)
+                {
+                    MelonLogger.Msg("VFX controller Failed to Load");
+                }
+            }
+
+        }
+        */
         private void CreateScriptManager()
         {
             if (AssetLoader.ScriptManager == null)
@@ -224,27 +245,6 @@ namespace GuruBMXMod
                 AssetLoader.ScriptManager = new GameObject("Guru BMX Mod");
                 UnityEngine.Object.DontDestroyOnLoad(AssetLoader.ScriptManager);
                 MelonLogger.Msg("ScriptManager Created");
-            }
-        }
-        private void AddScriptsToManager()
-        {
-            if (AssetLoader.ScriptManager == null)
-            {
-                MelonLogger.Msg("ScriptManager NOT Loaded");
-                return;
-            }
-            else
-            {
-                vfxController = AssetLoader.ScriptManager.gameObject.AddComponent<VFXController>();
-
-                if (vfxController != null)
-                {
-                    MelonLogger.Msg("VFXController Added");
-                }
-                else
-                {
-                    MelonLogger.Msg("VFXController Failed to Add");
-                }
             }
         }
     }

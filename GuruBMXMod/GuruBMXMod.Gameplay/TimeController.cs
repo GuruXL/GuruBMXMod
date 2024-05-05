@@ -21,6 +21,8 @@ namespace GuruBMXMod.Gameplay
         public static TimeController __instance { get; private set; }
         public static TimeController Instance => __instance ?? (__instance = new TimeController());
 
+        public static bool timeComponentsLoaded { get; private set; } = false;
+
 
         public TimeOfDayManager todManager;
 
@@ -65,7 +67,10 @@ namespace GuruBMXMod.Gameplay
             {"todVolume", todVolume},
             };
 
-            ComponentCheck.CheckComponents(components, "Time");
+            if (ComponentCheck.CheckComponents(components, "Time"))
+            {
+                timeComponentsLoaded = true;
+            }
         }
         private Volume GetTODVolume()
         {

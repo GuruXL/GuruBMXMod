@@ -33,11 +33,11 @@ namespace GuruBMXMod.Utils
         */
         public static byte[] ExtractResources(string filename)
         {
-            // Optional: Log all resource names for debugging
-            foreach (string resourceName in Assembly.GetExecutingAssembly().GetManifestResourceNames())
-            {
-                MelonLogger.Msg(resourceName);
-            }
+            // Log all resource names for debugging
+            //foreach (string resourceName in Assembly.GetExecutingAssembly().GetManifestResourceNames())
+            //{
+            //    MelonLogger.Msg(resourceName);
+            //}
 
             using (Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filename))
             {

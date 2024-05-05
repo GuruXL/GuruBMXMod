@@ -18,6 +18,8 @@ namespace GuruBMXMod.Multi
         public static BMXModNetworkController __instance { get; private set; }
         public static BMXModNetworkController Instance => __instance ?? (__instance = new BMXModNetworkController());
 
+        public static bool networkComponentsLoaded { get; private set; } = false;
+
         private NetworkRoomInfo roomInfo;
         //private NetworkingSessionScriptableObject networkSession;
 
@@ -48,7 +50,10 @@ namespace GuruBMXMod.Multi
             //{"networkSession", networkSession}
             };
 
-            ComponentCheck.CheckComponents(components, "Network");
+            if (ComponentCheck.CheckComponents(components, "Network"))
+            {
+                networkComponentsLoaded = true;
+            }
         }
         public void UpdateRoomSize()
         {

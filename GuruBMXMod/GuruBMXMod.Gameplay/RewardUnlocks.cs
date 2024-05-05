@@ -15,6 +15,8 @@ namespace GuruBMXMod.Gameplay
         public static RewardUnlocks __instance { get; private set; }
         public static RewardUnlocks Instance => __instance ?? (__instance = new RewardUnlocks());
 
+        public static bool smartComponentsLoaded { get; private set; } = false;
+
         //public RewardNotificatonBehaviour rewardsBehavior;
         public RewardContainerBehaviour rewardsBehavior;
         public UnityGameEventListener unlockRewardListener;
@@ -52,7 +54,10 @@ namespace GuruBMXMod.Gameplay
             {"lockRewardListener", lockRewardListener},
             };
 
-            ComponentCheck.CheckComponents(components, "Smart Data");
+            if (ComponentCheck.CheckComponents(components, "Smart Data"))
+            {
+                smartComponentsLoaded = true;
+            }
         }
         private void GetRewardListeners()
         {

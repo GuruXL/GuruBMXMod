@@ -15,6 +15,8 @@ namespace GuruBMXMod.Gameplay
         public static PlayerController __instance { get; private set; }
         public static PlayerController Instance => __instance ?? (__instance = new PlayerController());
 
+        public static bool playerComponentsLoaded { get; private set; } = false;
+
         // Player
         private FreeRunningPlayerManager freeRunPlayerManager;
         private JumpAbility jumpAbility;
@@ -51,7 +53,10 @@ namespace GuruBMXMod.Gameplay
             {"getUpAbility", getUpAbility}
             };
 
-            ComponentCheck.CheckComponents(components, "Player");
+            if (ComponentCheck.CheckComponents(components, "Player"))
+            {
+                playerComponentsLoaded = true;
+            }
         }
 
         public void UpdatePlayerAnimationSpeed()

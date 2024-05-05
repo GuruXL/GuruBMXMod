@@ -16,6 +16,8 @@ namespace GuruBMXMod.Gameplay
         public static BMXModController __instance { get; private set; }
         public static BMXModController Instance => __instance ?? (__instance = new BMXModController());
 
+        public static bool bmxComponentsLoaded { get; private set; } = false;
+
         // BMX
         private PlayerAbilityDataBehaviour playerAbilityDataBehaviour;
         private BMXAnimationControl animationControl;
@@ -107,7 +109,10 @@ namespace GuruBMXMod.Gameplay
             {"Grind_HopData", Grind_HopData}
             };
 
-            ComponentCheck.CheckComponents(components, "Bike");
+            if (ComponentCheck.CheckComponents(components, "Bike"))
+            {
+                bmxComponentsLoaded = true;
+            }
         }
 
         public void UpdateGravity()

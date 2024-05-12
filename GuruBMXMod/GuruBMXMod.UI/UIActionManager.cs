@@ -19,6 +19,9 @@ namespace GuruBMXMod.UI
         }
         public static void ToggleSimplePedal(bool enabled)
         {
+            if (enabled == SettingsManager.CurrentSettings.EnableSimplePedal)
+                return;
+
             SettingsManager.CurrentSettings.EnableSimplePedal = enabled;
             BMXModController.Instance.ToggleSimplePedal();
         }
@@ -29,28 +32,43 @@ namespace GuruBMXMod.UI
         // Rewards
         public static void UnlockStars(bool enabled)
         {
+            if (enabled == SettingsManager.CurrentSettings.UnlockStars)
+                return;
+
             SettingsManager.CurrentSettings.UnlockStars = enabled;
             RewardUnlocks.Instance.UnlockStars("All", SettingsManager.CurrentSettings.UnlockStars);
         }
         public static void UnlockRewards(bool enabled)
         {
+            if (enabled == SettingsManager.CurrentSettings.UnlockRewards)
+                return;
+
             SettingsManager.CurrentSettings.UnlockRewards = enabled;
             RewardUnlocks.Instance.UnlockRewards(SettingsManager.CurrentSettings.UnlockRewards);
         }         
         // VFX
         public static void ToggleRain(bool enabled)
         {
+            if (enabled == SettingsManager.CurrentSettings.rainEnabled)
+                return;
+
             SettingsManager.CurrentSettings.rainEnabled = enabled;
             VFXController.Instance.ToggleRain(SettingsManager.CurrentSettings.rainEnabled);
         }
         public static void ToggleSnow(bool enabled)
         {
+            if (enabled == SettingsManager.CurrentSettings.snowEnabled)
+                return;
+
             SettingsManager.CurrentSettings.snowEnabled = enabled;
             VFXController.Instance.ToggleSnow(SettingsManager.CurrentSettings.snowEnabled);
         }
         // Time of Day
         public static void EnableCycle(bool enabled)
         {
+            if (enabled == SettingsManager.CurrentSettings.EnableCycle)
+                return;
+
             SettingsManager.CurrentSettings.EnableCycle = enabled;
             TimeController.Instance.EnableDayNightCycle(SettingsManager.CurrentSettings.EnableCycle);
         }

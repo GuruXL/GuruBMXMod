@@ -8,6 +8,7 @@ using GuruBMXMod.Multi;
 using GuruBMXMod.Utils;
 using GuruBMXMod.Patches;
 using GuruBMXMod.Gameplay;
+using UnityEngine.UIElements;
 
 namespace GuruBMXMod
 {
@@ -29,6 +30,7 @@ namespace GuruBMXMod
         public override void OnInitializeMelon()
         {
             InitHarmony();
+            SettingsManager.CreateSettingsFolder();
             //MelonLogger.Msg("OnInitializeMelon Success");
         }
         public override void OnLateInitializeMelon()
@@ -38,12 +40,12 @@ namespace GuruBMXMod
                 LoadAssetBundles();
                 CreateScriptManager();
                 LoadUI();
-                //LoadVFX();
                 VFXController.Instance.LoadVFXAssets();
+                SettingsManager.LoadSettings();
             }
             catch (Exception ex)
             {
-                MelonLogger.Msg("Failed Load Exception: " + ex.Message);
+                MelonLogger.Error("Failed Load Exception: " + ex.Message + ex.Source);
             }
         }
         public override void OnSceneWasLoaded(int buildindex, string sceneName)
@@ -88,12 +90,13 @@ namespace GuruBMXMod
         }
         public override void OnApplicationQuit()
         {
+            SettingsManager.SaveSettings();
             UnloadAssetBundles();
             UnpatchHarmony();
         }
         public override void OnPreferencesSaved()
         {
-            //MelonLogger.Msg("OnPreferencesSaved");
+            //SettingsManager.SaveSettings();
         }
         public override void OnPreferencesLoaded()
         {
@@ -112,18 +115,13 @@ namespace GuruBMXMod
             }
             catch (Exception ex)
             {
-                MelonLogger.Msg("Exception Creating Harmony Instance: " + ex.Message);
+                MelonLogger.Error("Exception Creating Harmony Instance: " + ex.Message);
             }
             finally
             {
                 if (harmonyInstance != null)
                 {
                     MelonLogger.Msg("Harmony Instance Created");
-
-                    // Remove These after Testing ******
-                    MelonLogger.BigError("Name Section", "Big Error Test");
-                    MelonLogger.Error("Normal Error Test");
-                    MelonLogger.Warning("Warning Test");
                 }
             }
         }
@@ -139,7 +137,7 @@ namespace GuruBMXMod
             }
             catch (Exception ex)
             {
-                MelonLogger.Msg("Exception Unpatching Hamony: " + ex.Message);
+                MelonLogger.Error("Exception Unpatching Hamony: " + ex.Message);
             }
         }
         private void GetModComponents(int buildindex, string sceneName)
@@ -165,6 +163,10 @@ namespace GuruBMXMod
                 {
                     BMXModNetworkController.Instance.GetNetworkComponenets();
                 }
+                else if (buildindex == 18 || sceneName == "Background Full Production") // Last scene to Load so spply settings here
+                {
+                    SettingsManager.ApplySettings();
+                }
                 else if (buildindex == -1)
                 {
                     TimeController.Instance.GetModMapComponents(sceneName);
@@ -177,7 +179,7 @@ namespace GuruBMXMod
             }
             catch (Exception ex)
             {
-                MelonLogger.Msg("OnSceneWasLoaded exception: " + ex.Message);
+                MelonLogger.Error("OnSceneWasLoaded exception: " + ex.Message);
             }
         }
         private void CheckForModdedMap(int buildindex)
@@ -216,7 +218,7 @@ namespace GuruBMXMod
             {
                 if (uiController == null)
                 {
-                    MelonLogger.Msg("UI Failed to Load");
+                    MelonLogger.Error("UI Failed to Load");
                 }
             }
         } 

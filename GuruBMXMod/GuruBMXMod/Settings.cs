@@ -3,12 +3,21 @@ using UnityEngine;
 
 namespace GuruBMXMod
 {
+    public class SimpleSettings
+    {
+        public bool ModEnabled = true;
+        public float Gravity = -9.81f;
+    }
+
+    [Serializable]
     public class Settings
     {
         public Settings Clone()
         {
             return (Settings)MemberwiseClone();
         }
+
+        public Settings() { } // Ensure a parameterless constructor exists
 
         public Color BGColor = new Color(0.85f, 0.90f, 1.0f);
 

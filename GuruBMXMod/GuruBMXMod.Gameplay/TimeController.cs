@@ -23,12 +23,11 @@ namespace GuruBMXMod.Gameplay
 
         public static bool timeComponentsLoaded { get; private set; } = false;
 
-
         public TimeOfDayManager todManager;
 
         public MGModMapManager modMapManger;
 
-        private Volume todVolume;
+        //private Volume todVolume;
         public Bloom todBloom;
         public IndirectLightingController todIndirectLight;
 
@@ -39,7 +38,7 @@ namespace GuruBMXMod.Gameplay
             {
                 todManager = UnityEngine.Object.FindObjectOfType<TimeOfDayManager>();
 
-                todVolume = GetTODVolume();
+                //todVolume = GetTODVolume();
 
                 /*
                 if (todVolume != null)
@@ -63,8 +62,8 @@ namespace GuruBMXMod.Gameplay
             // Creating a dictionary for dynamic checking
             Dictionary<string, object> components = new Dictionary<string, object>
             {
-            {"todManager", todManager},
-            {"todVolume", todVolume},
+            {"todManager", todManager}
+            //{"todVolume", todVolume}
             };
 
             if (ComponentCheck.CheckComponents(components, "Time"))
@@ -103,24 +102,25 @@ namespace GuruBMXMod.Gameplay
             }
         }
 
-        public void PlayCycle(bool enabled)
+        private void PlayCycle(bool enabled)
         {
             todManager.isPlaying = enabled;
         }
-        public void ToggleModMapLighting(bool enabled)
+        private void ToggleModMapLighting(bool enabled)
         {
             modMapManger.EnableDisableLightingObjects(!enabled);
             todManager.transform.parent.gameObject.SetActive(enabled);
         }
-        public void RemoveMenuListeners()
+        private void RemoveMenuListeners()
         {
             modMapManger.OnClosePauseMenu.OnRaise.RemoveAllListeners();
         }
+
         public void EnableDayNightCycle(bool enabled)
         {
             PlayCycle(enabled);
 
-            if (!SettingsManager.CurrentSettings.IsModMap)
+            if (!SettingsManager.IsModMap)
                 return;
 
             if (modMapManger == null)
@@ -140,6 +140,9 @@ namespace GuruBMXMod.Gameplay
                 modMapManger.enabled = true;
             }
         }
+
+
+        #region TOD Updates
         public void UpdateTimeOfDay()
         {
             if (todManager.timeOfDay == SettingsManager.CurrentSettings.TimeOfDay)
@@ -147,6 +150,7 @@ namespace GuruBMXMod.Gameplay
 
             todManager.SetTimeOfDay(SettingsManager.CurrentSettings.TimeOfDay);
         }
+
         public void UpdateTimeBetweenSkyUpdates()
         {
             if (todManager.timeBetweenSkyUpdates == SettingsManager.CurrentSettings.TimeBetweenSkyUpdates)
@@ -170,6 +174,8 @@ namespace GuruBMXMod.Gameplay
 
             todManager._updateShadowsTime = SettingsManager.CurrentSettings.ShadowUpdateTime;
         }
+        #endregion
+
         /*
         public void SetSunIntensity()
         {

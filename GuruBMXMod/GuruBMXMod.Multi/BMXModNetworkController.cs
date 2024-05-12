@@ -11,7 +11,6 @@ using UnityEngine.PlayerLoop;
 
 namespace GuruBMXMod.Multi
 {
-    
     public class BMXModNetworkController
     {
         
@@ -55,6 +54,7 @@ namespace GuruBMXMod.Multi
                 networkComponentsLoaded = true;
             }
         }
+
         public void UpdateRoomSize()
         {
             try
@@ -71,12 +71,6 @@ namespace GuruBMXMod.Multi
                         roomInfo.currentSessionInfo.SetMaxPlayers((byte)SettingsManager.CurrentSettings.MultiRoomSize);
                         //MelonLogger.Msg($"Room Info Updated: Max Players:{roomInfo.currentSessionInfo._maxPlayers}");
                     }
-                    //if (networkSession._maxPlayers != SettingsManager.CurrentSettings.MultiRoomSize)
-                    //{
-                    //    networkSession.SetMaxPlayers(SettingsManager.CurrentSettings.MultiRoomSize);
-                    //    MelonLogger.Msg($"Network Session Updated: Max Players:{networkSession._maxPlayers}");
-                    //}
-
                 }
             }
             catch (Exception ex)

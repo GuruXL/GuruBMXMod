@@ -14,12 +14,6 @@ namespace GuruBMXMod
 
         public bool ModEnabled = false;
 
-        public bool IsModMap = false;
-
-        public bool SessionMarkerSwapped = false;
-
-        public bool DisableBail = false;
-
         #region Rewards
         public bool UnlockStars = false;
         public bool UnlockRewards = false;
@@ -27,8 +21,9 @@ namespace GuruBMXMod
 
         public float Gravity = -12.5f;
 
+        public bool DisableBail = false;
+
         #region Multiplayer
-        //public byte MultiRoomSize = 4;
         public float MultiRoomSize = 4.0f;
         #endregion
 

@@ -24,18 +24,14 @@ namespace GuruBMXMod
     public class BMXMod : MelonMod
     {
         private HarmonyLib.Harmony harmonyInstance;
-
-        //public GameObject ScriptManager;
-
         private UIcontroller uiController;
-        //private VFXController vfxController;
 
         public override void OnInitializeMelon()
         {
             InitHarmony();
             //MelonLogger.Msg("OnInitializeMelon Success");
         }
-        public override void OnLateInitializeMelon() // Runs after OnApplicationStart.
+        public override void OnLateInitializeMelon()
         {
             try
             {
@@ -49,15 +45,13 @@ namespace GuruBMXMod
             {
                 MelonLogger.Msg("Failed Load Exception: " + ex.Message);
             }
-
-            //MelonLogger.Msg("OnApplicationLateStart");
         }
-        public override void OnSceneWasLoaded(int buildindex, string sceneName) // Runs when a Scene has Loaded and is passed the Scene's Build Index and Name.
+        public override void OnSceneWasLoaded(int buildindex, string sceneName)
         {
             CheckForModdedMap(buildindex);
             //MelonLogger.Msg("OnSceneWasLoaded: " + buildindex.ToString() + " | " + sceneName);
         }
-        public override void OnSceneWasInitialized(int buildindex, string sceneName) // Runs when a Scene has Initialized and is passed the Scene's Build Index and Name.
+        public override void OnSceneWasInitialized(int buildindex, string sceneName)
         {
             GetModComponents(buildindex, sceneName);
             //MelonLogger.Msg("OnSceneWasInitialized: " + buildindex.ToString() + " | " + sceneName);
@@ -66,7 +60,7 @@ namespace GuruBMXMod
         {
             // MelonLogger.Msg("OnSceneWasUnloaded: " + buildIndex.ToString() + " | " + sceneName);
         }
-        public override void OnUpdate() // Runs once per frame.
+        public override void OnUpdate()
         {
             if (uiController != null)
             {
@@ -75,7 +69,7 @@ namespace GuruBMXMod
 
             if (SettingsManager.CurrentSettings.ModEnabled)
             {
-                VFXController.Instance.RunUpdate(CameraController.Instance.mainCam);
+                VFXController.Instance.RunUpdate();
             }  
         }
         public override void OnFixedUpdate()
@@ -125,6 +119,11 @@ namespace GuruBMXMod
                 if (harmonyInstance != null)
                 {
                     MelonLogger.Msg("Harmony Instance Created");
+
+                    // Remove These after Testing ******
+                    MelonLogger.BigError("Name Section", "Big Error Test");
+                    MelonLogger.Error("Normal Error Test");
+                    MelonLogger.Warning("Warning Test");
                 }
             }
         }
@@ -135,6 +134,7 @@ namespace GuruBMXMod
                 if (harmonyInstance != null)
                 {
                     harmonyInstance.UnpatchSelf();
+                    MelonLogger.Msg("Hamony Instance Unpatched");
                 }
             }
             catch (Exception ex)
@@ -184,14 +184,14 @@ namespace GuruBMXMod
         {
             if (buildindex == -1)
             {
-                SettingsManager.CurrentSettings.IsModMap = true;
-                MelonLogger.Msg($"IsModded Map: {SettingsManager.CurrentSettings.IsModMap}");
+                SettingsManager.IsModMap = true;
+                MelonLogger.Msg($"IsModded Map: {SettingsManager.IsModMap}");
             }
             else
             {
-                if (SettingsManager.CurrentSettings.IsModMap)
+                if (SettingsManager.IsModMap)
                 {
-                    SettingsManager.CurrentSettings.IsModMap = false;
+                    SettingsManager.IsModMap = false;
                 }
             }
         }
@@ -220,26 +220,6 @@ namespace GuruBMXMod
                 }
             }
         } 
-        /*
-        private void LoadVFX()
-        {
-            vfxController = new VFXController();
-
-            if (vfxController != null)
-            {
-                vfxController.LoadVFXAssets();
-                MelonLogger.Msg("VFX controller Loaded");
-            }
-            else
-            {
-                if (vfxController == null)
-                {
-                    MelonLogger.Msg("VFX controller Failed to Load");
-                }
-            }
-
-        }
-        */
         private void CreateScriptManager()
         {
             if (AssetLoader.ScriptManager == null)

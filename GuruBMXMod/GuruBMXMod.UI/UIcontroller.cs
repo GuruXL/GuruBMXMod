@@ -44,7 +44,7 @@ namespace GuruBMXMod.UI
 
         readonly UItab Player_Tab = new UItab(true, "Player", 14);
         readonly UItab BMX_Tab = new UItab(true, "BMX", 14);
-        readonly UItab DriftBike_Tab = new UItab(true, "Drift Bike", 14);
+        readonly UItab DriftBike_Tab = new UItab(true, "Drift Trike", 14);
 
         //readonly UItab Hopping_Tab = new UItab(true, "Hopping", 13);
         readonly UItab Tricks_Tab = new UItab(true, "Tricks", 13);
@@ -175,7 +175,7 @@ namespace GuruBMXMod.UI
             if (!showUI)
                 return;
             GUI.backgroundColor = SettingsManager.CurrentSettings.BGColor;
-            MainWindowRect = GUILayout.Window(387456, MainWindowRect, (GUI.WindowFunction)MainWindow, $"<b> {BuildInfo.Name} <i> v.{BuildInfo.Version}</i> </b>");
+            MainWindowRect = GUILayout.Window(387456, MainWindowRect, (GUI.WindowFunction)MainWindow, $"<b>{BuildInfo.Name}</b>  <i>v.{BuildInfo.Version}</i>");
         }
 
         // Creates the GUI window
@@ -198,7 +198,7 @@ namespace GuruBMXMod.UI
         private void MainUI()
         {
             GUILayout.BeginHorizontal();
-            UIextensions.FlexableButton(SettingsManager.CurrentSettings.ModEnabled ? "<b> Enabled </b>" : "<b><color=#171717> Disabled </color></b>", UIActionManager.MainToggle, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.ModEnabled));
+            UIextensions.FlexableToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.ModEnabled, "Enabled", "Disabled"), SettingsManager.CurrentSettings.ModEnabled, UIActionManager.MainToggle, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.ModEnabled));
             GUILayout.EndHorizontal();
 
             if (!SettingsManager.CurrentSettings.ModEnabled)
@@ -231,13 +231,13 @@ namespace GuruBMXMod.UI
             GUILayout.BeginHorizontal();
             GUILayout.Label($"Unlock All Stars", GUILayout.ExpandWidth(true));
             GUILayout.FlexibleSpace();
-            UIextensions.StandardButton(SettingsManager.CurrentSettings.UnlockStars ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.UnlockStars, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.UnlockStars), 72);
+            UIextensions.ToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.UnlockStars, "On", "Off"), SettingsManager.CurrentSettings.UnlockStars,UIActionManager.UnlockStars, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.UnlockStars), 72);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label($"Unlock All Rewards", GUILayout.ExpandWidth(true));
             GUILayout.FlexibleSpace();
-            UIextensions.StandardButton(SettingsManager.CurrentSettings.UnlockRewards ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.UnlockRewards, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.UnlockRewards), 72);
+            UIextensions.ToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.UnlockRewards, "On", "Off"), SettingsManager.CurrentSettings.UnlockRewards, UIActionManager.UnlockRewards, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.UnlockRewards), 72);
             GUILayout.EndHorizontal();
 
             GUILayout.EndVertical();
@@ -288,13 +288,13 @@ namespace GuruBMXMod.UI
             Tabs(BMX_Tab, UIextensions.TabColorSwitch(BMX_Tab));
             if (!BMX_Tab.isClosed)
             {
-                GUILayout.BeginVertical("Box"); // start BMX tabs
-
-                GUILayout.BeginHorizontal();
+                GUILayout.BeginHorizontal("Box");
                 GUILayout.Label($"Disable Bail", GUILayout.ExpandWidth(true));
                 GUILayout.FlexibleSpace();
-                UIextensions.StandardButton(SettingsManager.CurrentSettings.DisableBail ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.DisableBail, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.DisableBail), 72);
+                UIextensions.ToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.DisableBail, "On", "Off"), SettingsManager.CurrentSettings.DisableBail,UIActionManager.DisableBail, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.DisableBail), 72);
                 GUILayout.EndHorizontal();
+
+                GUILayout.BeginVertical("Box"); // start BMX tabs
 
                 Tabs(Tricks_Tab, UIextensions.TabColorSwitch(Tricks_Tab));
                 if (!Tricks_Tab.isClosed)
@@ -352,7 +352,7 @@ namespace GuruBMXMod.UI
                     GUILayout.BeginHorizontal();
                     GUILayout.Label($"Enable Simple Pedal", GUILayout.ExpandWidth(true));
                     GUILayout.FlexibleSpace();
-                    UIextensions.StandardButton(SettingsManager.CurrentSettings.EnableSimplePedal ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleSimplePedal, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.EnableSimplePedal), 72);
+                    UIextensions.ToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.EnableSimplePedal, "On", "Off"), SettingsManager.CurrentSettings.EnableSimplePedal, UIActionManager.ToggleSimplePedal, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.EnableSimplePedal), 72);
                     GUILayout.EndHorizontal();
                     if (SettingsManager.CurrentSettings.EnableSimplePedal)
                     {
@@ -386,7 +386,7 @@ namespace GuruBMXMod.UI
                     GUILayout.BeginHorizontal();
                     GUILayout.Label($"Auto Sideways Stability", GUILayout.ExpandWidth(true));
                     GUILayout.FlexibleSpace();
-                    UIextensions.StandardButton(SettingsManager.CurrentSettings.MannyAutoStability ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleMannyStability, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.MannyAutoStability), 72);
+                    UIextensions.ToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.MannyAutoStability, "On", "Off"), SettingsManager.CurrentSettings.MannyAutoStability, UIActionManager.ToggleMannyStability, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.MannyAutoStability), 72);
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginVertical("Box");
@@ -412,7 +412,7 @@ namespace GuruBMXMod.UI
             if (!DriftBike_Tab.isClosed)
             {
                 GUILayout.BeginHorizontal();
-                UIextensions.StandardButton("<b> Spawn Drift Bike </b>", UIActionManager.SpawnVehicle, Color.cyan, 128);
+                UIextensions.StandardButton("<b> Spawn Drift Trike </b>", BMXModController.Instance.SpawnVehicle, Color.cyan, 128);
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginVertical("Box");
@@ -476,21 +476,25 @@ namespace GuruBMXMod.UI
             if (Environment_Tab.isClosed)
                 return;
 
+            GUILayout.BeginVertical("Box"); // start Environment 
+
             Tabs(VFX_Tab, UIextensions.TabColorSwitch(VFX_Tab));
             if (!VFX_Tab.isClosed)
             {
-                GUILayout.BeginVertical("Box");
+                GUILayout.BeginVertical();
+
+                UIextensions.WarningLabel("Please note: Enabling weather effects may cause a decrease in performance");
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Label($"Enable Rain", GUILayout.ExpandWidth(true));
                 GUILayout.FlexibleSpace();
-                UIextensions.StandardButton(SettingsManager.CurrentSettings.rainEnabled ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleRain, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.rainEnabled), 72);
+                UIextensions.ToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.rainEnabled, "On", "Off"), SettingsManager.CurrentSettings.rainEnabled, UIActionManager.ToggleRain, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.rainEnabled), 72);
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Label($"Enable Snow", GUILayout.ExpandWidth(true));
                 GUILayout.FlexibleSpace();
-                UIextensions.StandardButton(SettingsManager.CurrentSettings.snowEnabled ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.ToggleSnow, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.snowEnabled), 72);
+                UIextensions.ToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.snowEnabled, "On", "Off"), SettingsManager.CurrentSettings.snowEnabled, UIActionManager.ToggleSnow, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.snowEnabled), 72);
                 GUILayout.EndHorizontal();
 
                 GUILayout.EndVertical();
@@ -498,11 +502,11 @@ namespace GuruBMXMod.UI
             Tabs(Cycle_Tab, UIextensions.TabColorSwitch(Cycle_Tab));
             if (!Cycle_Tab.isClosed)
             {
-                GUILayout.BeginVertical("Box"); // start
+                GUILayout.BeginVertical(); // start time
 
                 GUILayout.BeginVertical();
                 GUILayout.Label($"Enable Day/Night Cycle", GUILayout.ExpandWidth(true));
-                UIextensions.StandardButton(SettingsManager.CurrentSettings.EnableCycle ? "<b> On </b>" : "<b><color=#171717> Off </color></b>", UIActionManager.EnableCycle, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.EnableCycle), 72);
+                UIextensions.ToggleButton(UIextensions.ButtonLabelState(SettingsManager.CurrentSettings.EnableCycle, "On", "Off"), SettingsManager.CurrentSettings.EnableCycle, UIActionManager.EnableCycle, UIextensions.ButtonColorSwitch(SettingsManager.CurrentSettings.EnableCycle), 72);
                 GUILayout.EndVertical();
                 /*
                 GUILayout.BeginVertical();
@@ -540,8 +544,10 @@ namespace GuruBMXMod.UI
                     GUILayout.EndVertical();
                 }
 
-                GUILayout.EndVertical(); // end
+                GUILayout.EndVertical(); // end time
             }
+
+            GUILayout.EndVertical(); // end environment
         }
     }
 }

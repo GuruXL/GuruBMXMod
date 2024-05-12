@@ -17,6 +17,8 @@ namespace GuruBMXMod.Gameplay
 
         public static bool smartComponentsLoaded { get; private set; } = false;
 
+        public static bool rewardsUnlocked { get; private set; } = false;
+
         //public RewardNotificatonBehaviour rewardsBehavior;
         public RewardContainerBehaviour rewardsBehavior;
         public UnityGameEventListener unlockRewardListener;
@@ -96,16 +98,17 @@ namespace GuruBMXMod.Gameplay
                 BMXModController.Instance.vehicleSpawner._starSystemManagerData.overrideReturnZEROStars = state;
             }
         }
-
         public void UnlockRewards(bool unlock)
         {
             if (unlock)
             {
                 unlockRewardListener.RaiseEvent();
+                rewardsUnlocked = true;
             }
             else
             {
                 lockRewardListener.RaiseEvent();
+                rewardsUnlocked = false;
             }
         }
     }

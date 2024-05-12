@@ -8,59 +8,51 @@ namespace GuruBMXMod.UI
     internal class UIActionManager
     {
         #region Buttons
-        // Buttons
-        public static void MainToggle()
+        public static void MainToggle(bool enabled)
         {
-            SettingsManager.CurrentSettings.ModEnabled = !SettingsManager.CurrentSettings.ModEnabled;
+            SettingsManager.CurrentSettings.ModEnabled = enabled;
         }
-        public static void DisableBail()
+        // BMX
+        public static void DisableBail(bool enabled)
         {
-            SettingsManager.CurrentSettings.DisableBail = !SettingsManager.CurrentSettings.DisableBail;
+            SettingsManager.CurrentSettings.DisableBail = enabled;
         }
-        public static void ToggleSimplePedal()
+        public static void ToggleSimplePedal(bool enabled)
         {
-            SettingsManager.CurrentSettings.EnableSimplePedal = !SettingsManager.CurrentSettings.EnableSimplePedal;
+            SettingsManager.CurrentSettings.EnableSimplePedal = enabled;
             BMXModController.Instance.ToggleSimplePedal();
         }
-        public static void UnlockStars()
+        public static void ToggleMannyStability(bool enabled)
         {
-            SettingsManager.CurrentSettings.UnlockStars = !SettingsManager.CurrentSettings.UnlockStars;
+            SettingsManager.CurrentSettings.MannyAutoStability = enabled;
+        }
+        // Rewards
+        public static void UnlockStars(bool enabled)
+        {
+            SettingsManager.CurrentSettings.UnlockStars = enabled;
             RewardUnlocks.Instance.UnlockStars("All", SettingsManager.CurrentSettings.UnlockStars);
         }
-        public static void UnlockRewards()
+        public static void UnlockRewards(bool enabled)
         {
-            SettingsManager.CurrentSettings.UnlockRewards = !SettingsManager.CurrentSettings.UnlockRewards;
+            SettingsManager.CurrentSettings.UnlockRewards = enabled;
             RewardUnlocks.Instance.UnlockRewards(SettingsManager.CurrentSettings.UnlockRewards);
-        }
-        public static void SpawnVehicle()
+        }         
+        // VFX
+        public static void ToggleRain(bool enabled)
         {
-            BMXModController.Instance.SpawnVehicle();
-        }
-        public static void EnableCycle()
-        {
-            SettingsManager.CurrentSettings.EnableCycle = !SettingsManager.CurrentSettings.EnableCycle;
-            TimeController.Instance.EnableDayNightCycle(SettingsManager.CurrentSettings.EnableCycle);
-        }
-        /*
-        public static void SwapSessionMarker()
-        {
-            SettingsManager.CurrentSettings.SessionMarkerSwapped = !SettingsManager.CurrentSettings.SessionMarkerSwapped;
-            //SessionMarkerSwap.Instance.SwapUpAndDownActions();
-        }
-        */
-        public static void ToggleMannyStability()
-        {
-            SettingsManager.CurrentSettings.MannyAutoStability = !SettingsManager.CurrentSettings.MannyAutoStability;
-        }
-        public static void ToggleRain()
-        {
-            SettingsManager.CurrentSettings.rainEnabled = !SettingsManager.CurrentSettings.rainEnabled;
+            SettingsManager.CurrentSettings.rainEnabled = enabled;
             VFXController.Instance.ToggleRain(SettingsManager.CurrentSettings.rainEnabled);
         }
-        public static void ToggleSnow()
+        public static void ToggleSnow(bool enabled)
         {
-            SettingsManager.CurrentSettings.snowEnabled = !SettingsManager.CurrentSettings.snowEnabled;
+            SettingsManager.CurrentSettings.snowEnabled = enabled;
             VFXController.Instance.ToggleSnow(SettingsManager.CurrentSettings.snowEnabled);
+        }
+        // Time of Day
+        public static void EnableCycle(bool enabled)
+        {
+            SettingsManager.CurrentSettings.EnableCycle = enabled;
+            TimeController.Instance.EnableDayNightCycle(SettingsManager.CurrentSettings.EnableCycle);
         }
         #endregion
 
@@ -196,7 +188,7 @@ namespace GuruBMXMod.UI
         public static void UpdateNoseyMaxAngle(float newValue)
         {
             SettingsManager.CurrentSettings.BMX_NoseyMaxBailAngle = newValue;
-            BMXModController.Instance.updateNoseyMaxBailAngle();
+            BMXModController.Instance.UpdateNoseyMaxBailAngle();
         }
         #endregion
 
@@ -206,7 +198,7 @@ namespace GuruBMXMod.UI
         public static void UpdateDriftJumpForce(float newValue)
         {
             SettingsManager.CurrentSettings.DriftBike_JumpForce = newValue;
-            BMXModController.Instance.SetDriftJumpForce();
+            BMXModController.Instance.UpdateDriftJumpForce();
         }
         public static void UpdateDriftMaxMotorTorque(float newValue)
         {
@@ -260,9 +252,9 @@ namespace GuruBMXMod.UI
         
         public static void UpdateLobbySlider(float newValue)
         {
-            byte bytevalue = (byte)newValue;
+            int value = Mathf.RoundToInt(newValue);
 
-            SettingsManager.CurrentSettings.MultiRoomSize = bytevalue;
+            SettingsManager.CurrentSettings.MultiRoomSize = value;
             BMXModNetworkController.Instance.UpdateRoomSize();
         }
 
@@ -272,8 +264,8 @@ namespace GuruBMXMod.UI
         // Time Sliders
         public static void UpdateTimeOfDay(float newValue)
         {
-            SettingsManager.CurrentSettings.TimeOfDay= newValue;
-            TimeController.Instance.UpdateTimeOfDay();
+            SettingsManager.CurrentSettings.TimeOfDay = newValue;
+            TimeController.Instance.UpdateTimeOfDay(); // can't run in upadte so invoking here instead.
         }
         public static void UpdateCycleSpeed(float newValue)
         {

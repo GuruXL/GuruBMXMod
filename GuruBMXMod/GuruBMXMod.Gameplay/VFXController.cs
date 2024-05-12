@@ -38,15 +38,27 @@ namespace GuruBMXMod.Gameplay
             return AssetLoader.assetsLoaded;
         }
 
-        public void RunUpdate(Camera cam)
+        public void RunUpdate()
         {
             if (SettingsManager.CurrentSettings.rainEnabled)
             {
-                AttachToCamera(cam, rainObj_PS);
+                AttachToCamera(GetCamera(), rainObj_PS);
             }
             if (SettingsManager.CurrentSettings.snowEnabled)
             {
-                AttachToCamera(cam, snowObj_PS);
+                AttachToCamera(GetCamera(), snowObj_PS);
+            }
+        }
+
+        private Camera GetCamera()
+        {
+            if (CameraController.Instance != null && CameraController.Instance.mainCam != null)
+            {
+                return CameraController.Instance.mainCam;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -110,14 +122,14 @@ namespace GuruBMXMod.Gameplay
 
         public void ToggleRain(bool enabled)
         {
-            if (rainObj_PS != null)
+            if (rainObj_PS != null && rainObj_PS.activeSelf != enabled)
             {
                 rainObj_PS.SetActive(enabled);
             }
         }
         public void ToggleSnow(bool enabled)
         {
-            if (snowObj_PS != null)
+            if (snowObj_PS != null && snowObj_PS.activeSelf != enabled)
             {
                 snowObj_PS.SetActive(enabled);
             }

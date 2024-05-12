@@ -7,13 +7,15 @@ namespace GuruBMXMod
         public static Settings CurrentSettings { get; set; }
         public static Settings DefaultSettings { get; private set; }
 
-        static SettingsManager()
+        public static bool IsModMap { get; set; } = false;
+
+    static SettingsManager()
         {
             CurrentSettings = new Settings();
             DefaultSettings = new Settings { ModEnabled = true };
         }
 
-        public static void ResetToDefault()
+        private static void ResetToDefault()
         {
             CurrentSettings = DefaultSettings.Clone();
         }
@@ -21,72 +23,84 @@ namespace GuruBMXMod
         public static void ResetAllSettings()
         {
             ResetToDefault();
-            //ResetButtonsToDefault();
-            ResetSlidersToDefault();
+            ResetButtons();
+            ResetSliders();
         }
 
-        private static void ResetButtonsToDefault()
-        {
-           
-        }
         #region Reset Default Settings
-        public static void ResetSlidersToDefault()
+        private static void ResetButtons()
+        {
+            UIActionManager.MainToggle(CurrentSettings.ModEnabled);
+
+            UIActionManager.DisableBail(CurrentSettings.DisableBail);
+            UIActionManager.ToggleSimplePedal(CurrentSettings.EnableSimplePedal);
+            UIActionManager.ToggleMannyStability(CurrentSettings.MannyAutoStability);
+
+            UIActionManager.UnlockStars(CurrentSettings.UnlockStars);
+            UIActionManager.UnlockRewards(CurrentSettings.UnlockRewards);
+
+            UIActionManager.ToggleRain(CurrentSettings.rainEnabled);
+            UIActionManager.ToggleSnow(CurrentSettings.snowEnabled);
+
+            UIActionManager.EnableCycle(CurrentSettings.EnableCycle);
+        }
+        private static void ResetSliders()
         {
             // Player Settings
-            UIActionManager.UpdatePlayerAnimationSpeed(DefaultSettings.Player_AnimationSpeed);
-            UIActionManager.UpdatePlayerJumpForce(DefaultSettings.Player_JumpForce);
-            UIActionManager.UpdatePlayerMaxFallVelocity(DefaultSettings.Player_MaxVelocityToRagDoll);
+            UIActionManager.UpdatePlayerAnimationSpeed(CurrentSettings.Player_AnimationSpeed);
+            UIActionManager.UpdatePlayerJumpForce(CurrentSettings.Player_JumpForce);
+            UIActionManager.UpdatePlayerMaxFallVelocity(CurrentSettings.Player_MaxVelocityToRagDoll);
 
             // Bike Physics
-            UIActionManager.UpdateGravitySlider(DefaultSettings.Gravity);
+            UIActionManager.UpdateGravitySlider(CurrentSettings.Gravity);
 
             // BMX Hop Data
-            UIActionManager.UpdateGroundOllie(DefaultSettings.BMX_Ground_OllieForce);
-            UIActionManager.UpdateGroundNollie(DefaultSettings.BMX_Ground_NollieForce);
-            UIActionManager.UpdateGroundQuickHop(DefaultSettings.BMX_Ground_QuickHopForce);
-            UIActionManager.UpdateNoseyOllie(DefaultSettings.BMX_Nosey_OllieForce);
-            UIActionManager.UpdateNoseyQuickHop(DefaultSettings.BMX_Nosey_QuickHopForce);
-            UIActionManager.UpdateGrindOllie(DefaultSettings.BMX_Grind_OllieForce);
-            UIActionManager.UpdateGrindNollie(DefaultSettings.BMX_Grind_NollieForce);
-            UIActionManager.UpdateGrindQuickHop(DefaultSettings.BMX_Grind_QuickHopForce);
+            UIActionManager.UpdateGroundOllie(CurrentSettings.BMX_Ground_OllieForce);
+            UIActionManager.UpdateGroundNollie(CurrentSettings.BMX_Ground_NollieForce);
+            UIActionManager.UpdateGroundQuickHop(CurrentSettings.BMX_Ground_QuickHopForce);
+            UIActionManager.UpdateNoseyOllie(CurrentSettings.BMX_Nosey_OllieForce);
+            UIActionManager.UpdateNoseyQuickHop(CurrentSettings.BMX_Nosey_QuickHopForce);
+            UIActionManager.UpdateGrindOllie(CurrentSettings.BMX_Grind_OllieForce);
+            UIActionManager.UpdateGrindNollie(CurrentSettings.BMX_Grind_NollieForce);
+            UIActionManager.UpdateGrindQuickHop(CurrentSettings.BMX_Grind_QuickHopForce);
 
             // BMX Trick Data
-            UIActionManager.UpdateTrickAnimationSpeed(DefaultSettings.BMX_TrickAnimationSpeed);
-            UIActionManager.UpdatePerefectTweakThreshold(DefaultSettings.BMX_PerfectTweakThreshold);
+            UIActionManager.UpdateTrickAnimationSpeed(CurrentSettings.BMX_TrickAnimationSpeed);
+            UIActionManager.UpdatePerefectTweakThreshold(CurrentSettings.BMX_PerfectTweakThreshold);
 
             // Simple Pedal and Velocity
-            UIActionManager.UpdatePedalForceSlider(DefaultSettings.SimpleBMX_PedalForce);
-            UIActionManager.UpdatePedalVelocitySlider(DefaultSettings.SimpleBMX_MaxPedalVel);
+            UIActionManager.UpdatePedalForceSlider(CurrentSettings.SimpleBMX_PedalForce);
+            UIActionManager.UpdatePedalVelocitySlider(CurrentSettings.SimpleBMX_MaxPedalVel);
 
             // Grind Mechanics
-            UIActionManager.UpdateGrindHoldForce(DefaultSettings.SimpleBMX_GrindHoldForce);
+            UIActionManager.UpdateGrindHoldForce(CurrentSettings.SimpleBMX_GrindHoldForce);
 
             // Steering and Pumping
-            UIActionManager.UpdateSteeringPumpMin(DefaultSettings.SimpleBMX_MinPumpForceMulti);
-            UIActionManager.UpdateSteeringPumpMax(DefaultSettings.SimpleBMX_MaxPumpForceMulti);
-            UIActionManager.UpdateSteeringPumpTime(DefaultSettings.SimpleBMX_PumpMinMaxCurveTime);
+            UIActionManager.UpdateSteeringPumpMin(CurrentSettings.SimpleBMX_MinPumpForceMulti);
+            UIActionManager.UpdateSteeringPumpMax(CurrentSettings.SimpleBMX_MaxPumpForceMulti);
+            UIActionManager.UpdateSteeringPumpTime(CurrentSettings.SimpleBMX_PumpMinMaxCurveTime);
 
             // Manny and Nosey Balancing
-            UIActionManager.UpdateMannyMaxAngle(DefaultSettings.BMX_MannyMaxBailAngle);
-            UIActionManager.UpdateNoseyMaxAngle(DefaultSettings.BMX_NoseyMaxBailAngle);
+            UIActionManager.UpdateMannyMaxAngle(CurrentSettings.BMX_MannyMaxBailAngle);
+            UIActionManager.UpdateNoseyMaxAngle(CurrentSettings.BMX_NoseyMaxBailAngle);
 
             // Drift Bike
-            UIActionManager.UpdateDriftJumpForce(DefaultSettings.DriftBike_JumpForce);
-            UIActionManager.UpdateDriftMaxMotorTorque(DefaultSettings.DriftBike_MaxMotorTorque);
-            UIActionManager.UpdateDriftMaxBrakeTorque(DefaultSettings.DriftBike_MaxBrakeTorque);
-            UIActionManager.UpdateDriftAirFlipTorque(DefaultSettings.DriftBike_AirFlipTorque);
-            UIActionManager.UpdateDriftAirSpinTorque(DefaultSettings.DriftBike_AirSpinTorque);
-            UIActionManager.UpdateDriftAirUpRightTorque(DefaultSettings.DriftBike_AirUpRightTorque);
-            UIActionManager.UpdateDriftAntiRoll(DefaultSettings.DriftBike_AntiRoll);
-            UIActionManager.UpdateDriftCOMoffset(DefaultSettings.DriftBike_COMOffset);
-            UIActionManager.UpdateDriftTurnTorque(DefaultSettings.DriftBike_TurnTorque);
-            UIActionManager.UpdateDriftTurnResponse(DefaultSettings.DriftBike_TurnResponse);
+            UIActionManager.UpdateDriftJumpForce(CurrentSettings.DriftBike_JumpForce);
+            UIActionManager.UpdateDriftMaxMotorTorque(CurrentSettings.DriftBike_MaxMotorTorque);
+            UIActionManager.UpdateDriftMaxBrakeTorque(CurrentSettings.DriftBike_MaxBrakeTorque);
+            UIActionManager.UpdateDriftAirFlipTorque(CurrentSettings.DriftBike_AirFlipTorque);
+            UIActionManager.UpdateDriftAirSpinTorque(CurrentSettings.DriftBike_AirSpinTorque);
+            UIActionManager.UpdateDriftAirUpRightTorque(CurrentSettings.DriftBike_AirUpRightTorque);
+            UIActionManager.UpdateDriftAntiRoll(CurrentSettings.DriftBike_AntiRoll);
+            UIActionManager.UpdateDriftCOMoffset(CurrentSettings.DriftBike_COMOffset);
+            UIActionManager.UpdateDriftTurnTorque(CurrentSettings.DriftBike_TurnTorque);
+            UIActionManager.UpdateDriftTurnResponse(CurrentSettings.DriftBike_TurnResponse);
 
             // Time of Day Settings
-            UIActionManager.UpdateTimeOfDay(DefaultSettings.TimeOfDay);
-            UIActionManager.UpdateCycleSpeed(DefaultSettings.CycleSpeed);
-            UIActionManager.UpdateShadowTime(DefaultSettings.ShadowUpdateTime);
-            UIActionManager.TimeBetweenSkyUpdates(DefaultSettings.TimeBetweenSkyUpdates);
+            UIActionManager.UpdateTimeOfDay(CurrentSettings.TimeOfDay);
+            UIActionManager.UpdateCycleSpeed(CurrentSettings.CycleSpeed);
+            UIActionManager.UpdateShadowTime(CurrentSettings.ShadowUpdateTime);
+            UIActionManager.TimeBetweenSkyUpdates(CurrentSettings.TimeBetweenSkyUpdates);
         }
         #endregion
     }

@@ -11,26 +11,6 @@ namespace GuruBMXMod.Utils
 {
     internal class ResourceExtractor
     {
-        /*
-        public static byte[] ExtractResources(string filename)
-        {
-            foreach (string resourceName in Assembly.GetExecutingAssembly().GetManifestResourceNames())
-            {
-                MelonLogger.Msg(resourceName);
-            }
-
-            using (Stream manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filename))
-            {
-                if (manifestResourceStream == null)
-                    MelonLogger.Msg($"manifestResourceStream Failed to Extract");
-                    return null;
-
-                byte[] buffer = new byte[manifestResourceStream.Length];
-                manifestResourceStream.Read(buffer, 0, buffer.Length);
-                return buffer;
-            }
-        }
-        */
         public static byte[] ExtractResources(string filename)
         {
             // Log all resource names for debugging

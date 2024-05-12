@@ -13,10 +13,6 @@ namespace GuruBMXMod.UI
         {
             SettingsManager.CurrentSettings.ModEnabled = !SettingsManager.CurrentSettings.ModEnabled;
         }
-        public static void ResetToDefaults()
-        {
-            SettingsManager.ResetToDefault();
-        }
         public static void DisableBail()
         {
             SettingsManager.CurrentSettings.DisableBail = !SettingsManager.CurrentSettings.DisableBail;
@@ -43,17 +39,28 @@ namespace GuruBMXMod.UI
         public static void EnableCycle()
         {
             SettingsManager.CurrentSettings.EnableCycle = !SettingsManager.CurrentSettings.EnableCycle;
-
             TimeController.Instance.EnableDayNightCycle(SettingsManager.CurrentSettings.EnableCycle);
         }
+        /*
         public static void SwapSessionMarker()
         {
             SettingsManager.CurrentSettings.SessionMarkerSwapped = !SettingsManager.CurrentSettings.SessionMarkerSwapped;
             //SessionMarkerSwap.Instance.SwapUpAndDownActions();
         }
+        */
         public static void ToggleMannyStability()
         {
             SettingsManager.CurrentSettings.MannyAutoStability = !SettingsManager.CurrentSettings.MannyAutoStability;
+        }
+        public static void ToggleRain()
+        {
+            SettingsManager.CurrentSettings.rainEnabled = !SettingsManager.CurrentSettings.rainEnabled;
+            VFXController.Instance.ToggleRain(SettingsManager.CurrentSettings.rainEnabled);
+        }
+        public static void ToggleSnow()
+        {
+            SettingsManager.CurrentSettings.snowEnabled = !SettingsManager.CurrentSettings.snowEnabled;
+            VFXController.Instance.ToggleSnow(SettingsManager.CurrentSettings.snowEnabled);
         }
         #endregion
 
@@ -259,19 +266,6 @@ namespace GuruBMXMod.UI
             BMXModNetworkController.Instance.UpdateRoomSize();
         }
 
-        #endregion
-
-        #region VFX
-        public static void ToggleRain()
-        {
-            SettingsManager.CurrentSettings.rainEnabled = !SettingsManager.CurrentSettings.rainEnabled;
-            VFXController.Instance.ToggleRain(SettingsManager.CurrentSettings.rainEnabled);
-        }
-        public static void ToggleSnow()
-        {
-            SettingsManager.CurrentSettings.snowEnabled = !SettingsManager.CurrentSettings.snowEnabled;
-            VFXController.Instance.ToggleSnow(SettingsManager.CurrentSettings.snowEnabled);
-        }
         #endregion
 
         #region TimeOfDay Sliders

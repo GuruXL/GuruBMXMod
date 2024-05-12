@@ -175,7 +175,7 @@ namespace GuruBMXMod.UI
             if (!showUI)
                 return;
             GUI.backgroundColor = SettingsManager.CurrentSettings.BGColor;
-            MainWindowRect = GUILayout.Window(387456, MainWindowRect, (GUI.WindowFunction)MainWindow, "<b> Guru BMX Mod </b>");
+            MainWindowRect = GUILayout.Window(387456, MainWindowRect, (GUI.WindowFunction)MainWindow, $"<b> {BuildInfo.Name} <i> v.{BuildInfo.Version}</i> </b>");
         }
 
         // Creates the GUI window
@@ -205,7 +205,7 @@ namespace GuruBMXMod.UI
                 return;
 
             GUILayout.BeginHorizontal();
-            UIextensions.FlexableButton("Reset All Settings", UIActionManager.ResetToDefaults, Color.white);
+            UIextensions.FlexableButton("Reset All Settings", SettingsManager.ResetAllSettings, Color.white);
             GUILayout.EndHorizontal();
         }
 
@@ -257,7 +257,7 @@ namespace GuruBMXMod.UI
                 return;
 
             GUILayout.BeginVertical("Box");
-            UIextensions.Slider("Gravity", UIActionManager.UpdateGravitySlider, Color.white, SettingsManager.CurrentSettings.Gravity, -50.0f, 50.0f, SettingsManager.DefaultSettings.Gravity);
+            UIextensions.Slider("Gravity", UIActionManager.UpdateGravitySlider, Color.white, ref SettingsManager.CurrentSettings.Gravity, -50.0f, 50.0f, SettingsManager.DefaultSettings.Gravity);
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical("Box");
@@ -273,15 +273,15 @@ namespace GuruBMXMod.UI
                 */
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Player Animation Speed", UIActionManager.UpdatePlayerAnimationSpeed, Color.white, SettingsManager.CurrentSettings.Player_AnimationSpeed, 0.0f, 4.0f, SettingsManager.DefaultSettings.Player_AnimationSpeed);
+                UIextensions.Slider("Player Animation Speed", UIActionManager.UpdatePlayerAnimationSpeed, Color.white, ref SettingsManager.CurrentSettings.Player_AnimationSpeed, 0.0f, 4.0f, SettingsManager.DefaultSettings.Player_AnimationSpeed);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Jump Force", UIActionManager.UpdatePlayerJumpForce, Color.white, SettingsManager.CurrentSettings.Player_JumpForce, 0f, 50f, SettingsManager.DefaultSettings.Player_JumpForce);
+                UIextensions.Slider("Jump Force", UIActionManager.UpdatePlayerJumpForce, Color.white, ref SettingsManager.CurrentSettings.Player_JumpForce, 0f, 50f, SettingsManager.DefaultSettings.Player_JumpForce);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Max Fall Velocity To Ragdoll", UIActionManager.UpdatePlayerMaxFallVelocity, Color.white, SettingsManager.CurrentSettings.Player_MaxVelocityToRagDoll, -100f, 0f, SettingsManager.DefaultSettings.Player_MaxVelocityToRagDoll);
+                UIextensions.Slider("Max Fall Velocity To Ragdoll", UIActionManager.UpdatePlayerMaxFallVelocity, Color.white, ref SettingsManager.CurrentSettings.Player_MaxVelocityToRagDoll, -100f, 0f, SettingsManager.DefaultSettings.Player_MaxVelocityToRagDoll);
                 GUILayout.EndVertical();
 
             }
@@ -300,11 +300,11 @@ namespace GuruBMXMod.UI
                 if (!Tricks_Tab.isClosed)
                 {
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Trick Animation Speed", UIActionManager.UpdateTrickAnimationSpeed, Color.white, SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed, 1.0f, 2.0f, SettingsManager.DefaultSettings.BMX_TrickAnimationSpeed);
+                    UIextensions.Slider("Trick Animation Speed", UIActionManager.UpdateTrickAnimationSpeed, Color.white, ref SettingsManager.CurrentSettings.BMX_TrickAnimationSpeed, 1.0f, 2.0f, SettingsManager.DefaultSettings.BMX_TrickAnimationSpeed);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Perfect Tweak Threshold", UIActionManager.UpdatePerefectTweakThreshold, Color.white, SettingsManager.CurrentSettings.BMX_PerfectTweakThreshold, 0.0f, 1.0f, SettingsManager.DefaultSettings.BMX_PerfectTweakThreshold);
+                    UIextensions.Slider("Perfect Tweak Threshold", UIActionManager.UpdatePerefectTweakThreshold, Color.white, ref SettingsManager.CurrentSettings.BMX_PerfectTweakThreshold, 0.0f, 1.0f, SettingsManager.DefaultSettings.BMX_PerfectTweakThreshold);
                     GUILayout.EndVertical();
                 }
                 Tabs(Hop_Tab, UIextensions.TabColorSwitch(Hop_Tab));
@@ -315,31 +315,31 @@ namespace GuruBMXMod.UI
                     GUILayout.BeginVertical("Box");
                     UIextensions.CenteredLabel("Default");
                     GUILayout.Space(2);
-                    UIextensions.Slider("Ollie Hop Force", UIActionManager.UpdateGroundOllie, Color.white, SettingsManager.CurrentSettings.BMX_Ground_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_OllieForce);
+                    UIextensions.Slider("Ollie Hop Force", UIActionManager.UpdateGroundOllie, Color.white, ref SettingsManager.CurrentSettings.BMX_Ground_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_OllieForce);
                     GUILayout.Space(2);
-                    UIextensions.Slider("Nollie Hop Force", UIActionManager.UpdateGroundNollie, Color.white, SettingsManager.CurrentSettings.BMX_Ground_NollieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_NollieForce);
+                    UIextensions.Slider("Nollie Hop Force", UIActionManager.UpdateGroundNollie, Color.white, ref SettingsManager.CurrentSettings.BMX_Ground_NollieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_NollieForce);
                     GUILayout.Space(2);
-                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateGroundQuickHop, Color.white, SettingsManager.CurrentSettings.BMX_Ground_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_QuickHopForce);
+                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateGroundQuickHop, Color.white, ref SettingsManager.CurrentSettings.BMX_Ground_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Ground_QuickHopForce);
                     GUILayout.Space(2);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
                     UIextensions.CenteredLabel("Manny");
                     GUILayout.Space(2);
-                    UIextensions.Slider("Manny/Nosey Hop Force", UIActionManager.UpdateNoseyOllie, Color.white, SettingsManager.CurrentSettings.BMX_Nosey_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Nosey_OllieForce);
+                    UIextensions.Slider("Manny/Nosey Hop Force", UIActionManager.UpdateNoseyOllie, Color.white, ref SettingsManager.CurrentSettings.BMX_Nosey_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Nosey_OllieForce);
                     GUILayout.Space(2);
-                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateNoseyQuickHop, Color.white, SettingsManager.CurrentSettings.BMX_Nosey_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Nosey_QuickHopForce);
+                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateNoseyQuickHop, Color.white, ref SettingsManager.CurrentSettings.BMX_Nosey_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Nosey_QuickHopForce);
                     GUILayout.Space(2);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
                     UIextensions.CenteredLabel("Grind");
                     GUILayout.Space(2);
-                    UIextensions.Slider("Ollie Hop Force", UIActionManager.UpdateGrindOllie, Color.white, SettingsManager.CurrentSettings.BMX_Grind_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_OllieForce);
+                    UIextensions.Slider("Ollie Hop Force", UIActionManager.UpdateGrindOllie, Color.white, ref SettingsManager.CurrentSettings.BMX_Grind_OllieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_OllieForce);
                     GUILayout.Space(2);
-                    UIextensions.Slider("Nollie Hop Force", UIActionManager.UpdateGrindNollie, Color.white, SettingsManager.CurrentSettings.BMX_Grind_NollieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_NollieForce);
+                    UIextensions.Slider("Nollie Hop Force", UIActionManager.UpdateGrindNollie, Color.white, ref SettingsManager.CurrentSettings.BMX_Grind_NollieForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_NollieForce);
                     GUILayout.Space(2);
-                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateGrindQuickHop, Color.white, SettingsManager.CurrentSettings.BMX_Grind_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_QuickHopForce);
+                    UIextensions.Slider("Quick Hop Force", UIActionManager.UpdateGrindQuickHop, Color.white, ref SettingsManager.CurrentSettings.BMX_Grind_QuickHopForce, 0.0f, 10.0f, SettingsManager.DefaultSettings.BMX_Grind_QuickHopForce);
                     GUILayout.Space(2);
                     GUILayout.EndVertical();
 
@@ -357,11 +357,11 @@ namespace GuruBMXMod.UI
                     if (SettingsManager.CurrentSettings.EnableSimplePedal)
                     {
                         GUILayout.BeginVertical("Box");
-                        UIextensions.Slider("Pedal Force", UIActionManager.UpdatePedalForceSlider, Color.white, SettingsManager.CurrentSettings.SimpleBMX_PedalForce, 0f, 10000f, SettingsManager.DefaultSettings.SimpleBMX_PedalForce);
+                        UIextensions.Slider("Pedal Force", UIActionManager.UpdatePedalForceSlider, Color.white, ref SettingsManager.CurrentSettings.SimpleBMX_PedalForce, 0f, 10000f, SettingsManager.DefaultSettings.SimpleBMX_PedalForce);
                         GUILayout.EndVertical();
 
                         GUILayout.BeginVertical("Box");
-                        UIextensions.Slider("Max Pedal Velocity", UIActionManager.UpdatePedalVelocitySlider, Color.white, SettingsManager.CurrentSettings.SimpleBMX_MaxPedalVel, 0f, 800f, SettingsManager.DefaultSettings.SimpleBMX_MaxPedalVel);
+                        UIextensions.Slider("Max Pedal Velocity", UIActionManager.UpdatePedalVelocitySlider, Color.white, ref SettingsManager.CurrentSettings.SimpleBMX_MaxPedalVel, 0f, 800f, SettingsManager.DefaultSettings.SimpleBMX_MaxPedalVel);
                         GUILayout.EndVertical();
                     }
                 }
@@ -369,15 +369,15 @@ namespace GuruBMXMod.UI
                 if (!Pumping_Tab.isClosed)
                 {
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Steering Pump Force MIN", UIActionManager.UpdateSteeringPumpMin, Color.white, SettingsManager.CurrentSettings.SimpleBMX_MinPumpForceMulti, 0f, 20f, SettingsManager.DefaultSettings.SimpleBMX_MinPumpForceMulti);
+                    UIextensions.Slider("Steering Pump Force MIN", UIActionManager.UpdateSteeringPumpMin, Color.white, ref SettingsManager.CurrentSettings.SimpleBMX_MinPumpForceMulti, 0f, 20f, SettingsManager.DefaultSettings.SimpleBMX_MinPumpForceMulti);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Steering Pump Force MAX", UIActionManager.UpdateSteeringPumpMax, Color.white, SettingsManager.CurrentSettings.SimpleBMX_MaxPumpForceMulti, 0f, 20f, SettingsManager.DefaultSettings.SimpleBMX_MaxPumpForceMulti);
+                    UIextensions.Slider("Steering Pump Force MAX", UIActionManager.UpdateSteeringPumpMax, Color.white, ref SettingsManager.CurrentSettings.SimpleBMX_MaxPumpForceMulti, 0f, 20f, SettingsManager.DefaultSettings.SimpleBMX_MaxPumpForceMulti);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Time from Min to Max", UIActionManager.UpdateSteeringPumpTime, Color.white, SettingsManager.CurrentSettings.SimpleBMX_PumpMinMaxCurveTime, 0f, 100f, SettingsManager.DefaultSettings.SimpleBMX_PumpMinMaxCurveTime);
+                    UIextensions.Slider("Time from Min to Max", UIActionManager.UpdateSteeringPumpTime, Color.white, ref SettingsManager.CurrentSettings.SimpleBMX_PumpMinMaxCurveTime, 0f, 100f, SettingsManager.DefaultSettings.SimpleBMX_PumpMinMaxCurveTime);
                     GUILayout.EndVertical();
                 }
                 Tabs(Manny_Tab, UIextensions.TabColorSwitch(Manny_Tab));
@@ -390,11 +390,11 @@ namespace GuruBMXMod.UI
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Manny Max Bail Angle", UIActionManager.UpdateMannyMaxAngle, Color.white, SettingsManager.CurrentSettings.BMX_MannyMaxBailAngle, 0f, 90f, SettingsManager.DefaultSettings.BMX_MannyMaxBailAngle);
+                    UIextensions.Slider("Manny Max Bail Angle", UIActionManager.UpdateMannyMaxAngle, Color.white, ref SettingsManager.CurrentSettings.BMX_MannyMaxBailAngle, 0f, 90f, SettingsManager.DefaultSettings.BMX_MannyMaxBailAngle);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Nosey Max Bail Angle", UIActionManager.UpdateNoseyMaxAngle, Color.white, SettingsManager.CurrentSettings.BMX_NoseyMaxBailAngle, 0f, 90f, SettingsManager.DefaultSettings.BMX_NoseyMaxBailAngle);
+                    UIextensions.Slider("Nosey Max Bail Angle", UIActionManager.UpdateNoseyMaxAngle, Color.white, ref SettingsManager.CurrentSettings.BMX_NoseyMaxBailAngle, 0f, 90f, SettingsManager.DefaultSettings.BMX_NoseyMaxBailAngle);
                     GUILayout.EndVertical();
 
                 }
@@ -402,7 +402,7 @@ namespace GuruBMXMod.UI
                 if (!Grind_Tab.isClosed)
                 {
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Grind Hold Force", UIActionManager.UpdateGrindHoldForce, Color.white, SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce, -5000f, 5000f, SettingsManager.DefaultSettings.SimpleBMX_GrindHoldForce);
+                    UIextensions.Slider("Grind Hold Force", UIActionManager.UpdateGrindHoldForce, Color.white, ref SettingsManager.CurrentSettings.SimpleBMX_GrindHoldForce, -5000f, 5000f, SettingsManager.DefaultSettings.SimpleBMX_GrindHoldForce);
                     GUILayout.EndVertical();
                 }
 
@@ -416,43 +416,43 @@ namespace GuruBMXMod.UI
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Jump Force", UIActionManager.UpdateDriftJumpForce, Color.white, SettingsManager.CurrentSettings.DriftBike_JumpForce, 0f, 4000f, SettingsManager.DefaultSettings.DriftBike_JumpForce);
+                UIextensions.Slider("Jump Force", UIActionManager.UpdateDriftJumpForce, Color.white, ref SettingsManager.CurrentSettings.DriftBike_JumpForce, 0f, 4000f, SettingsManager.DefaultSettings.DriftBike_JumpForce);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Max Motor Torque", UIActionManager.UpdateDriftMaxMotorTorque, Color.white, SettingsManager.CurrentSettings.DriftBike_MaxMotorTorque, 0f, 5000f, SettingsManager.DefaultSettings.DriftBike_MaxMotorTorque);
+                UIextensions.Slider("Max Motor Torque", UIActionManager.UpdateDriftMaxMotorTorque, Color.white, ref SettingsManager.CurrentSettings.DriftBike_MaxMotorTorque, 0f, 5000f, SettingsManager.DefaultSettings.DriftBike_MaxMotorTorque);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Max Brake Torque", UIActionManager.UpdateDriftMaxBrakeTorque, Color.white, SettingsManager.CurrentSettings.DriftBike_MaxBrakeTorque, 0f, 8000f, SettingsManager.DefaultSettings.DriftBike_MaxBrakeTorque);
+                UIextensions.Slider("Max Brake Torque", UIActionManager.UpdateDriftMaxBrakeTorque, Color.white, ref SettingsManager.CurrentSettings.DriftBike_MaxBrakeTorque, 0f, 8000f, SettingsManager.DefaultSettings.DriftBike_MaxBrakeTorque);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Air Flip Torque", UIActionManager.UpdateDriftAirFlipTorque, Color.white, SettingsManager.CurrentSettings.DriftBike_AirFlipTorque, 0f, 2500f, SettingsManager.DefaultSettings.DriftBike_AirFlipTorque);
+                UIextensions.Slider("Air Flip Torque", UIActionManager.UpdateDriftAirFlipTorque, Color.white, ref SettingsManager.CurrentSettings.DriftBike_AirFlipTorque, 0f, 2500f, SettingsManager.DefaultSettings.DriftBike_AirFlipTorque);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Air Spin Torque", UIActionManager.UpdateDriftAirSpinTorque, Color.white, SettingsManager.CurrentSettings.DriftBike_AirSpinTorque, -1000f, 1000f, SettingsManager.DefaultSettings.DriftBike_AirSpinTorque);
+                UIextensions.Slider("Air Spin Torque", UIActionManager.UpdateDriftAirSpinTorque, Color.white, ref SettingsManager.CurrentSettings.DriftBike_AirSpinTorque, -1000f, 1000f, SettingsManager.DefaultSettings.DriftBike_AirSpinTorque);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Air Up Right Torque", UIActionManager.UpdateDriftAirUpRightTorque, Color.white, SettingsManager.CurrentSettings.DriftBike_AirUpRightTorque, 0f, 20f, SettingsManager.DefaultSettings.DriftBike_AirUpRightTorque);
+                UIextensions.Slider("Air Up Right Torque", UIActionManager.UpdateDriftAirUpRightTorque, Color.white, ref SettingsManager.CurrentSettings.DriftBike_AirUpRightTorque, 0f, 20f, SettingsManager.DefaultSettings.DriftBike_AirUpRightTorque);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Anti Roll", UIActionManager.UpdateDriftAntiRoll, Color.white, SettingsManager.CurrentSettings.DriftBike_AntiRoll, 0f, 1000f, SettingsManager.DefaultSettings.DriftBike_AntiRoll);
+                UIextensions.Slider("Anti Roll", UIActionManager.UpdateDriftAntiRoll, Color.white, ref SettingsManager.CurrentSettings.DriftBike_AntiRoll, 0f, 1000f, SettingsManager.DefaultSettings.DriftBike_AntiRoll);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Center Of Mass Offset", UIActionManager.UpdateDriftCOMoffset, Color.white, SettingsManager.CurrentSettings.DriftBike_COMOffset, -0.2f, 0.2f, SettingsManager.DefaultSettings.DriftBike_COMOffset);
+                UIextensions.Slider("Center Of Mass Offset", UIActionManager.UpdateDriftCOMoffset, Color.white, ref SettingsManager.CurrentSettings.DriftBike_COMOffset, -0.2f, 0.2f, SettingsManager.DefaultSettings.DriftBike_COMOffset);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Turn Torque", UIActionManager.UpdateDriftTurnTorque, Color.white, SettingsManager.CurrentSettings.DriftBike_TurnTorque, 0f, 8000f, SettingsManager.DefaultSettings.DriftBike_TurnTorque);
+                UIextensions.Slider("Turn Torque", UIActionManager.UpdateDriftTurnTorque, Color.white, ref SettingsManager.CurrentSettings.DriftBike_TurnTorque, 0f, 8000f, SettingsManager.DefaultSettings.DriftBike_TurnTorque);
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical("Box");
-                UIextensions.Slider("Turn Responsiveness", UIActionManager.UpdateDriftTurnResponse, Color.white, SettingsManager.CurrentSettings.DriftBike_TurnResponse, 0f, 20f, SettingsManager.DefaultSettings.DriftBike_TurnResponse);
+                UIextensions.Slider("Turn Responsiveness", UIActionManager.UpdateDriftTurnResponse, Color.white, ref SettingsManager.CurrentSettings.DriftBike_TurnResponse, 0f, 20f, SettingsManager.DefaultSettings.DriftBike_TurnResponse);
                 GUILayout.EndVertical();
             }
             GUILayout.EndVertical();
@@ -465,7 +465,7 @@ namespace GuruBMXMod.UI
                 return;
 
             GUILayout.BeginVertical("Box");
-            UIextensions.Slider("Lobby Size", UIActionManager.UpdateLobbySlider, Color.white, SettingsManager.CurrentSettings.MultiRoomSize, 2, 32, SettingsManager.DefaultSettings.MultiRoomSize);
+            UIextensions.Slider("Lobby Size", UIActionManager.UpdateLobbySlider, Color.white, ref SettingsManager.CurrentSettings.MultiRoomSize, 2, 32, SettingsManager.DefaultSettings.MultiRoomSize);
             GUILayout.EndVertical();
 
         }
@@ -498,7 +498,7 @@ namespace GuruBMXMod.UI
             Tabs(Cycle_Tab, UIextensions.TabColorSwitch(Cycle_Tab));
             if (!Cycle_Tab.isClosed)
             {
-                GUILayout.BeginVertical(); // start
+                GUILayout.BeginVertical("Box"); // start
 
                 GUILayout.BeginVertical();
                 GUILayout.Label($"Enable Day/Night Cycle", GUILayout.ExpandWidth(true));
@@ -524,19 +524,19 @@ namespace GuruBMXMod.UI
                     }
                     //GUILayout.Label($"Time Of Day: {formattedTime}", GUILayout.ExpandWidth(true));
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Time Of Day", UIActionManager.UpdateTimeOfDay, Color.white, SettingsManager.CurrentSettings.TimeOfDay, 0.0f, 24.0f, SettingsManager.DefaultSettings.TimeOfDay);
+                    UIextensions.Slider("Time Of Day", UIActionManager.UpdateTimeOfDay, Color.white, ref SettingsManager.CurrentSettings.TimeOfDay, 0.0f, 24.0f, SettingsManager.DefaultSettings.TimeOfDay);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Time Of Day Speed", UIActionManager.UpdateCycleSpeed, Color.white, SettingsManager.CurrentSettings.CycleSpeed, 0.01f, 1.00f, SettingsManager.DefaultSettings.CycleSpeed);
+                    UIextensions.Slider("Time Of Day Speed", UIActionManager.UpdateCycleSpeed, Color.white, ref SettingsManager.CurrentSettings.CycleSpeed, 0.01f, 1.00f, SettingsManager.DefaultSettings.CycleSpeed);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Shadow Update Time", UIActionManager.UpdateShadowTime, Color.white, SettingsManager.CurrentSettings.ShadowUpdateTime, 0.01f, 0.10f, SettingsManager.DefaultSettings.ShadowUpdateTime);
+                    UIextensions.Slider("Shadow Update Time", UIActionManager.UpdateShadowTime, Color.white, ref SettingsManager.CurrentSettings.ShadowUpdateTime, 0.01f, 0.10f, SettingsManager.DefaultSettings.ShadowUpdateTime);
                     GUILayout.EndVertical();
 
                     GUILayout.BeginVertical("Box");
-                    UIextensions.Slider("Time BetweenSky Updates", UIActionManager.TimeBetweenSkyUpdates, Color.white, SettingsManager.CurrentSettings.TimeBetweenSkyUpdates, 0.1f, 2.0f, SettingsManager.DefaultSettings.TimeBetweenSkyUpdates);
+                    UIextensions.Slider("Time BetweenSky Updates", UIActionManager.TimeBetweenSkyUpdates, Color.white, ref SettingsManager.CurrentSettings.TimeBetweenSkyUpdates, 0.1f, 2.0f, SettingsManager.DefaultSettings.TimeBetweenSkyUpdates);
                     GUILayout.EndVertical();
                 }
 

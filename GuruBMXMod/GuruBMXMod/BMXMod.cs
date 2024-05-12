@@ -68,15 +68,15 @@ namespace GuruBMXMod
         }
         public override void OnUpdate() // Runs once per frame.
         {
-            if (!SettingsManager.CurrentSettings.ModEnabled)
-                return;
-
             if (uiController != null)
             {
                 uiController.WaitForInput();
             }
 
-            VFXController.Instance.RunUpdate(CameraController.Instance.mainCam);
+            if (SettingsManager.CurrentSettings.ModEnabled)
+            {
+                VFXController.Instance.RunUpdate(CameraController.Instance.mainCam);
+            }  
         }
         public override void OnFixedUpdate()
         {

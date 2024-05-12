@@ -95,25 +95,15 @@ namespace GuruBMXMod.Gameplay
             }
         }
 
-        private void InstantiatePrefab(GameObject newPrefab, GameObject assetBundlePrefab, bool enabled)
-        {
-            newPrefab = UnityEngine.Object.Instantiate(assetBundlePrefab);
-            newPrefab.transform.SetParent(AssetLoader.ScriptManager.transform);
-            if (enabled)
-            {
-                newPrefab.SetActive(enabled);
-            }
-            else
-            {
-                newPrefab.SetActive(!enabled);
-            }
-        }
-
         private void InitPrefabs()
         {
-            InstantiatePrefab(snowObj_PS, AssetLoader.snowPrefab_PS, SettingsManager.CurrentSettings.snowEnabled);
+            rainObj_PS = UnityEngine.Object.Instantiate(AssetLoader.rainPrefab_PS);
+            rainObj_PS.transform.SetParent(AssetLoader.ScriptManager.transform);
+            rainObj_PS.SetActive(SettingsManager.CurrentSettings.rainEnabled);
 
-            InstantiatePrefab(rainObj_PS, AssetLoader.rainPrefab_PS, SettingsManager.CurrentSettings.rainEnabled);
+            snowObj_PS = UnityEngine.Object.Instantiate(AssetLoader.snowPrefab_PS);
+            snowObj_PS.transform.SetParent(AssetLoader.ScriptManager.transform);
+            snowObj_PS.SetActive(SettingsManager.CurrentSettings.snowEnabled);
 
             GetVFXComponents();
         }

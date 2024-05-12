@@ -63,11 +63,12 @@ namespace GuruBMXMod.Multi
                 {
                     if (PUNManager.Instance.maxPlayersPerRoom != SettingsManager.CurrentSettings.MultiRoomSize)
                     {
-                        PUNManager.Instance.maxPlayersPerRoom = SettingsManager.CurrentSettings.MultiRoomSize;
+                        byte newSize = (byte)SettingsManager.CurrentSettings.MultiRoomSize;
+                        PUNManager.Instance.maxPlayersPerRoom = newSize;
                     }
                     if (roomInfo.currentSessionInfo._maxPlayers != SettingsManager.CurrentSettings.MultiRoomSize)
                     {
-                        roomInfo.currentSessionInfo.SetMaxPlayers(SettingsManager.CurrentSettings.MultiRoomSize);
+                        roomInfo.currentSessionInfo.SetMaxPlayers((byte)SettingsManager.CurrentSettings.MultiRoomSize);
                         //MelonLogger.Msg($"Room Info Updated: Max Players:{roomInfo.currentSessionInfo._maxPlayers}");
                     }
                     //if (networkSession._maxPlayers != SettingsManager.CurrentSettings.MultiRoomSize)

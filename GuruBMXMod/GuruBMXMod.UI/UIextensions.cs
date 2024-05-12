@@ -75,7 +75,7 @@ namespace GuruBMXMod.UI
             GUILayout.EndHorizontal();
         }
         /*
-        public static void Slider(string label, Action<float> valueChangedCallback, Color color, float value, float minValue, float maxValue)
+        public static void Slider(string label, Action<float> valueChangedCallback, Color color, float value, float minValue, float maxValue, float defaultValue)
         {
             GUILayout.BeginVertical(); // Start the main vertical layout
 
@@ -85,9 +85,16 @@ namespace GuruBMXMod.UI
             GUILayout.Label(label, GUILayout.ExpandWidth(false));
             GUILayout.FlexibleSpace();
 
-            // Use a TextField instead of a Label for the value input
+            // Use a TextField for the value input
             string valueInput = GUILayout.TextField(value.ToString("F2"), GUILayout.Width(50));
 
+            // Draw the Reset button to the right of the input field
+            if (GUILayout.Button("Reset", GUILayout.Width(50)))
+            {
+                valueInput = defaultValue.ToString("F2"); // Update the valueInput with the default value
+                value = defaultValue; // Reset value to default
+                valueChangedCallback?.Invoke(defaultValue); // Invoke the callback with the default value
+            }
             GUILayout.EndHorizontal();
 
             // Slider underneath the labels
@@ -97,19 +104,18 @@ namespace GuruBMXMod.UI
             if (float.TryParse(valueInput, out float inputValue) && inputValue != value)
             {
                 newValue = inputValue; // Update the slider position based on input field value
-                value = newValue;      // Update the reference value to the new input
-                valueChangedCallback?.Invoke(newValue); // Invoke the callback with new value
             }
-            else if (newValue != value)
+
+            // If the slider was moved or reset button was pressed, update the value
+            if (newValue != value)
             {
                 value = newValue; // Update the value if the slider moved
                 valueChangedCallback?.Invoke(newValue); // Invoke the callback with new value
             }
-
             GUILayout.EndVertical(); // End the main vertical layout
         }
         */
-        public static void Slider(string label, Action<float> valueChangedCallback, Color color, float value, float minValue, float maxValue, float defaultValue)
+        public static void Slider(string label, Action<float> valueChangedCallback, Color color, ref float value, float minValue, float maxValue, float defaultValue)
         {
             GUILayout.BeginVertical(); // Start the main vertical layout
 

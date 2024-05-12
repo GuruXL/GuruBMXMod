@@ -68,42 +68,44 @@ namespace GuruBMXMod
         }
         public override void OnUpdate() // Runs once per frame.
         {
+            if (!SettingsManager.CurrentSettings.ModEnabled)
+                return;
+
             if (uiController != null)
             {
                 uiController.WaitForInput();
             }
-            //MelonLogger.Msg("OnUpdate");
+
+            VFXController.Instance.RunUpdate(CameraController.Instance.mainCam);
         }
-        public override void OnFixedUpdate() // Can run multiple times per frame. Mostly used for Physics.
+        public override void OnFixedUpdate()
         {
-            //MelonLogger.Msg("OnFixedUpdate");
         }
 
-        public override void OnLateUpdate() // Runs once per frame after OnUpdate and OnFixedUpdate have finished.
+        public override void OnLateUpdate()
         {
-            //MelonLogger.Msg("OnLateUpdate");
         }
-        public override void OnGUI() // Can run multiple times per frame. Mostly used for Unity's IMGUI.
+        public override void OnGUI()
         {
             if (uiController != null)
             {
                 uiController.CustomOnGUI();
             }  
         }
-        public override void OnApplicationQuit() // Runs when the Game is told to Close.
+        public override void OnApplicationQuit()
         {
             UnloadAssetBundles();
             UnpatchHarmony();
-            //MelonLogger.Msg("OnApplicationQuit");
         }
-        public override void OnPreferencesSaved() // Runs when Melon Preferences get saved.
+        public override void OnPreferencesSaved()
         {
             //MelonLogger.Msg("OnPreferencesSaved");
         }
-        public override void OnPreferencesLoaded() // Runs when Melon Preferences get loaded.
+        public override void OnPreferencesLoaded()
         {
             //MelonLogger.Msg("OnPreferencesLoaded");
         }
+
         private void InitHarmony()
         {
             try
@@ -148,7 +150,7 @@ namespace GuruBMXMod
                 {
                     BMXModController.Instance.GetBikeComponents();
                     PlayerController.Instance.GetPlayerComponents();
-                    //CameraController.Instance.GetCameraComponents();
+                    CameraController.Instance.GetCameraComponents();
                     //SessionMarkerSwap.Instance.GetInputComponents();
                 }
                 else if (buildindex == 8 || sceneName == "BMXS_WorldLighting")

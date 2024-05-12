@@ -1,4 +1,5 @@
-﻿using Il2Cpp;
+﻿using GuruBMXMod.Utils;
+using Il2Cpp;
 using MelonLoader;
 using System;
 using System.Collections.Generic;
@@ -11,24 +12,20 @@ namespace GuruBMXMod.Gameplay
 {
     public class CameraController
     {
-        /*
+        
         public static CameraController __instance { get; private set; }
         public static CameraController Instance => __instance ?? (__instance = new CameraController());
 
-        public CameraSpotLight cameraSpotLight;
-        private Light lightComponent;
+        public static bool CamComponentsLoaded { get; private set; } = false;
+
+        public Camera mainCam;
 
         public void GetCameraComponents()
         {
             MelonLogger.Msg("Getting Camera Components...");
             try
             {
-                cameraSpotLight = PlayerComponents.GetInstance().gameplayCamera.gameObject.GetComponent<CameraSpotLight>();
-
-                if (cameraSpotLight != null)
-                {
-                    lightComponent = cameraSpotLight.flashLightObj.GetComponentInChildren<Light>();
-                }
+                mainCam = PlayerComponents.GetInstance().gameplayCamera.gameObject.GetComponent<Camera>();
             }
             catch (Exception ex)
             {
@@ -36,24 +33,22 @@ namespace GuruBMXMod.Gameplay
             }
             finally
             {
-                if (cameraSpotLight != null && lightComponent != null)
-                {
-                    MelonLogger.Msg("Camera Components Found");
-                }
-                else
-                {
-                    if (cameraSpotLight == null)
-                    {
-                        MelonLogger.Msg("Camera Spot Light NOT Found");
-                    }
-                    if (lightComponent == null)
-                    {
-                        MelonLogger.Msg("Camera Light Component NOT Found");
-                    }
-                }
+                CheckCamComponents();
             }
         }
-        */
 
+        private void CheckCamComponents()
+        {
+            // Creating a dictionary for dynamic checking
+            Dictionary<string, object> components = new Dictionary<string, object>
+            {
+            {"mainCam", mainCam}
+            };
+
+            if (ComponentCheck.CheckComponents(components, "Bike"))
+            {
+                CamComponentsLoaded = true;
+            }
+        }
     }
 }

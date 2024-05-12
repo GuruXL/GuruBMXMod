@@ -17,6 +17,8 @@ namespace GuruBMXMod.Utils
         public static GameObject snowPrefab;
         public static GameObject snowPrefab_PS;
         public static GameObject rainPrefab;
+        public static GameObject rainPrefab_PS;
+
         public static bool assetsLoaded { get; private set; } = false;
 
         public static void LoadBundles()
@@ -109,6 +111,7 @@ namespace GuruBMXMod.Utils
                 snowPrefab = assetBundle.LoadAsset("snowV3").Cast<GameObject>();
                 rainPrefab = assetBundle.LoadAsset("RainV4").Cast<GameObject>();
                 snowPrefab_PS = assetBundle.LoadAsset("Snow_PS").Cast<GameObject>();
+                rainPrefab_PS = assetBundle.LoadAsset("Rain_PS").Cast<GameObject>();
             }
             catch (Exception ex)
             {
@@ -128,6 +131,7 @@ namespace GuruBMXMod.Utils
             {"snowPrefab", snowPrefab},
             {"rainPrefab", rainPrefab},
             {"snowPrefab_PS", snowPrefab_PS},
+            {"rainPrefab_PS", rainPrefab_PS}
             };
 
             if (ComponentCheck.CheckComponents(components, "VFX"))

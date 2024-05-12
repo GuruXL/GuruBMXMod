@@ -1,5 +1,9 @@
 ﻿using GuruBMXMod.Utils;
+using Il2Cpp;
 using Il2CppMG_Gameplay;
+using Il2CppMG_Gameplay.Player;
+using Il2CppCinemachine;
+using Il2CppSystem.Reflection;
 using MelonLoader;
 using System;
 using System.Collections;
@@ -10,6 +14,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.VFX;
+using System.Reflection;
 
 namespace GuruBMXMod.Gameplay
 {
@@ -18,13 +23,64 @@ namespace GuruBMXMod.Gameplay
         public static VFXController __instance { get; private set; }
         public static VFXController Instance => __instance ?? (__instance = new VFXController());
 
-        public GameObject snowObj;
-        public GameObject rainObj;
-        public GameObject snowObj_PS;
+        public static bool VFXComponentsLoaded { get; private set; } = false;
+
+        //public GameObject snowObj;
+        //public GameObject rainObj;
+        private GameObject snowObj_PS;
+        private GameObject rainObj_PS;
+
+        private ParticleSystem snowPS;
+        private ParticleSystem rainPS;
 
         private bool AssetsLoaded()
         {
             return AssetLoader.assetsLoaded;
+        }
+
+        public void RunUpdate(Camera cam)
+        {
+            if (SettingsManager.CurrentSettings.rainEnabled)
+            {
+                AttachToCamera(cam, rainObj_PS);
+            }
+            if (SettingsManager.CurrentSettings.snowEnabled)
+            {
+                AttachToCamera(cam, snowObj_PS);
+            }
+        }
+
+        private void GetVFXComponents()
+        {
+            MelonLogger.Msg("Getting VFX Components...");
+            try
+            {
+                snowPS = snowObj_PS.GetComponent<ParticleSystem>();
+                rainPS = rainObj_PS.GetComponent<ParticleSystem>();
+
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Msg("VFX Components Exception: " + ex.Message);
+            }
+            finally
+            {
+                CheckVFXComponents();
+            }
+        }
+        private void CheckVFXComponents()
+        {
+            // Creating a dictionary for dynamic checking
+            Dictionary<string, object> components = new Dictionary<string, object>
+            {
+            {"snowPS", snowPS},
+            {"rainPS", rainPS}
+            };
+
+            if (ComponentCheck.CheckComponents(components, "VFX"))
+            {
+                VFXComponentsLoaded = true;
+            }
         }
 
         public void LoadVFXAssets()
@@ -39,19 +95,50 @@ namespace GuruBMXMod.Gameplay
             }
         }
 
+        private void InstantiatePrefab(GameObject newPrefab, GameObject assetBundlePrefab, bool enabled)
+        {
+            newPrefab = UnityEngine.Object.Instantiate(assetBundlePrefab);
+            newPrefab.transform.SetParent(AssetLoader.ScriptManager.transform);
+            if (enabled)
+            {
+                newPrefab.SetActive(enabled);
+            }
+            else
+            {
+                newPrefab.SetActive(!enabled);
+            }
+        }
+
         private void InitPrefabs()
         {
-            snowObj = UnityEngine.Object.Instantiate(AssetLoader.snowPrefab);
-            snowObj.transform.SetParent(AssetLoader.ScriptManager.transform);
-            snowObj.SetActive(false);
+            InstantiatePrefab(snowObj_PS, AssetLoader.snowPrefab_PS, SettingsManager.CurrentSettings.snowEnabled);
 
-            rainObj = UnityEngine.Object.Instantiate(AssetLoader.rainPrefab);
-            rainObj.transform.SetParent(AssetLoader.ScriptManager.transform);
-            rainObj.SetActive(false);
+            InstantiatePrefab(rainObj_PS, AssetLoader.rainPrefab_PS, SettingsManager.CurrentSettings.rainEnabled);
 
-            snowObj_PS = UnityEngine.Object.Instantiate(AssetLoader.snowPrefab_PS);
-            snowObj_PS.transform.SetParent(AssetLoader.ScriptManager.transform);
-            snowObj_PS.SetActive(false);
+            GetVFXComponents();
+        }
+
+        public void ToggleRain(bool enabled)
+        {
+            if (rainObj_PS != null)
+            {
+                rainObj_PS.SetActive(enabled);
+            }
+        }
+        public void ToggleSnow(bool enabled)
+        {
+            if (snowObj_PS != null)
+            {
+                snowObj_PS.SetActive(enabled);
+            }
+        }
+
+        private void AttachToCamera(Camera cam, GameObject obj)
+        {
+            if (cam != null && obj.activeSelf)
+            {
+                obj.transform.position = cam.transform.position + new Vector3(0, 10, 0);
+            }
         }
     }
 }

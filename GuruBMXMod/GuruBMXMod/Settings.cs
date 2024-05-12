@@ -20,6 +20,8 @@ namespace GuruBMXMod
 
         public float Gravity = -12.5f;
 
+        public bool DisableBail = false;
+
         #region Multiplayer
         public byte MultiRoomSize = 4;
         #endregion
@@ -39,6 +41,11 @@ namespace GuruBMXMod
         public float ShadowUpdateTime = 0.1f;
 
         public float SunIntensity = 20000.0f;
+        #endregion
+
+        #region VFX
+        public bool rainEnabled = false;
+        public bool snowEnabled = false;
         #endregion
 
         #region Player

@@ -1,5 +1,7 @@
 ﻿<linker>
 	<assembly fullname="UnityEngine">
 		<type fullname="UnityEngine.Object" preserve="all"/>
+		<type fullname="UnityEngine.ParticleSystem" preserve="all" />
+		<type fullname="UnityEngine.VFX" preserve="all" />
 	</assembly>
 </linker>

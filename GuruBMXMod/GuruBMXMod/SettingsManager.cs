@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuruBMXMod.Utils
+namespace GuruBMXMod
 {
     public static class SettingsManager
     {

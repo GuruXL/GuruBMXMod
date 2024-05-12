@@ -17,6 +17,10 @@ namespace GuruBMXMod.UI
         {
             SettingsManager.ResetToDefault();
         }
+        public static void DisableBail()
+        {
+            SettingsManager.CurrentSettings.DisableBail = !SettingsManager.CurrentSettings.DisableBail;
+        }
         public static void ToggleSimplePedal()
         {
             SettingsManager.CurrentSettings.EnableSimplePedal = !SettingsManager.CurrentSettings.EnableSimplePedal;
@@ -254,7 +258,20 @@ namespace GuruBMXMod.UI
             SettingsManager.CurrentSettings.MultiRoomSize = bytevalue;
             BMXModNetworkController.Instance.UpdateRoomSize();
         }
-        
+
+        #endregion
+
+        #region VFX
+        public static void ToggleRain()
+        {
+            SettingsManager.CurrentSettings.rainEnabled = !SettingsManager.CurrentSettings.rainEnabled;
+            VFXController.Instance.ToggleRain(SettingsManager.CurrentSettings.rainEnabled);
+        }
+        public static void ToggleSnow()
+        {
+            SettingsManager.CurrentSettings.snowEnabled = !SettingsManager.CurrentSettings.snowEnabled;
+            VFXController.Instance.ToggleSnow(SettingsManager.CurrentSettings.snowEnabled);
+        }
         #endregion
 
         #region TimeOfDay Sliders
